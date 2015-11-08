@@ -39,7 +39,7 @@ public class VaioHazardGame extends ApplicationAdapter {
 		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
 			knight.setPosition(knight.getX() + 100 * dt, knight.getY());
 		}
-
+		//..
 
 		batch.begin();
 
