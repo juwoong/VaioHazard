@@ -10,17 +10,22 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
  */
 public class KnightActor extends Actor{
     private TextureRegion body = new TextureRegion(new Texture("resources/Knight.png"));
-
-
+    private boolean flipStatus;
 
     public KnightActor() {
         setBounds(0, 0, 100, 100);
+        flipStatus = false;
     }
 
 
 
-    @Override
-    public void draw (Batch batch, float parentAlpha) {
+    //@Override
+    public void draw (Batch batch, float parentAlpha, boolean flip) {
+        if(flipStatus != flip) {
+            flipStatus = flip;
+            body.flip(true, false);
+        }
+
         batch.draw(body, getX(), getY(), getOriginX(), getOriginY(),
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
 

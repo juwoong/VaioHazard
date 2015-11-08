@@ -19,7 +19,7 @@ public class VaioHazardGame extends ApplicationAdapter {
 	//Stage stage;
 	Texture img;
 	KnightActor knight;
-	
+	boolean flip = false;
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
@@ -33,20 +33,22 @@ public class VaioHazardGame extends ApplicationAdapter {
 		float dt = Gdx.graphics.getDeltaTime();
 		Gdx.gl.glClearColor(92 / 255f, 167 / 255f, 244 / 255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		//boolean flip = false;
 
-		if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			knight.setPosition(knight.getX() - 100 * dt, knight.getY());
-		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			knight.setPosition(knight.getX() + 100 * dt, knight.getY());
-		}
-		//..
+        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            knight.setPosition(knight.getX() - 100 * dt, knight.getY());
+            //knight.draw(batch, 1, true);
+            flip = true;
+        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            knight.setPosition(knight.getX() + 100 * dt, knight.getY());
+            flip = false;
+        }
 
-		batch.begin();
+        batch.begin();
 
-		knight.draw(batch, 1);
+        knight.draw(batch, 1, flip);
 
 		batch.draw(img, 16, 300);
-
 
 		batch.end();
 	}
