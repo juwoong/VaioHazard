@@ -10,7 +10,8 @@ public class DesktopLauncher {
 		config.title = "Vaio Hazard";
 		config.width = 1280;
 		config.height = 720;
+		config.resizable = true;
 
-		new LwjglApplication(new TextWrite(), config);
+		new LwjglApplication(new VaioHazardGame(), config);
 	}
 }
