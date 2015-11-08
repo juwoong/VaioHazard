@@ -23,7 +23,7 @@ public class VaioHazardGame extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		img = new Texture("resources/vaio.png");
+		img = new Texture("resources/logo.png");
 		knight = new KnightActor();
 		knight.setPosition(0, 0);
 	}
