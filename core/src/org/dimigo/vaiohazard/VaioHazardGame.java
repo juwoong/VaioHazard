@@ -37,7 +37,7 @@ public class VaioHazardGame extends ApplicationAdapter {
 
 	@Override
 	public void render () {
-		BitmapFont font = generater.getBitmapFont(24, "Developedby박유택,배주웅", Color.WHITE);
+		//BitmapFont font = generater.getBitmapFont(24, "Developedby박유택,배주웅", Color.WHITE);
 		float dt = Gdx.graphics.getDeltaTime();
 		Gdx.gl.glClearColor(92 / 255f, 167 / 255f, 244 / 255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -55,11 +55,14 @@ public class VaioHazardGame extends ApplicationAdapter {
         batch.begin();
 
         knight.draw(batch, 1, flip);
-		font.draw(batch, "Developed by 박유택, 배주웅", 50, 300);
+		//font.draw(batch, "Developed by 박유택, 배주웅", 50, 300);
+		generater.drawBitmapFont(batch, 25, "Developed by 박유택, 배주웅", Color.WHITE, 50, 300);
 		batch.draw(img, 16, 300);
 
 		batch.end();
-		font.dispose();
+		//font.dispose();
+
+		generater.releaseAll();
 	}
 
 
