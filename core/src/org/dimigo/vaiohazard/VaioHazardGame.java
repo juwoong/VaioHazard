@@ -16,23 +16,31 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
 
 public class VaioHazardGame extends Game {
-	SpriteBatch batch;
+	/*SpriteBatch batch;
 	//Stage stage;
 	Texture img;
 	KnightActor knight;
-	boolean flip = false;
+	boolean flip = false;*/
+	public MainMenu mainMenu;
+	public GameScreen gameScreen;
+
 	@Override
 	public void create () {
-		batch = new SpriteBatch();
+		/*batch = new SpriteBatch();
 		img = new Texture("resources/logo.png");
 		knight = new KnightActor();
-		knight.setPosition(0, 0);
+		knight.setPosition(0, 0);*/
 
-		setScreen(new MainMenu());
+		mainMenu = new MainMenu(this);
+		gameScreen = new GameScreen(this);
+
+		setScreen(mainMenu);
 	}
 
 	@Override
 	public void render () {
+		super.render();
+		getScreen().render(Gdx.graphics.getDeltaTime());
 		/*float dt = Gdx.graphics.getDeltaTime();
 		Gdx.gl.glClearColor(92 / 255f, 167 / 255f, 244 / 255f, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -55,7 +63,6 @@ public class VaioHazardGame extends Game {
 
 		batch.end();*/
 
-		getScreen().render(Gdx.graphics.getDeltaTime());
 	}
 
 

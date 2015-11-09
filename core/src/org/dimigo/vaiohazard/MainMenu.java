@@ -20,13 +20,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 /**
  * Created by YuTack on 2015-11-08.
  */
-public class MainMenu extends ScreenAdapter {
-
-    static final int width = 1280;
-    static final int height = 720;
-
+public class MainMenu implements Screen {
     Image logo;
-
     Stage stage;
 
     Button newGameButton;
@@ -34,13 +29,16 @@ public class MainMenu extends ScreenAdapter {
     TextureAtlas buttonAtlas;
     Skin skin;
 
-    private Table table;
+    VaioHazardGame currentGame;
 
-    public MainMenu() {
-        create();
+    Table table;
+
+    public MainMenu(VaioHazardGame game) {
+        currentGame = game;
     }
 
-    public void create() {
+    @Override
+    public void show() {
         stage = new Stage();
 
         table = new Table();
@@ -59,12 +57,12 @@ public class MainMenu extends ScreenAdapter {
         newGameButton = new Button(buttonStyle);
         newGameButton.addListener( new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("button", "pressed");
+
                 return true;
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                Gdx.app.log("button", "released");
+                currentGame.setScreen(currentGame.gameScreen);
             }
         });
 
@@ -78,12 +76,36 @@ public class MainMenu extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-
-        stage.act(delta);
-
         Gdx.gl.glClearColor(92 / 255f, 167 / 255f, 244 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        stage.act(delta);
         stage.draw();
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
+    }
+
+    @Override
+    public void hide() {
+        stage.clear();
+
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resize(int width, int height) {
+
+    }
+
+    @Override
+    public void resume() {
 
     }
 }
