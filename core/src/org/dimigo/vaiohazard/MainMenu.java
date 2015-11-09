@@ -12,6 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
+import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
@@ -46,6 +49,7 @@ public class MainMenu implements Screen {
 
         logo = new Image(new Texture("resources/logo.png"));
         logo.setPosition(16, 300);
+        logo.setOrigin(logo.getWidth() / 2, logo.getHeight() / 2);
 
         Gdx.input.setInputProcessor(stage);
         skin = new Skin();
@@ -69,6 +73,21 @@ public class MainMenu implements Screen {
         table.row();
         table.add(newGameButton).padRight(80).width(150).height(70);
         table.right();
+
+        RotateToAction action = new RotateToAction();
+        action.setRotation(10);
+        action.setDuration(0.5f);
+
+        RotateToAction action2 = new RotateToAction();
+        action2.setRotation(-10);
+        action2.setDuration(.5f);
+
+        SequenceAction seq = new SequenceAction(action, action2);
+
+        RepeatAction repeat = new RepeatAction();
+        repeat.setAction(seq);
+        repeat.setCount(RepeatAction.FOREVER);
+        logo.addAction(repeat);
 
         stage.addActor(table);
         stage.addActor(logo);
