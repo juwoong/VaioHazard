@@ -13,5 +13,6 @@ public class DesktopLauncher {
 		config.resizable = true;
 
 		new LwjglApplication(new VaioHazardGame(), config);
+        //new LwjglApplication(new TextWrite(), config);
 	}
 }
