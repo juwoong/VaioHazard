@@ -19,7 +19,7 @@ public class KnightActor extends Actor{
 
 
 
-    //@Override
+
     public void draw (Batch batch, float parentAlpha, boolean flip) {
         if(flipStatus != flip) {
             flipStatus = flip;
