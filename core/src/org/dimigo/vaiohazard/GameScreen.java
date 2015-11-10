@@ -15,6 +15,8 @@ import com.badlogic.gdx.maps.tiled.renderers.BatchTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import org.dimigo.vaiohazard.Object.MarioActor;
 
 /**
  * Created by YuTack on 2015-11-09.
@@ -25,16 +27,22 @@ public class GameScreen extends ScreenAdapter {
     TiledMapRenderer tiledMapRenderer;
     OrthographicCamera camera;
     Stage stage;
+    MarioActor mario;
 
     public GameScreen(VaioHazardGame game) {
         this.currentGame = game;
         stage = new Stage();
+
+        mario = new MarioActor();
+        mario.setPosition(0,0);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
         camera.update();
         tiledMap = new TmxMapLoader().load("resources/map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+
+        stage.addActor(mario);
     }
 
     @Override
@@ -47,11 +55,14 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(92 / 255f, 167 / 255f, 244 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+
+        stage.act(delta);
+
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
 
-        stage.act(delta);
         stage.draw();
+
     }
 }
