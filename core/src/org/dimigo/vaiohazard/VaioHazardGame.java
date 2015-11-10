@@ -24,6 +24,10 @@ public class VaioHazardGame extends Game {
 	public MainMenu mainMenu;
 	public GameScreen gameScreen;
 
+	//80 * 4,  45 * 4
+	static final int pixelWidth = 320;
+	static final int pixelHeight = 180;
+
 	@Override
 	public void create () {
 

@@ -15,6 +15,7 @@ import com.badlogic.gdx.maps.tiled.renderers.BatchTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthoCachedTiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import org.dimigo.vaiohazard.Object.MarioActor;
 
@@ -34,13 +35,19 @@ public class GameScreen extends ScreenAdapter {
         stage = new Stage();
 
         mario = new MarioActor();
-        mario.setPosition(0,0);
+        mario.setPosition(30, 30);
 
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
         camera.update();
-        tiledMap = new TmxMapLoader().load("resources/map.tmx");
+        tiledMap = new TmxMapLoader().load("resources/Ui/map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+
+        Image img = new Image(new Texture("resources/Ui/Dialog_.png"));
+        img.setScale(GameCoordinate.RATIO);
+        img.setPosition(GameCoordinate.toRealPos(28), GameCoordinate.toRealPos(20));
+
+        stage.addActor(img);
 
         stage.addActor(mario);
     }

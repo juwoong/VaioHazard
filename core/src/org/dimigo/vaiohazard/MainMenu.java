@@ -68,12 +68,13 @@ public class MainMenu implements Screen {
         generater.drawBitmapFont(batch, 30, "Developed By 박유택, 배주웅", Color.WHITE, 10, 40);
 
         batch.end();
+        generater.releaseAll();
     }
 
     private void mainInit() {
         Image logo;
 
-        logo = new Image(new Texture("resources/logo.png"));
+        logo = new Image(new Texture("resources/Ui/logo.png"));
         logo.setPosition(16, 300);
         logo.setOrigin(logo.getWidth() / 2, logo.getHeight() / 2);
         RepeatAction twinkleForever = new RepeatAction();

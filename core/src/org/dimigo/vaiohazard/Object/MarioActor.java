@@ -26,7 +26,7 @@ public class MarioActor extends Actor {
 
     public MarioActor() {
         setBounds(0,0,100,100);
-        walkSheet = new Texture(Gdx.files.internal("resources/mario.png"));
+        walkSheet = new Texture(Gdx.files.internal("resources/Actor/mario.png"));
         TextureRegion[][] temp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);
         walkFrame = new TextureRegion[FRAME_COLS*FRAME_ROWS-1];
 
