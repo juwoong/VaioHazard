@@ -26,10 +26,6 @@ public class VaioHazardGame extends Game {
 
 	@Override
 	public void create () {
-		/*batch = new SpriteBatch();
-		img = new Texture("resources/logo.png");
-		knight = new KnightActor();
-		knight.setPosition(0, 0);*/
 
 		mainMenu = new MainMenu(this);
 		gameScreen = new GameScreen(this);
@@ -41,28 +37,6 @@ public class VaioHazardGame extends Game {
 	public void render () {
 		super.render();
 		getScreen().render(Gdx.graphics.getDeltaTime());
-		/*float dt = Gdx.graphics.getDeltaTime();
-		Gdx.gl.glClearColor(92 / 255f, 167 / 255f, 244 / 255f, 1);
-		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		//boolean flip = false;
-
-        if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            knight.setPosition(knight.getX() - 100 * dt, knight.getY());
-            //knight.draw(batch, 1, true);
-            flip = true;
-        } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            knight.setPosition(knight.getX() + 100 * dt, knight.getY());
-            flip = false;
-        }
-
-        batch.begin();
-
-        knight.draw(batch, 1, flip);
-
-		batch.draw(img, 16, 300);
-
-		batch.end();*/
-
 	}
 
 
