@@ -1,11 +1,14 @@
 package org.dimigo.library;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,11 +32,23 @@ public class FontGenerater {
         parameter.color = color;
 
         font = generator.generateFont(parameter);
-        //generator.dispose();
 
         font.draw(batch, str, locX, locY);
         fonts.add(font);
-        //font.dispose();
+    }
+
+    public BitmapFont getBitmapFont(int size, String str, Color color)
+    {
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        BitmapFont font;
+
+        parameter.size = size;
+        parameter.characters = str;
+        parameter.color = color;
+
+        font = generator.generateFont(parameter);
+
+        return font;
     }
 
     public void releaseAll() {
