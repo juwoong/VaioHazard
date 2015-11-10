@@ -23,6 +23,7 @@ public class VaioHazardGame extends Game {
 	boolean flip = false;*/
 	public MainMenu mainMenu;
 	public GameScreen gameScreen;
+	public LoadingScreen loadingScreen;
 
 	//80 * 4,  45 * 4
 

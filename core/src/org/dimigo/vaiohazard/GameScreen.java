@@ -17,17 +17,12 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import org.dimigo.library.DialogGenerater;
 import org.dimigo.vaiohazard.Object.MarioActor;
+import org.dimigo.vaiohazard.Object.PixelizedDialog;
 
 /**
  * Created by YuTack on 2015-11-09.
- */
-
-/**
- * 게임 이미지 규격
- * 320 * 180 도트
- * 픽셀 그대로 export 출력하고 여기서 setScale 로 GameCoordinate.RATIO 만큼 크기를 키워서 사용
- * 현재 마리오는 준수하고 있지 앟음
  */
 public class GameScreen extends ScreenAdapter {
     VaioHazardGame currentGame;
@@ -36,6 +31,7 @@ public class GameScreen extends ScreenAdapter {
     OrthographicCamera camera;
     Stage stage;
     MarioActor mario;
+    PixelizedDialog dialog;
 
     public GameScreen(VaioHazardGame game) {
         this.currentGame = game;
@@ -52,22 +48,24 @@ public class GameScreen extends ScreenAdapter {
 
         Image img = new Image(new Texture("resources/Ui/Dialog_.png"));
         img.setScale(GameCoordinate.RATIO);
-        img.setPosition(GameCoordinate.toRealPos(33), GameCoordinate.toRealPos(22));
+        img.setPosition(GameCoordinate.toRealPos(28), GameCoordinate.toRealPos(20));
+
+        dialog =  (new DialogGenerater()).getDialog("d");
 
         stage.addActor(img);
-
         stage.addActor(mario);
     }
 
     @Override
     public void show() {
-
+        dialog.show(stage);
     }
 
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(92 / 255f, 167 / 255f, 244 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
 
         stage.act(delta);
 
