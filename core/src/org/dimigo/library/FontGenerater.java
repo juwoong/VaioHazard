@@ -42,4 +42,15 @@ public class FontGenerater {
         }
         fonts.clear();
     }
+
+    public BitmapFont getBitmapFont(int size, String str, Color color, int locX, int locY) {
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        BitmapFont font;
+        parameter.size = size;
+        parameter.characters = str;
+        parameter.color = color;
+
+        font = generator.generateFont(parameter);
+        return font;
+    }
 }
