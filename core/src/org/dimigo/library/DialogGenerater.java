@@ -5,9 +5,11 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.stbtt.TrueTypeFontFactory;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
+import com.badlogic.gdx.utils.SharedLibraryLoader;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
 
 /**
@@ -18,12 +20,14 @@ public class DialogGenerater {
     }
 
     public PixelizedDialog getDialog(String str) {
+
+
         FontGenerater generater = new FontGenerater();
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("resources/dialog.atlas"));
         Skin skin = new Skin();
         skin.addRegions(atlas);
 
-        BitmapFont font = generater.getBitmapFont(16, "Fuck you?", Color.WHITE);
+        BitmapFont font = new BitmapFont();//generater.getBitmapFont(16, "Fuck you?", Color.WHITE);
 
         Window.WindowStyle windowStyle = new Window.WindowStyle();
         windowStyle.titleFont = font;
@@ -36,7 +40,7 @@ public class DialogGenerater {
         style.font = font;
 
         Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
-        Label label = new Label("Fuck you?", labelStyle);
+        Label label = new Label(null, labelStyle);
         label.setAlignment(Align.center);
 
         PixelizedDialog dialog = new PixelizedDialog("Fuck you?", windowStyle);
@@ -47,4 +51,25 @@ public class DialogGenerater {
         return dialog;
     }
 
+    public PixelizedDialog getDialog2(String str) {
+        SharedLibraryLoader loader = new SharedLibraryLoader();
+        loader.load("lib/gdx-stb-truetype-natives.jar");
+
+        FontGenerater generater = new FontGenerater();
+        TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("resources/dialog.atlas"));
+        Skin skin = new Skin();
+        skin.addRegions(atlas);
+
+        BitmapFont font = TrueTypeFontFactory.createBitmapFont(Gdx.files.internal("resources/font/font.ttf"), str, 12.5f, 7.5f, 1.0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        font.setColor(1f, 1f, 1f, 1f);
+
+        Window.WindowStyle windowStyle = new Window.WindowStyle();
+        windowStyle.titleFont = font;
+        NinePatch background = skin.getPatch("background");
+        windowStyle.background = new NinePatchDrawable(background);
+
+
+        PixelizedDialog dialog = new PixelizedDialog(str, windowStyle);
+        return dialog;
+    }
 }
