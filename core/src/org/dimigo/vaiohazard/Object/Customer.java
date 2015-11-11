@@ -1,7 +1,7 @@
 package org.dimigo.vaiohazard.Object;
 
 /**
- * Created by YuTack on 2015-11-11.
+ * Created by YuTack on 2015-11-11. fuck you
  */
 public class Customer {
 }
