@@ -45,15 +45,16 @@ project(":desktop") {
 
 project(":core") {
     apply plugin: "java"
-
-
     dependencies {
+        compile files("../lib/gdx-stb-truetype-natives.jar")
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
         compile "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
         compile "com.kotcrab.vis:vis-ui:0.9.2"
         compile "net.dermetfan.libgdx-utils:libgdx-utils:0.13.1"
         compile "net.dermetfan.libgdx-utils:libgdx-utils-box2d:0.13.1"
+        compile files("../lib/gdx-stb-truetype.jar")
+
     }
 }
 

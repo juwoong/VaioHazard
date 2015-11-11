@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.utils.SharedLibraryLoader;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -20,6 +21,7 @@ public class FontGenerater {
     private List<BitmapFont> fonts;
 
     public FontGenerater() {
+
         generator = new FreeTypeFontGenerator(Gdx.files.internal("resources/font/font.ttf"));
         fonts = new ArrayList<BitmapFont>();
     }
