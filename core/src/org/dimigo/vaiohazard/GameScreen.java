@@ -2,6 +2,7 @@ package org.dimigo.vaiohazard;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -58,7 +59,7 @@ public class GameScreen extends ScreenAdapter {
         img.setScale(GameCoordinate.RATIO);
         img.setPosition(GameCoordinate.toRealPos(28), GameCoordinate.toRealPos(20));
 
-        dialog = (new DialogGenerater()).getDialog2("String");
+        dialog = (new DialogGenerater()).getDialog("\n이것은 폰트입니다. 아마도요..");
 
         Button newGameButton;
         Button.ButtonStyle buttonStyle;
@@ -89,12 +90,15 @@ public class GameScreen extends ScreenAdapter {
         stage.addActor(newGameButton);
         stage.addActor(mario);
 
-        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void show() {
-        dialog.show(stage);
+        Gdx.input.setCatchMenuKey(true);
+        Gdx.input.setCatchBackKey(true);
+        InputMultiplexer inputMultiplexer = new InputMultiplexer();
+        inputMultiplexer.addProcessor(stage);
+        Gdx.input.setInputProcessor(inputMultiplexer);
     }
 
     @Override
