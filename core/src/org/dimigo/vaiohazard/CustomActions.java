@@ -1,6 +1,8 @@
 package org.dimigo.vaiohazard;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
+import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 
@@ -31,6 +33,25 @@ public class CustomActions {
         action5.setDuration(0.2f);
 
         SequenceAction seq = new SequenceAction(action, action2, action3, action4, action5);
+
+        return seq;
+    }
+
+    public static Action stepByStepBy(int dotXAmount, int dotYAmount, boolean moveToXFirst, float xDuration, float yDuration) {
+        int ratio = GameCoordinate.RATIO;
+
+        MoveByAction moveX = new MoveByAction();
+        moveX.setDuration(xDuration);
+        moveX.setAmount(dotXAmount * ratio, 0);
+
+        MoveByAction moveY = new MoveByAction();
+        moveY.setDuration(yDuration);
+        moveY.setAmount(0, dotYAmount * ratio);
+
+        SequenceAction seq = null;
+
+        if(moveToXFirst == true) seq = new SequenceAction(moveX, moveY);
+        else seq = new SequenceAction(moveY, moveX);
 
         return seq;
     }

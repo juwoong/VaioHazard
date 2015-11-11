@@ -11,10 +11,9 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 /**
  * Created by juwoong on 15. 11. 9..
  */
-public class MarioActor extends Actor {
+public class MarioActor extends VaioActor {
     private static final int FRAME_COLS = 4;
     private static final int FRAME_ROWS = 1;
-
 
     private Animation walkAnimation;
     private Texture walkSheet;

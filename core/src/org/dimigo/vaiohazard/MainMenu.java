@@ -21,6 +21,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import javafx.scene.control.ColorPickerBuilder;
 import org.dimigo.library.FontGenerater;
+import org.dimigo.vaiohazard.Object.ServiceCenter;
 
 import javax.imageio.stream.ImageInputStream;
 import java.time.format.TextStyle;
@@ -67,7 +68,6 @@ public class MainMenu implements Screen {
 
         batch.begin();
         generater.drawBitmapFont(batch, 30, "Developed By 박유택, 배주웅", Color.WHITE, 10, 40);
-
         batch.end();
         generater.releaseAll();
     }
@@ -112,8 +112,9 @@ public class MainMenu implements Screen {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                currentGame.setScreen(currentGame.gameScreen);
-                //currentGame.setScreen(currentGame.LoadingScreen);
+                //currentGame.setScreen(currentGame.gameScreen);
+                ServiceCenter.newCenter();
+                currentGame.setScreen(currentGame.loadingScreen);
             }
         });
 

@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
+import org.dimigo.vaiohazard.Object.ServiceCenter;
 
 public class VaioHazardGame extends Game {
 	/*SpriteBatch batch;
@@ -25,14 +26,16 @@ public class VaioHazardGame extends Game {
 	public GameScreen gameScreen;
 	public LoadingScreen loadingScreen;
 
+	public ServiceCenter serviceCenter;
+
 	//80 * 4,  45 * 4
 
 
 	@Override
 	public void create () {
-
 		mainMenu = new MainMenu(this);
 		gameScreen = new GameScreen(this);
+		loadingScreen = new LoadingScreen(this);
 
 		setScreen(mainMenu);
 	}
