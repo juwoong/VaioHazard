@@ -27,7 +27,7 @@ public class DialogGenerater {
         Skin skin = new Skin();
         skin.addRegions(atlas);
 
-        BitmapFont font = new BitmapFont();//generater.getBitmapFont(16, "Fuck you?", Color.WHITE);
+        BitmapFont font = new BitmapFont(Gdx.files.internal("resources/font/font.fnt"));
 
         Window.WindowStyle windowStyle = new Window.WindowStyle();
         windowStyle.titleFont = font;
@@ -47,21 +47,21 @@ public class DialogGenerater {
 
         dialog.button("Yes", true, style);
         dialog.button("No", false, style);
+        dialog.button("MotherFucker", false, style);
         dialog.getContentTable().add(label);
         return dialog;
     }
 
     public PixelizedDialog getDialog2(String str) {
-        SharedLibraryLoader loader = new SharedLibraryLoader();
-        loader.load("lib/gdx-stb-truetype-natives.jar");
 
         FontGenerater generater = new FontGenerater();
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("resources/dialog.atlas"));
         Skin skin = new Skin();
         skin.addRegions(atlas);
 
-        BitmapFont font = TrueTypeFontFactory.createBitmapFont(Gdx.files.internal("resources/font/font.ttf"), str, 12.5f, 7.5f, 1.0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        font.setColor(1f, 1f, 1f, 1f);
+        /*BitmapFont font = TrueTypeFontFactory.createBitmapFont(Gdx.files.internal("resources/font/font.ttf"), str, 12.5f, 7.5f, 1.0f, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        font.setColor(1f, 1f, 1f, 1f);*/
+        BitmapFont font = new BitmapFont(Gdx.files.internal("resources/font/font.fnt"));
 
         Window.WindowStyle windowStyle = new Window.WindowStyle();
         windowStyle.titleFont = font;

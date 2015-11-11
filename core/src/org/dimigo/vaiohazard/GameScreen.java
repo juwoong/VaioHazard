@@ -58,7 +58,7 @@ public class GameScreen extends ScreenAdapter {
         img.setScale(GameCoordinate.RATIO);
         img.setPosition(GameCoordinate.toRealPos(28), GameCoordinate.toRealPos(20));
 
-        dialog = (new DialogGenerater()).getDialog2("String");
+        dialog = (new DialogGenerater()).getDialog("이것은폰트입니다 씨발려나");
 
         Button newGameButton;
         Button.ButtonStyle buttonStyle;
