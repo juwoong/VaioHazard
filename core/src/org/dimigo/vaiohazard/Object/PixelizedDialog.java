@@ -6,6 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import org.dimigo.vaiohazard.conversation.Question;
 
 /**
  * Created by juwoong on 15. 11. 10..
@@ -29,11 +30,15 @@ public class PixelizedDialog extends Dialog{
     @Override
     protected void result(Object object){
         //boolean exit = (Boolean) object;
-        String result = (String) object;
-        if(result.equals("Exit")) Gdx.app.exit();
-        else remove();
-
-        System.out.println(result);
+        //String result = (String) object;
+        //if(result.equals("Exit")) Gdx.app.exit();
+        //else remove();
+        //System.out.println(result);
+        if(object instanceof Question) {
+            Question question = (Question) object;
+            question.ask();
+        }
+        remove();
     }
 
     @Override

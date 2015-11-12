@@ -16,42 +16,47 @@ import org.dimigo.vaiohazard.Object.PixelizedDialog;
  * Created by juwoong on 15. 11. 10..
  */
 public class DialogGenerater {
+    private FontGenerater generater;
+    private BitmapFont font;
+    private Skin skin;
+    private Window.WindowStyle windowStyle;
+    private TextButton.TextButtonStyle style;
+    private Label.LabelStyle labelStyle;
+    private Label label;
+
     public DialogGenerater() {
-    }
-
-    public PixelizedDialog getDialog(String str) {
-
-
-        FontGenerater generater = new FontGenerater();
+        generater = new FontGenerater();
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("resources/dialog.atlas"));
         Skin skin = new Skin();
         skin.addRegions(atlas);
 
-        BitmapFont font = new BitmapFont(Gdx.files.internal("resources/font/font.fnt"));
-
-        Window.WindowStyle windowStyle = new Window.WindowStyle();
+        font = new BitmapFont(Gdx.files.internal("resources/font/font.fnt"));
+        windowStyle = new Window.WindowStyle();
         windowStyle.titleFont = font;
         NinePatch background = skin.getPatch("background");
         windowStyle.background = new NinePatchDrawable(background);
 
-        TextButton.TextButtonStyle style = new TextButton.TextButtonStyle();
+        style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable("button");
         style.down = skin.getDrawable("touched-button");
         style.font = font;
 
-        Label.LabelStyle labelStyle = new Label.LabelStyle(font, Color.WHITE);
-        Label label = new Label(null, labelStyle);
+        labelStyle = new Label.LabelStyle(font, Color.WHITE);
+        label = new Label(null, labelStyle);
         label.setAlignment(Align.center);
+    }
+
+    public PixelizedDialog getDialog(String str) {
+        str = "\n" + str;
 
         PixelizedDialog dialog = new PixelizedDialog(str, windowStyle);
 
-        dialog.button("Yes", "Exit", style);
-        dialog.button("No", "Not yet", style);
-        dialog.button("Maybe..?", "maybe", style);
         dialog.getContentTable().add(label);
         return dialog;
     }
 
+
+    public TextButton.TextButtonStyle getStyle() { return style; }
     public PixelizedDialog getDialog2(String str) {
         FontGenerater generater = new FontGenerater();
         TextureAtlas atlas = new TextureAtlas(Gdx.files.internal("resources/dialog.atlas"));
