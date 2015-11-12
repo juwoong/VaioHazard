@@ -27,8 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import org.dimigo.library.DialogGenerater;
-import org.dimigo.vaiohazard.Object.MarioActor;
-import org.dimigo.vaiohazard.Object.PixelizedDialog;
+import org.dimigo.vaiohazard.Object.*;
 
 /**
  * Created by YuTack on 2015-11-09.
@@ -86,6 +85,8 @@ public class GameScreen extends ScreenAdapter {
             }
         });
 
+        Argument.getInstance().startArgu(new Customer(), stage);
+
         //stage.addActor(img);
         stage.addActor(newGameButton);
         stage.addActor(mario);
@@ -106,6 +107,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClearColor(92 / 255f, 167 / 255f, 244 / 255f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        Argument.getInstance().act(delta);
 
         stage.act(delta);
 

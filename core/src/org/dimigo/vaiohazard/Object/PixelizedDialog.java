@@ -29,11 +29,13 @@ public class PixelizedDialog extends Dialog{
     @Override
     protected void result(Object object){
         //boolean exit = (Boolean) object;
+        /*
         String result = (String) object;
         if(result.equals("Exit")) Gdx.app.exit();
-        else remove();
+        else remove();*/
+        Argument.getInstance().answer = (int)object;
 
-        System.out.println(result);
+        //System.out.println(result);
     }
 
     @Override
