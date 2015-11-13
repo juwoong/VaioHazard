@@ -27,6 +27,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import org.dimigo.library.DialogGenerater;
+import org.dimigo.library.GameCoordinate;
 import org.dimigo.vaiohazard.Object.MarioActor;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
 import org.dimigo.vaiohazard.conversation.Conversation;
@@ -57,9 +58,6 @@ public class GameScreen extends ScreenAdapter {
         tiledMap = new TmxMapLoader().load("resources/Ui/map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
-        Image img = new Image(new Texture("resources/Ui/Dialog_.png"));
-        img.setScale(GameCoordinate.RATIO);
-        img.setPosition(GameCoordinate.toRealPos(28), GameCoordinate.toRealPos(20));
 
         Button newGameButton;
         Button.ButtonStyle buttonStyle;
@@ -74,7 +72,7 @@ public class GameScreen extends ScreenAdapter {
         q3.insertQuestion(q1);
         q3.insertQuestion(q2);
         Question q4 = new Question("오, 장난이었는데.... 미안해.... 바이오같은새끼", "예");
-        Question q5 = new Question("한국 디지털 미디어 고등학교 사무국장 같다", "그렇습니다");
+        Question q5 = new Question("한국 디지털 미디어 고등학교 사무국장 같다", "그렇습니다.");
         Question q6 = new Question("너 엄마 없지?", "null");
         q6.insertQuestion(q4);
         q6.insertQuestion(q5);

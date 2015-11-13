@@ -1,14 +1,10 @@
 package org.dimigo.vaiohazard.Object;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
-import org.dimigo.library.Timer;
 import org.dimigo.vaiohazard.CustomActions;
-import org.dimigo.vaiohazard.GameCoordinate;
 
 /**
  * Created by YuTack on 2015-11-11.

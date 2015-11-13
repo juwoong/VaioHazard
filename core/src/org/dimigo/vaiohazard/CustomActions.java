@@ -2,9 +2,9 @@ package org.dimigo.vaiohazard;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
+import org.dimigo.library.GameCoordinate;
 
 /**
  * Created by YuTack on 2015-11-09.
