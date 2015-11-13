@@ -4,7 +4,17 @@
 	"answer" : [
 		{
 			"question" : "민준아!!!! 못생긴건 여전하구나!!!!!",
-			"requiredAnswer" : "어? 어떻게 아셨어요?"
+			"requiredAnswer" : "어? 어떻게 아셨어요?",
+		  	"answer" : [
+              {
+                "question" : "어...? 날 알 사람이 없을텐데..",
+                "requiredAnswer" : "너희 행성에서 물어봤지!"
+              },
+              {
+                "question" : "아 씨발 존나 헷갈리네",
+                "requiredAnswer" : "아니 초면에 씨발 그게 할말이냐?"
+              }
+			]
  		},
 		{
 			"question" : "아.... 못생긴게 김민준 씨 같아서요... 죄송합니다.",

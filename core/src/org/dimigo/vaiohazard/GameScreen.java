@@ -26,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import org.dimigo.library.ConversationParser;
 import org.dimigo.library.DialogGenerater;
 import org.dimigo.vaiohazard.Object.MarioActor;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
@@ -67,6 +68,8 @@ public class GameScreen extends ScreenAdapter {
         Skin skin;
 
         final Conversation conversation = new Conversation(stage);
+        ConversationParser parser = new ConversationParser(stage);
+        final Conversation conv2 = parser.parse("resources/conversation/question.json");
 
         Question q1 = new Question("넌 정말 엄마가 없구나!", "응 니애미");
         Question q2 = new Question("오... 당신은 패드립 마스터입니다.", "너 내 동생이구나!");
@@ -92,7 +95,7 @@ public class GameScreen extends ScreenAdapter {
         newGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                conversation.start();
+                conv2.start();
             }
         });
 
