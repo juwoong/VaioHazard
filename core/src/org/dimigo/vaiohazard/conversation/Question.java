@@ -45,6 +45,7 @@ public class Question {
     public void insertQuestion(Question q) {
         nodes.add(q);
     }
+    public void insertQuestion(List<Question> q) { nodes.addAll(q); }
 
     public String getQuestion() { return this.question; }
     public String getRequiredAnswer() { return this.requiredAnswer; }

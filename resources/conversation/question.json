@@ -1,0 +1,14 @@
+{
+	"question" : "혹시.... 어머니 잃어버리신 분이... 김민준이세요?",
+	"requiredAnswer" : "null",
+	"answer" : [
+		{
+			"question" : "민준아!!!! 못생긴건 여전하구나!!!!!",
+			"requiredAnswer" : "어? 어떻게 아셨어요?"
+ 		},
+		{
+			"question" : "아.... 못생긴게 김민준 씨 같아서요... 죄송합니다.",
+			"requiredAnswer" : "아니요... 초면에 너무하시네요.."
+		}
+	]
+}
