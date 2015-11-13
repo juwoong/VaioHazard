@@ -23,7 +23,6 @@ public class PixelizedDialog extends Dialog{
     public PixelizedDialog(String title, Window.WindowStyle windowStyle) {
         super(title, windowStyle);
 
-
         getContentTable().left().padLeft(50).padTop(20);
         getTitleTable().padTop(90).padLeft(60);
 

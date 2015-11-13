@@ -62,6 +62,10 @@ public class DialogGenerater {
 
         PixelizedDialog dialog = new PixelizedDialog(str, windowStyle);
 
+        dialog.text("hey have some text Here!! is this enough long? long l" +
+                "ong long? more more long\nhey have some text Here!!\nhey h" +
+                "ave some text Here!!여기 한글 되나용? \n", labelStyle);
+
         dialog.getContentTable().add(label);
         return dialog;
     }
