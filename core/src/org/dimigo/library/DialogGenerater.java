@@ -39,6 +39,7 @@ public class DialogGenerater {
 
         style = new TextButton.TextButtonStyle();
         style.up = skin.getDrawable("Button");
+        style.over = skin.getDrawable("Button_hover");
         style.down = skin.getDrawable("Button_pressed");
         style.font = font;
 
