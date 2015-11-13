@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 /**
  * Created by YuTack on 2015-11-11.
  */
-public class Clerk extends Actor {
+public class Clerk extends VaioActor {
 
     public void Clerk() {
 

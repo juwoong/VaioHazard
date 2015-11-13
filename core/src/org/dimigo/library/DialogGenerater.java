@@ -17,7 +17,7 @@ import java.util.List;
  */
 public class DialogGenerater {
     private FontGenerater generater;
-    private BitmapFont font;
+    private BitmapFont textFont, titleFont;
     private Skin skin;
     private Window.WindowStyle windowStyle;
     private TextButton.TextButtonStyle style;
@@ -30,10 +30,16 @@ public class DialogGenerater {
         Skin skin = new Skin();
         skin.addRegions(atlas);
 
-        font = new BitmapFont(Gdx.files.internal("resources/font/font_black.fnt"));
+        textFont = new BitmapFont(Gdx.files.internal("resources/font/font.fnt"));
+        titleFont = new BitmapFont(Gdx.files.internal("resources/font/font_big.fnt"));
 
         windowStyle = new Window.WindowStyle();
-        windowStyle.titleFont = font;
+        windowStyle.titleFont = titleFont;
+
+        //이거 동적으로
+        windowStyle.titleFontColor = Color.NAVY;
+        //
+
         NinePatch background = skin.getPatch("Dialog_");
         windowStyle.background = new NinePatchDrawable(background);
 
@@ -41,11 +47,14 @@ public class DialogGenerater {
         style.up = skin.getDrawable("Button");
         style.over = skin.getDrawable("Button_hover");
         style.down = skin.getDrawable("Button_pressed");
-        style.font = font;
+        style.font = textFont;
+        style.fontColor = Color.BLACK;
 
-        labelStyle = new Label.LabelStyle(font, Color.BLACK);
+        labelStyle = new Label.LabelStyle(textFont, Color.BLACK);
         label = new Label(null, labelStyle);
         label.setAlignment(Align.center);
+
+        //여기 뭔가 코드가 사라졌는데 뭔지 모르겠다 ㅈㅅ;
     }
 
     public PixelizedDialog getDialog(String str) {

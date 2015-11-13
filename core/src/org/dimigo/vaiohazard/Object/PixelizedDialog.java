@@ -1,5 +1,6 @@
 package org.dimigo.vaiohazard.Object;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Array;
@@ -22,9 +23,7 @@ public class PixelizedDialog extends Dialog{
     public PixelizedDialog(String title, Window.WindowStyle windowStyle) {
         super(title, windowStyle);
 
-        text("hey have some text Here!! is this enough long? long l" +
-                "ong long? more more long\nhey have some text Here!!\nhey h" +
-                "ave some text Here!!여기 한글 되나용? \n", getTitleLabel().getStyle());
+
         getContentTable().left().padLeft(50).padTop(20);
         getTitleTable().padTop(90).padLeft(60);
 

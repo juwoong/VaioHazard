@@ -20,7 +20,6 @@ public class ServiceCenter {
     private int money;
     private int reputaion;
     private int doubt;
-
     private int month;
     private int day;
     private DayOfWeek dayOfWeek;
@@ -32,7 +31,6 @@ public class ServiceCenter {
         center.month = 1;
         center.day= 1;
         center.dayOfWeek = DayOfWeek.MONDAY;
-
         center.doubt = 10;
     }
 
@@ -41,7 +39,7 @@ public class ServiceCenter {
     }*/
 
     public void tomorrow() {
-
+        dayOfWeek.plus(1);
     }
 
     public int getMoney() {
