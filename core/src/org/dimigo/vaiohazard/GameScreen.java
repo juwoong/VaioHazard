@@ -29,6 +29,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import org.dimigo.library.DialogGenerater;
 import org.dimigo.vaiohazard.Object.MarioActor;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
+import org.dimigo.vaiohazard.conversation.Conversation;
+import org.dimigo.vaiohazard.conversation.Question;
 
 /**
  * Created by YuTack on 2015-11-09.
@@ -59,12 +61,26 @@ public class GameScreen extends ScreenAdapter {
         img.setScale(GameCoordinate.RATIO);
         img.setPosition(GameCoordinate.toRealPos(28), GameCoordinate.toRealPos(20));
 
-        dialog = (new DialogGenerater()).getDialog("\n이것은 폰트입니다. 아마도요..");
-
         Button newGameButton;
         Button.ButtonStyle buttonStyle;
         TextureAtlas buttonAtlas;
         Skin skin;
+
+        final Conversation conversation = new Conversation(stage);
+
+        Question q1 = new Question("넌 정말 엄마가 없구나!", "응 니애미");
+        Question q2 = new Question("오... 당신은 패드립 마스터입니다.", "너 내 동생이구나!");
+        Question q3 = new Question("너희엄마는 미국이 아니라 하늘나라 가셨겠지!", "뭐 임마");
+        q3.insertQuestion(q1);
+        q3.insertQuestion(q2);
+        Question q4 = new Question("오, 장난이었는데.... 미안해.... 바이오같은새끼", "예");
+        Question q5 = new Question("한국 디지털 미디어 고등학교 사무국장 같다", "그렇습니다");
+        Question q6 = new Question("너 엄마 없지?", "null");
+        q6.insertQuestion(q4);
+        q6.insertQuestion(q5);
+        q6.insertQuestion(q3);
+        conversation.setQuestion(q6);
+        conversation.setStage();
 
         skin = new Skin();
         buttonAtlas = new TextureAtlas("resources/Button/NewButton.pack");
@@ -76,13 +92,7 @@ public class GameScreen extends ScreenAdapter {
         newGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                dialog.show(stage);
-                Timer.schedule(new Timer.Task() {
-                    @Override
-                    public void run() {
-                        dialog.hide();
-                    }
-                }, 10);
+                conversation.start();
             }
         });
 
