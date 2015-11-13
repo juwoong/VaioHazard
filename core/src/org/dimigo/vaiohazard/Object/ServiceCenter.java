@@ -24,7 +24,7 @@ public class ServiceCenter {
     private int month;
     private int day;
     private DayOfWeek dayOfWeek;
-
+//
     public static void newCenter() {
         center = new ServiceCenter();
         center.money = 10000;
