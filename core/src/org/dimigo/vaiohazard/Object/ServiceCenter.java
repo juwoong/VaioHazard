@@ -17,18 +17,9 @@ public class ServiceCenter {
 
     }
 
-    enum DayOfWeek{
-        Monday,
-        Tuesday,
-        Wednesday,
-        Thursday,
-        Friday,
-        Saturday,
-        Sunday
-    }
-
     private int money;
     private int reputaion;
+    private int doubt;
 
     private int month;
     private int day;
@@ -40,12 +31,42 @@ public class ServiceCenter {
         center.reputaion = 10;
         center.month = 1;
         center.day= 1;
-        center.dayOfWeek = DayOfWeek.Monday;
+        center.dayOfWeek = DayOfWeek.MONDAY;
+
+        center.doubt = 10;
     }
 
     /*public static ServiceCenter loadCenter() {
 
     }*/
 
+    public void tomorrow() {
 
+    }
+
+
+
+    public int getMoney() {
+        return money;
+    }
+
+    public int getReputaion() {
+        return reputaion;
+    }
+
+    public int getDoubt() {
+        return doubt;
+    }
+
+    public int getMonth() {
+        return month;
+    }
+
+    public int getDay() {
+        return day;
+    }
+
+    public DayOfWeek getDayOfWeek() {
+        return dayOfWeek;
+    }
 }
