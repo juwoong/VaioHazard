@@ -7,23 +7,23 @@ import java.time.DayOfWeek;
  */
 
 public class ServiceCenter {
-    private static ServiceCenter center;
+    private static ServiceCenter center = new ServiceCenter();
 
-    public ServiceCenter getInstance() {
+    public static ServiceCenter getInstance() {
         return center;
     }
 
     private ServiceCenter() {
-
     }
 
     private int money;
     private int reputaion;
     private int doubt;
+
     private int month;
     private int day;
     private DayOfWeek dayOfWeek;
-
+//
     public static void newCenter() {
         center = new ServiceCenter();
         center.money = 10000;
@@ -31,6 +31,7 @@ public class ServiceCenter {
         center.month = 1;
         center.day= 1;
         center.dayOfWeek = DayOfWeek.MONDAY;
+
         center.doubt = 10;
     }
 
@@ -39,7 +40,20 @@ public class ServiceCenter {
     }*/
 
     public void tomorrow() {
-        dayOfWeek.plus(1);
+
+    }
+
+    public void changeMoney(int money) {
+        this.money = ((this.money-money)>=0 ? this.money-money : 0);
+    }
+
+    public void changeReputaion(int reputaion) {
+        this.reputaion = ((this.reputaion-reputaion)>=0 ? this.reputaion-reputaion : 0);
+
+    }
+
+    public void changeDoubt(int doubt) {
+        this.doubt = ((this.doubt-doubt)>=0 ? this.doubt-doubt : 0);
     }
 
     public int getMoney() {

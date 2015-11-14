@@ -16,6 +16,7 @@ public class Conversation {
     public void setStage() {
         startQuestion.setStage(stage);
     }
+    public void setName(String name) { startQuestion.setName(name);}
 
     public void setQuestion(Question q) {
         startQuestion = q;

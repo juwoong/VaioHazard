@@ -11,13 +11,14 @@ import java.util.List;
  * Created by juwoong on 15. 11. 12..
  */
 public class Question {
-    private List<Question> nodes;
-    private String question;
-    private String requiredAnswer;
-    private int level;
-    private DialogGenerater generater;
-    private Stage stage;
-    private boolean isFinal;
+    protected List<Question> nodes;
+    protected String question;
+    protected String requiredAnswer;
+    protected int level;
+    protected DialogGenerater generater;
+    protected Stage stage;
+    protected String name;
+    protected boolean isFinal;
 
     public Question(String question, String requiredAnswer) {
         this.nodes = new ArrayList<Question>();
@@ -42,6 +43,13 @@ public class Question {
         }
     }
 
+    public void setName(String name) {
+        this.name = name;
+        for(Question q : nodes) {
+            q.setName(name);
+        }
+    }
+
     public void insertQuestion(Question q) {
         nodes.add(q);
     }
@@ -52,7 +60,7 @@ public class Question {
     public void setRequiredAnswer(String requiredAnswer) { this.requiredAnswer = requiredAnswer; }
 
     public void ask() {
-        PixelizedDialog dialog = generater.getDialog(question);
+        PixelizedDialog dialog = generater.getDialog(name, question);
 
         for(Question q : nodes) {
             System.out.println(q.toString());

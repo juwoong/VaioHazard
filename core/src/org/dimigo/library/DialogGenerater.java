@@ -57,14 +57,12 @@ public class DialogGenerater {
         //여기 뭔가 코드가 사라졌는데 뭔지 모르겠다 ㅈㅅ;
     }
 
-    public PixelizedDialog getDialog(String str) {
+    public PixelizedDialog getDialog(String str, String text) {
         str = "\n" + str;
 
         PixelizedDialog dialog = new PixelizedDialog(str, windowStyle);
 
-        dialog.text("hey have some text Here!! is this enough long? long l" +
-                "ong long? more more long\nhey have some text Here!!\nhey h" +
-                "ave some text Here!!여기 한글 되나용? \n", labelStyle);
+        dialog.text(text, labelStyle);
 
         dialog.getContentTable().add(label);
         return dialog;
