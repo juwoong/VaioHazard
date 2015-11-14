@@ -16,6 +16,4 @@ public class Customer extends VaioActor {
     public Customer(String name) {
         this(name, "default.png", 1, 1);
     }
-
-
 }
