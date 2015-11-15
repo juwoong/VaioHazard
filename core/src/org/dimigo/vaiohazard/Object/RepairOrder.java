@@ -14,15 +14,12 @@ public class RepairOrder {
     int appointmentDate;
 
     //or id, 창고를 만들어 거기에 넣고 여기엔 id만 저장하던가 함
-    Vaio repairTarget;
-
     int reward;
 
-    public RepairOrder(Customer orderer, int appointmentMonth, int appointmentDate, Vaio repairTarget, int reward) {
+    public RepairOrder(Customer orderer, int appointmentMonth, int appointmentDate, int reward) {
         this.orderer = orderer;
         this.appointmentMonth = appointmentMonth;
         this.appointmentDate = appointmentDate;
-        this.repairTarget = repairTarget;
         this.reward = reward;
     }
 }

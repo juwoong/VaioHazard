@@ -1,6 +1,7 @@
 
 package org.dimigo.vaiohazard.Object;
 
+import org.dimigo.vaiohazard.Device.Vaio;
 import org.json.simple.JSONObject;
 
 import java.io.*;
@@ -15,8 +16,8 @@ public class Customer extends VaioActor {
     private final String uuid; //수리 맡긴 고객을 다시 등장시키기 위한 UUID - 중복 안 됨.
     private boolean isTakeOff = false;
     private String date;
-    private int takeOffMonth, takeOffDay;
     private int cost;
+    private Vaio vaio;
 
     public Customer(String name, String image, int cols, int rows, String uuid) {
         this.name = name;
@@ -38,23 +39,17 @@ public class Customer extends VaioActor {
 
     public void setCost(int cost) { this.cost = cost; }
     public int getCost() { return cost; }
-    public void setTakeOffDate(int month, int date) {
-        this.takeOffDay = date;
-        this.takeOffMonth = month;
-    }
 
+    public void setVaio(Vaio vaio) { this.vaio = vaio; }
+    public Vaio getVaio() { return vaio; }
 
-    public void save() {
+    /*public void save() {
         JSONObject json = new JSONObject();
         JSONObject size = new JSONObject();
         JSONObject takeOff = new JSONObject();
 
         size.put("cols", FRAME_COLS);
         size.put("rows", FRAME_ROWS);
-
-        takeOff.put("month", takeOffMonth);
-        takeOff.put("day", takeOffDay);
-
 
         json.put("name", name);
         json.put("uuid", uuid);
@@ -73,5 +68,5 @@ public class Customer extends VaioActor {
             e.printStackTrace();
         }
 
-    }
+    }*/
 }

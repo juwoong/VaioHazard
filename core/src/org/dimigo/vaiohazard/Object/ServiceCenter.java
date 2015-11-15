@@ -1,6 +1,8 @@
 package org.dimigo.vaiohazard.Object;
 
 import java.time.DayOfWeek;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by YuTack on 2015-11-11.
@@ -8,7 +10,6 @@ import java.time.DayOfWeek;
 
 public class ServiceCenter {
     private static ServiceCenter center = new ServiceCenter();
-
     public static ServiceCenter getInstance() {
         return center;
     }
@@ -19,6 +20,7 @@ public class ServiceCenter {
     private int money;
     private int reputaion;
     private int doubt;
+    private List<RepairOrder> orders = new ArrayList<>();
 
     private int month;
     private int day;

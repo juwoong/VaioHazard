@@ -22,53 +22,12 @@ public class Scheduler {
     private JSONParser parser;
     private Random random;
 
-    private void textReader() throws IOException, org.json.simple.parser.ParseException{
-        File directory = new File("resources/user/");
-        File[] files = directory.listFiles();
-        parser = new JSONParser();
-        random = new Random();
 
-        for(File file : files) {
-            //현재 날짜를 비교한다.
-            byte[] bytes = new byte[(int)file.length()];
-
-            InputStream is = new FileInputStream(file);
-            is.read(bytes);
-
-            String result = new String(bytes);
-            JSONObject obj = (JSONObject) parser.parse(result);
-            JSONObject takeOff = (JSONObject) obj.get("takeOff");
-
-            int month = (int) takeOff.get("month");
-            int day = (int) takeOff.get("day");
-
-            if(this.day == day && this.month == month) {
-                //put UUID to map.
-                while(true) {
-                    int time = random.nextInt(540)+540;
-
-                    if(map.containsKey(time)) continue;
-
-                    map.put(time, file.getName());
-                    break;
-                }
-
-            }
-
-        }
-    }
 
     public Scheduler(int month, int day) {
         this.month = month;
         this.day = day;
 
-        try {
-            textReader();
-        }catch(IOException e){
-            e.printStackTrace();
-        }catch(org.json.simple.parser.ParseException e) {
-            e.printStackTrace();
-        }
 
         //INSERT characterName to Schedule
         int customerCount = 20;
