@@ -35,6 +35,8 @@ import org.dimigo.vaiohazard.Object.PixelizedDialog;
 import org.dimigo.vaiohazard.conversation.Conversation;
 import org.dimigo.vaiohazard.conversation.Question;
 
+import java.io.File;
+
 /**
  * Created by YuTack on 2015-11-09.
  */
@@ -86,7 +88,6 @@ public class GameScreen extends ScreenAdapter {
         conversation.setQuestion(q6);
         conversation.setStage();
         conversation.setName(nameGenerator.getName());
-
 
         conv2.setStage();
         conv2.setName(nameGenerator.getName());

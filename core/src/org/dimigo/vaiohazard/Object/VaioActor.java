@@ -23,7 +23,8 @@ public class VaioActor extends Actor {
     private TextureRegion[] walkFrame;
     private SpriteBatch spriteBatch;
     private TextureRegion currentFrame;
-    private int FRAME_COLS, FRAME_ROWS;
+    protected int FRAME_COLS, FRAME_ROWS;
+    protected String image;
 
     private float stateTime;
 
@@ -41,6 +42,7 @@ public class VaioActor extends Actor {
 
     protected void setAnimation(String image, int cols, int rows) {
         setBounds(0,0,100,100);
+        this.image = image;
         this.FRAME_COLS = cols;
         this.FRAME_ROWS = rows;
 

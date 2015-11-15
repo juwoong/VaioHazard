@@ -60,6 +60,7 @@ public class ConversationParser {
 
 
             conv.setQuestion(q);
+            is.close();
         }catch(IOException e) {
             e.printStackTrace();
         }catch(ParseException e) {
