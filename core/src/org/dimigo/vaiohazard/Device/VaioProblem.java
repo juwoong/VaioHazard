@@ -1,7 +1,6 @@
 package org.dimigo.vaiohazard.Device;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by YuTack on 2015-11-14.
@@ -23,7 +22,15 @@ public class VaioProblem {
         LCDTrouble,
         FunctionTrouble,
         Cleaning,
-        BatteryTrouble
+        BatteryTrouble;
+
+        private static final List<Trouble> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
+        private static final int SIZE = VALUES.size();
+        private static final Random RANDOM = new Random();
+
+        public static Trouble getTrouble() {
+            return VALUES.get(RANDOM.nextInt(SIZE));
+        }
     }
 
     //문제가 심각한 정도, 수리의 난이도에 영향
@@ -38,7 +45,7 @@ public class VaioProblem {
 
     //look at this trick!
     //필요한 개수임 ( 임시 )
-    public static final Map<Trouble, Components> TroubleRequireComponets = new HashMap<Trouble, Components>(){{
+    public static final Map<Trouble, Components> troubleRequireComponents = new HashMap<Trouble, Components>(){{
         put(Trouble.LiquidDisplayTrouble, new Components(2, 0, 1, 0, 0, 0, 2, 0 ,0));
         put(Trouble.BootTrouble, new Components(2, 0, 1, 0, 0, 0, 2, 0 ,0));
         put(Trouble.PowerTrouble, new Components(2, 0, 2, 0, 0, 0, 0, 0, 2));
@@ -46,6 +53,17 @@ public class VaioProblem {
         put(Trouble.FunctionTrouble, new Components(2, 2, 2, 2, 2, 2, 0, 2, 2));
         put(Trouble.Cleaning, new Components(2, 0, 0, 0, 0, 0, 0, 0, 0));
         put(Trouble.BatteryTrouble, new Components(0, 0, 0, 0, 0, 0, 0, 0, 2));
+    }};
+
+    //다음과 같은 문제가 발생했을 때, 어떤 부품의 문제가 생길수 있는가? 에 대한 배열입니다.
+    public static final Map<Trouble, boolean[]> causeAbleReason = new HashMap<Trouble, boolean[]>(){{
+        put(Trouble.LiquidDisplayTrouble, new boolean[]{true, false, true, false, false, false, true, false, false});
+        put(Trouble.BootTrouble, new boolean[]{true, false, true, true, true, true, false, true, true});
+        put(Trouble.PowerTrouble, new boolean[]{true, false, true, false, false, false, false, false, true});
+        put(Trouble.LCDTrouble, new boolean[]{true, false, false, false, false, false, true, false, false});
+        put(Trouble.FunctionTrouble, new boolean[]{true, true, true, true, true, true, false, true, true});
+        put(Trouble.Cleaning, new boolean[]{true, false, false, false, false, false, false, false, false});
+        put(Trouble.BatteryTrouble, new boolean[]{false, false, false, false, false,  false, false, false, true});
     }};
 
 

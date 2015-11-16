@@ -14,9 +14,10 @@ import java.util.UUID;
 public class Customer extends VaioActor {
     private String name; //고객의 이름
     private final String uuid; //수리 맡긴 고객을 다시 등장시키기 위한 UUID - 중복 안 됨.
-    private boolean isTakeOff = false;
-    private String date;
-    private int cost;
+    private boolean isTakeOff = false; //이번 고객은 맡긴 물건을 찾으러 온 고객인가?
+    private boolean isDoubt = false;
+    private String date; //
+    private int cost; //책정된 수리 비용
     private Vaio vaio;
 
     public Customer(String name, String image, int cols, int rows, String uuid) {
@@ -30,7 +31,7 @@ public class Customer extends VaioActor {
         this.name = name;
         setAnimation(image, cols, rows);
         uuid = UUID.randomUUID().toString().replace("-","");
-        /*고객의 호갱도, */
+        //TODO: 고객의 의심도 설정 - 이 고객의 난이도와 연관되어 있음.
     }
 
     public Customer(String name) {
@@ -43,6 +44,14 @@ public class Customer extends VaioActor {
     public void setVaio(Vaio vaio) { this.vaio = vaio; }
     public Vaio getVaio() { return vaio; }
 
+    //TODO: Vaio의 현재 수리 상태와, 전달받은 수리 상태를 비교한다. 물론 손님은 모르기 때문에 계산식을 이용해서 받아온다. 또한, 이 값과 의심도를 섞어 의심할 지 정한다.
+    //현재 캐릭터의 상태가 Doubt 상태에 있는가?
+
+    public boolean isDoubt() {
+       return isDoubt;
+    }
+
+    //TODO: 기록 저장 시 User Save 만들 것.
     /*public void save() {
         JSONObject json = new JSONObject();
         JSONObject size = new JSONObject();

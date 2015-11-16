@@ -102,7 +102,7 @@ public class GameScreen extends ScreenAdapter {
         newGameButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                conversation.start();
+                conv2.start();
             }
         });
 

@@ -20,7 +20,7 @@ public class ServiceCenter {
     private int money;
     private int reputaion;
     private int doubt;
-    private List<RepairOrder> orders = new ArrayList<>();
+    private List<RepairOrder> orders = new ArrayList<RepairOrder>();
 
     private int month;
     private int day;
