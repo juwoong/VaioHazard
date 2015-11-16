@@ -47,8 +47,9 @@ public class Customer extends VaioActor {
     //TODO: Vaio의 현재 수리 상태와, 전달받은 수리 상태를 비교한다. 물론 손님은 모르기 때문에 계산식을 이용해서 받아온다. 또한, 이 값과 의심도를 섞어 의심할 지 정한다.
     //현재 캐릭터의 상태가 Doubt 상태에 있는가?
 
-    public boolean isDoubt() {
-       return isDoubt;
+    public boolean isDoubt(boolean[] list) {
+
+        return isDoubt;
     }
 
     //TODO: 기록 저장 시 User Save 만들 것.

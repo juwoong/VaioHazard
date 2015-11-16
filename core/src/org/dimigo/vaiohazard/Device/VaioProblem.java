@@ -31,6 +31,7 @@ public class VaioProblem {
         public static Trouble getTrouble() {
             return VALUES.get(RANDOM.nextInt(SIZE));
         }
+        public static List<Trouble> getList() { return VALUES; }
     }
 
     //문제가 심각한 정도, 수리의 난이도에 영향
@@ -39,8 +40,15 @@ public class VaioProblem {
         Soso,
         Bad,
         Serious,
-        //Raped,
-        Died
+        Died;
+
+        private static final List<Critical> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
+        private static final int SIZE = VALUES.size();
+        private static final Random RANDOM = new Random();
+
+        public static Critical getCritical() {
+            return VALUES.get(RANDOM.nextInt(SIZE));
+        }
     }
 
     //look at this trick!

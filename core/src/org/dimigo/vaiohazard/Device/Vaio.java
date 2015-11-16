@@ -15,7 +15,6 @@ public class Vaio {
     //내구성이 낮은 바이오는 수리해도 또 망가질 수 있습니다. 수리 확률에 영향
     private int durability = 100;
     VaioProblem.Trouble trouble;
-    boolean[] status = new boolean[9];
     boolean isInspected = false;
 
     public Vaio() {
@@ -25,11 +24,13 @@ public class Vaio {
         Random random = new Random();
 
         for(int i=0; i<causeAble.length; i++) {
-            if(causeAble[i] == false) status[i] = false;
-            else status[i] = random.nextBoolean();
+            if(causeAble[i] == false) continue;
+            if(random.nextBoolean()) {
+                impairs.put(VaioProblem.Trouble.getList().get(i), VaioProblem.Critical.getCritical());
+            }
         }
-        int temp = random.nextInt(5);
 
+        int temp = random.nextInt(5);
         //내구성을 책정합니다.
         if(temp == 0) durability = random.nextInt(30);
         else if(temp == 4) durability = random.nextInt(40)+60;
@@ -50,7 +51,6 @@ public class Vaio {
         }
     }
 
-    public boolean[] getStatus() { return status; }
 
     public Map<VaioProblem.Trouble, VaioProblem.Critical> getImpairs() {
         return impairs;
