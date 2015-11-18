@@ -1,6 +1,12 @@
 package org.dimigo.vaiohazard.Object;
 
+import org.dimigo.vaiohazard.Device.Components;
 import org.dimigo.vaiohazard.Device.Vaio;
+import org.dimigo.vaiohazard.Device.VaioProblem;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by YuTack on 2015-11-14.
@@ -9,6 +15,7 @@ import org.dimigo.vaiohazard.Device.Vaio;
 public class RepairOrder {
     //or id
     Customer orderer;
+    List<Components.Component> list = new ArrayList<Components.Component>();
 
     int appointmentMonth;
     int appointmentDate;
@@ -21,5 +28,23 @@ public class RepairOrder {
         this.appointmentMonth = appointmentMonth;
         this.appointmentDate = appointmentDate;
         this.reward = reward;
+
+        this.orderer.setRepairOrder(this);
+    }
+
+    public void addRepairOrder(Components.Component trouble) {
+        list.add(trouble);
+    }
+
+    public void addRepairOrder(List<Components.Component> troubles) {
+        list.addAll(troubles);
+    }
+
+    public void addRepairOrder(Components.Component[] troubles) {
+        list.addAll(Arrays.asList(troubles));
+    }
+
+    public List<Components.Component> getRepairOrder() {
+        return list;
     }
 }

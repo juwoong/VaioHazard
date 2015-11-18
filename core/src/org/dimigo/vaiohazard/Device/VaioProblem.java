@@ -15,7 +15,7 @@ import java.util.*;
 
  */
 public class VaioProblem {
-    enum Trouble{
+    public enum Trouble{
         LiquidDisplayTrouble,
         BootTrouble,
         PowerTrouble,
@@ -35,7 +35,14 @@ public class VaioProblem {
     }
 
     //문제가 심각한 정도, 수리의 난이도에 영향
-    enum Critical{
+    /*
+    NotBad : 5
+    Soso : 4
+    Bad : 3
+    Serious : 2
+    Died : 1
+     */
+    public enum Critical{
         NotBad,
         Soso,
         Bad,

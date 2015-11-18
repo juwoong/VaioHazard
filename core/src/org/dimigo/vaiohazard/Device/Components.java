@@ -1,44 +1,95 @@
 package org.dimigo.vaiohazard.Device;
 
+import java.util.*;
+
 /**
  * Created by YuTack on 2015-11-14.
  */
 public class Components {
-    public int skrew;
-    public float thermalGrease;
-    public int mainBoard;
-    public int CPU;
-    public int ram;
-    public int SATA;
-    public int liquidDisplay;
-    public int hardDisk;
-    public int battery;
+    private Map<Component, Integer> map;
 
-    public Components(int skrew, float thermalGrease, int mainBoard, int CPU, int ram, int SATA, int liquidDisplay, int hardDisk, int battery) {
-        this.skrew = skrew;
-        this.thermalGrease = thermalGrease;
-        this.mainBoard = mainBoard;
-        this.CPU = CPU;
-        this.ram = ram;
-        this.SATA = SATA;
-        this.liquidDisplay = liquidDisplay;
-        this.hardDisk = hardDisk;
-        this.battery = battery;
+    public enum Component{
+        skrew,
+        thermalGrease,
+        mainBoard,
+        CPU,
+        RAM,
+        SATA,
+        liquidDisplay,
+        hardDisk,
+        battery;
+
+        private static final List<Component> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
+        public static List<Component> getList() { return VALUES; }
+    }
+
+    public Components(int skrew, int thermalGrease, int mainBoard, int CPU, int ram, int SATA, int liquidDisplay, int hardDisk, int battery) {
+        map = new HashMap<Component, Integer>();
+
+        map.put(Component.skrew, skrew);
+        map.put(Component.thermalGrease, thermalGrease);
+        map.put(Component.mainBoard, mainBoard);
+        map.put(Component.CPU, CPU);
+        map.put(Component.RAM, ram);
+        map.put(Component.SATA, SATA);
+        map.put(Component.liquidDisplay, liquidDisplay);
+        map.put(Component.hardDisk, hardDisk);
+        map.put(Component.battery, battery);
+
     }
 
     public Components() {
+        map = new HashMap<Component, Integer>();
 
+        for(Component component : Component.getList()) {
+            map.put(component, 0);
+        }
     }
 
     public void addComponets(Components components) {
-        this.skrew += components.skrew;
-        this.thermalGrease += components.thermalGrease;
-        this.mainBoard += components.mainBoard;
-        this.CPU += components.CPU;
-        this.ram += components.ram;
-        this.SATA += components.SATA;
-        this.liquidDisplay += components.liquidDisplay;
-        this.hardDisk += components.hardDisk;
-        this.battery += components.battery;
+        for(Components.Component component : Component.getList()) {
+            map.put(component, map.get(component)+components.get(component));
+        }
     }
+
+    public int getSkrew() {
+        return map.get(Component.skrew);
+    }
+
+    public float getThermalGrease() {
+        return map.get(Component.thermalGrease);
+    }
+
+    public int getMainBoard() {
+        return map.get(Component.mainBoard);
+    }
+
+    public int getCPU() {
+        return map.get(Component.CPU);
+    }
+
+    public int getRam() {
+        return map.get(Component.RAM);
+    }
+
+    public int getSATA() {
+        return map.get(Component.SATA);
+    }
+
+    public int getLiquidDisplay() {
+        return map.get(Component.liquidDisplay);
+    }
+
+    public int getHardDisk() {
+        return map.get(Component.hardDisk);
+    }
+
+    public int getBattery() {
+        return map.get(Component.battery);
+    }
+
+    public int get(Components.Component component) {
+        return map.get(component);
+    }
+
 }
