@@ -81,5 +81,16 @@ public class VaioProblem {
         put(Trouble.BatteryTrouble, new boolean[]{false, false, false, false, false,  false, false, false, true});
     }};
 
+    //look at this trick!
+    //필요한 개수임 ( 임시 )
+    public static final Map<Trouble, Components> TroubleRequireComponets = new HashMap<Trouble, Components>(){{
+        put(Trouble.LiquidDisplayTrouble, new Components(2, 0, 1, 0, 0, 0, 2, 0 ,0));
+        put(Trouble.BootTrouble, new Components(2, 0, 1, 0, 0, 0, 2, 0 ,0));
+        put(Trouble.PowerTrouble, new Components(2, 0, 2, 0, 0, 0, 0, 0, 2));
+        put(Trouble.LCDTrouble, new Components(2, 0, 0, 0, 0, 0, 2, 0, 0));
+        put(Trouble.FunctionTrouble, new Components(2, 2, 2, 2, 2, 2, 0, 2, 2));
+        put(Trouble.Cleaning, new Components(2, 0, 0, 0, 0, 0, 0, 0, 0));
+        put(Trouble.BatteryTrouble, new Components(0, 0, 0, 0, 0, 0, 0, 0, 2));
+    }};
 
 }

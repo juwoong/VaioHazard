@@ -19,7 +19,7 @@ public class Customer extends VaioActor {
     private RepairOrder order;
     private final String uuid; //수리 맡긴 고객을 다시 등장시키기 위한 UUID - 중복 안 됨.
     private boolean isTakeOff = false; //이번 고객은 맡긴 물건을 찾으러 온 고객인가?
-    private boolean isDoubt = false;
+    private boolean isCaught = false;
     private String date; //
     private int cost; //책정된 수리 비용
     private Vaio vaio;
@@ -104,7 +104,7 @@ public class Customer extends VaioActor {
     //TODO: Vaio의 현재 수리 상태와, 전달받은 수리 상태를 비교한다. 물론 손님은 모르기 때문에 계산식을 이용해서 받아온다. 또한, 이 값과 의심도를 섞어 의심할 지 정한다.
     //현재 캐릭터의 상태가 Doubt 상태에 있는가?
 
-    public boolean isDoubt(Map<VaioProblem.Trouble, VaioProblem.Critical> map) {
+    public boolean isCaught(Map<VaioProblem.Trouble, VaioProblem.Critical> map) {
         //실제 고장난 리스트
         Map<Components.Component, VaioProblem.Critical> crash = vaio.getImpairs();
         boolean[] crashAbleComponents = VaioProblem.causeAbleReason.get(vaio.getTrouble());
@@ -130,9 +130,9 @@ public class Customer extends VaioActor {
             doubtLevel += (new Random()).nextInt(degree.get(level));
         }
 
-        if(doubtLevel >= 100) isDoubt = true;
+        if(doubtLevel >= 100) isCaught = true;
 
-        return isDoubt;
+        return isCaught;
     }
 
     //TODO: 기록 저장 시 User Save 만들 것.

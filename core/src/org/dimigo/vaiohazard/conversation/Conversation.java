@@ -6,6 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
  * Created by juwoong on 15. 11. 12..
  */
 public class Conversation {
+    //Main Conversation
+    //분노 등의 Conversation은 이 Conversation 클래스를 상속받는다.
+    //Dialog...
+
     private Stage stage;
     public Question startQuestion;
 
