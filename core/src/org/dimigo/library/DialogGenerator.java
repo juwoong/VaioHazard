@@ -5,9 +5,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
-import org.dimigo.vaiohazard.device.Components;
+import org.dimigo.vaiohazard.Device.Components;
 import org.dimigo.vaiohazard.GameResource;
-import org.dimigo.vaiohazard.object.PixelizedDialog;
+import org.dimigo.vaiohazard.Object.PixelizedDialog;
 
 /**
  * Created by juwoong on 15. 11. 10..

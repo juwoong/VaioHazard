@@ -16,11 +16,11 @@ import java.util.List;
 /**
  * Created by juwoong on 15. 11. 9..
  */
-public class FontGenerater {
+public class FontGenerator {
     private FreeTypeFontGenerator generator;
     private List<BitmapFont> fonts;
 
-    public FontGenerater() {
+    public FontGenerator() {
 
         generator = new FreeTypeFontGenerator(Gdx.files.internal("resources/font/font.ttf"));
         fonts = new ArrayList<BitmapFont>();

@@ -25,7 +25,7 @@ public class VaioProblem {
         BatteryTrouble;
 
         private static final List<Trouble> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
-        private static final int SIZE = VALUES.size();
+        public static final int SIZE = VALUES.size();
         private static final Random RANDOM = new Random();
 
         public static Trouble getTrouble() {
@@ -36,14 +36,14 @@ public class VaioProblem {
 
     //문제가 심각한 정도, 수리의 난이도에 영향
     /*
-    NotBad : 5
+    Little : 5
     Soso : 4
     Bad : 3
     Serious : 2
     Died : 1
      */
     public enum Critical{
-        NotBad,
+        Little,
         Soso,
         Bad,
         Serious,
@@ -58,7 +58,6 @@ public class VaioProblem {
         }
     }
 
-    //look at this trick!
     //필요한 개수임 ( 임시 )
     public static final Map<Trouble, Components> troubleRequireComponents = new HashMap<Trouble, Components>(){{
         put(Trouble.LiquidDisplayTrouble, new Components(2, 0, 1, 0, 0, 0, 2, 0 ,0));

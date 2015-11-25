@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import org.dimigo.library.FontGenerater;
-import org.dimigo.vaiohazard.object.MarioActor;
-import org.dimigo.vaiohazard.object.VaioActor;
+import org.dimigo.library.FontGenerator;
+import org.dimigo.vaiohazard.Object.MarioActor;
+import org.dimigo.vaiohazard.Object.VaioActor;
 
 /**
  * Created by juwoong on 15. 11. 10..
@@ -19,7 +19,7 @@ public class LoadingScreen extends ScreenAdapter {
     MarioActor mario;
     SpriteBatch batch;
 
-    FontGenerater generater;
+    FontGenerator generater;
 
     float timer = 0;
     String loading;
@@ -41,7 +41,7 @@ public class LoadingScreen extends ScreenAdapter {
 
         mario.twitch(VaioActor.FOREVER);
 
-        generater = new FontGenerater();
+        generater = new FontGenerator();
 
         stage.addActor(mario);
 

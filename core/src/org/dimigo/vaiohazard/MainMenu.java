@@ -5,14 +5,13 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.actions.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import org.dimigo.library.FontGenerater;
-import org.dimigo.vaiohazard.object.ServiceCenter;
+import org.dimigo.library.FontGenerator;
+import org.dimigo.vaiohazard.Object.ServiceCenter;
 //1280 720
 
 /**
@@ -25,7 +24,7 @@ public class MainMenu implements Screen {
 
     Table table;
 
-    FontGenerater generater = new FontGenerater();
+    FontGenerator generater = new FontGenerator();
     SpriteBatch batch = new SpriteBatch();
 
     public MainMenu(VaioHazardGame game) {  currentGame = game; }
@@ -63,7 +62,7 @@ public class MainMenu implements Screen {
     private void mainInit() {
         Image logo;
 
-        logo = new Image(new Texture("resources/Ui/logo.png"));
+        logo = new Image(new Texture("resources/logo.png"));
         logo.setPosition(16, 300);
         logo.setOrigin(logo.getWidth() / 2, logo.getHeight() / 2);
         RepeatAction twinkleForever = new RepeatAction();
@@ -73,26 +72,15 @@ public class MainMenu implements Screen {
         logo.addAction(twinkleForever);
 
         stage.addActor(logo);
-
-        TextField.TextFieldStyle textFieldStyle = new TextField.TextFieldStyle();
-
-
-
-        //TextField text = new TextField("Developed by 박유택, 배주웅",);
     }
 
     private void buttonInit() {
         Button newGameButton;
         Button.ButtonStyle buttonStyle;
-        TextureAtlas buttonAtlas;
-        Skin skin;
 
-        skin = new Skin();
-        buttonAtlas = new TextureAtlas("resources/Button/NewButton.pack");
-        skin.addRegions(buttonAtlas);
         buttonStyle = new Button.ButtonStyle();
-        buttonStyle.up = skin.getDrawable("NewButton");
-        buttonStyle.down = skin.getDrawable("NewButton_Pressed");
+        buttonStyle.up = GameResource.getInstance().getDrawable("new_button");
+        buttonStyle.down = GameResource.getInstance().getDrawable("new_button_pressed");
         newGameButton = new Button(buttonStyle);
         newGameButton.addListener( new InputListener() {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
@@ -107,11 +95,9 @@ public class MainMenu implements Screen {
         });
 
         Button loadGameButton;
-        buttonAtlas = new TextureAtlas("resources/Button/LoadButton.pack");
-        skin.addRegions(buttonAtlas);
         buttonStyle = new Button.ButtonStyle();
-        buttonStyle.up = skin.getDrawable("LoadButton");
-        buttonStyle.down = skin.getDrawable("LoadButton_Pressed");
+        buttonStyle.up = GameResource.getInstance().getDrawable("load_button");
+        buttonStyle.down = GameResource.getInstance().getDrawable("load_button_pressed");
         loadGameButton = new Button(buttonStyle);
         loadGameButton.addListener( new InputListener() {
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {

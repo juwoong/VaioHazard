@@ -2,7 +2,7 @@ package org.dimigo.vaiohazard;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import org.dimigo.vaiohazard.object.ServiceCenter;
+import org.dimigo.vaiohazard.Object.ServiceCenter;
 
 public class VaioHazardGame extends Game {
 	/*SpriteBatch batch;

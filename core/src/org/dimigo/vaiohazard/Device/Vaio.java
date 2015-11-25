@@ -23,8 +23,17 @@ public class Vaio {
         this.durability = durability;
     }
 
+    public void setImpairs(Map<VaioProblem.Trouble, VaioProblem.Critical> impairs) {
+        this.impairs = impairs;
+    }
+
+    public void setDurability(int durability) {
+        this.durability = durability;
+    }
+
     @Override
     public String toString() {
+
         if (isInspected) {
             return impairs.toString() + "현재 내구성 : " + durability;
         } else {
@@ -40,7 +49,7 @@ public class Vaio {
         return durability;
     }
 
-    //나중에 기획이 끝나면 코드를 늘립니다.
+    //TODO: Inspect 함수 완성
     public void inspect() {
         isInspected = true;
     }
@@ -52,4 +61,5 @@ public class Vaio {
 
         return require;
     }
+
 }

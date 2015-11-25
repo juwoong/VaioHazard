@@ -1,0 +1,82 @@
+
+skin.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+dialog_background
+  rotate: false
+  xy: 1, 19
+  size: 97, 44
+  orig: 97, 44
+  offset: 0, 0
+  index: -1
+load_button
+  rotate: false
+  xy: 100, 37
+  size: 56, 26
+  orig: 56, 26
+  offset: 0, 0
+  index: -1
+load_button_pressed
+  rotate: false
+  xy: 158, 37
+  size: 56, 26
+  orig: 56, 26
+  offset: 0, 0
+  index: -1
+new_button
+  rotate: false
+  xy: 100, 9
+  size: 56, 26
+  orig: 56, 26
+  offset: 0, 0
+  index: -1
+new_button_pressed
+  rotate: false
+  xy: 158, 9
+  size: 56, 26
+  orig: 56, 26
+  offset: 0, 0
+  index: -1
+checkbox
+  rotate: false
+  xy: 1, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+checkbox_checked
+  rotate: false
+  xy: 19, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+checkbox_hover
+  rotate: false
+  xy: 37, 1
+  size: 16, 16
+  orig: 16, 16
+  offset: 0, 0
+  index: -1
+dialog_button
+  rotate: false
+  xy: 216, 58
+  size: 8, 5
+  orig: 8, 5
+  offset: 0, 0
+  index: -1
+dialog_button_hover
+  rotate: false
+  xy: 55, 12
+  size: 8, 5
+  orig: 8, 5
+  offset: 0, 0
+  index: -1
+dialog_button_pressed
+  rotate: false
+  xy: 216, 51
+  size: 8, 5
+  orig: 8, 5
+  offset: 0, 0
+  index: -1

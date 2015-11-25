@@ -1,4 +1,4 @@
-package org.dimigo.vaiohazard.object;
+package org.dimigo.vaiohazard.Object;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -24,7 +24,6 @@ public class VaioActor extends Actor {
         walkingOver,
         wating
     }
-//this is important juseok
     private Animation walkAnimation;
     private Texture walkSheet;
     private TextureRegion[] walkFrame;
@@ -32,7 +31,6 @@ public class VaioActor extends Actor {
     private TextureRegion currentFrame;
     protected int FRAME_COLS, FRAME_ROWS;
     protected String image;
-    int a;
     private float stateTime;
 
     //dot per second

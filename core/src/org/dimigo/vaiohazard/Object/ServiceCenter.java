@@ -1,5 +1,7 @@
 package org.dimigo.vaiohazard.Object;
 
+import org.dimigo.vaiohazard.Device.Components;
+
 import java.time.DayOfWeek;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,60 +16,62 @@ public class ServiceCenter {
         return center;
     }
 
-    private ServiceCenter() {
-    }
+    private ServiceCenter() {}
 
     private int money;
-    private int reputaion;
-    private int doubt;
+    private float reputaionPercent;
     private List<RepairOrder> orders = new ArrayList<RepairOrder>();
 
     private int month;
     private int day;
     private DayOfWeek dayOfWeek;
+
+    private Components components;
 //
     public static void newCenter() {
         center = new ServiceCenter();
         center.money = 10000;
-        center.reputaion = 10;
+        center.reputaionPercent = 30 / 100;
         center.month = 1;
         center.day= 1;
         center.dayOfWeek = DayOfWeek.MONDAY;
-
-        center.doubt = 10;
     }
 
     /*public static ServiceCenter loadCenter() {
 
     }*/
 
-    public void tomorrow() {
-
-    }
-
     public void changeMoney(int money) {
         this.money = ((this.money-money)>=0 ? this.money-money : 0);
     }
 
     public void changeReputaion(int reputaion) {
-        this.reputaion = ((this.reputaion-reputaion)>=0 ? this.reputaion-reputaion : 0);
+        this.reputaionPercent = ((this.reputaionPercent -reputaion)>=0 ? this.reputaionPercent -reputaion : 0);
 
     }
 
-    public void changeDoubt(int doubt) {
-        this.doubt = ((this.doubt-doubt)>=0 ? this.doubt-doubt : 0);
+    public void negotiateRepairDevice(Customer target) {
+        if(target.getPurpose() == Customer.REPAIR && target.getCumstomerState() == Customer.CumstomerState.readyToNegotiate) {
+            //여기서 점원으로 자동 처리 또는 직접 처리
+
+
+        }
+    }
+
+    public void negotiateRegainDevice(Customer target) {
+
+    }
+
+    public void addRepairOrder(RepairOrder order) {
+        orders.add(order);
     }
 
     public int getMoney() {
         return money;
     }
 
-    public int getReputaion() {
-        return reputaion;
-    }
-
-    public int getDoubt() {
-        return doubt;
+    public float getReputaionPercent() {
+        return reputaionPercent;
     }
 
     public int getMonth() {

@@ -23,6 +23,16 @@ public class Components {
         public static List<Component> getList() { return VALUES; }
     }
 
+    public final static String[] deviceStrings = new String[] {
+        "MainBoard",
+            "CPU",
+            "RAM",
+            "SATA",
+            "LiquidDisplay",
+            "HardDisk",
+            "Battery"
+    };
+
     public Components(int skrew, int thermalGrease, int mainBoard, int CPU, int ram, int SATA, int liquidDisplay, int hardDisk, int battery) {
         map = new HashMap<Component, Integer>();
 
@@ -52,9 +62,7 @@ public class Components {
         }
     }
 
-    public int getSkrew() {
-        return map.get(Component.skrew);
-    }
+    public int getSkrew() { return map.get(Component.skrew); }
 
     public float getThermalGrease() {
         return map.get(Component.thermalGrease);

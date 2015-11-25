@@ -1,6 +1,6 @@
 package org.dimigo.vaiohazard.Object;
 
-import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.utils.Array;
@@ -11,6 +11,17 @@ import org.dimigo.vaiohazard.conversation.Question;
  * Created by juwoong on 15. 11. 10..
  */
 public class PixelizedDialog extends Dialog{
+
+    private static BitmapFont textFont, titleFont;
+    private static Skin skin;
+    private static Window.WindowStyle windowStyle;
+    private static TextButton.TextButtonStyle style;
+    private static Label.LabelStyle labelStyle;
+    private static Label label;
+
+    static {
+
+    }
 
     public PixelizedDialog(String title, Skin skin) {
         super(title, skin);
@@ -28,14 +39,15 @@ public class PixelizedDialog extends Dialog{
 
         setMovable(true);
 
+        getButtonTable().left();
         getButtonTable().padBottom(50);
-        getButtonTable().padRight(600);
+        //getButtonTable().padRight(600);
     }
 
+    public Dialog button(String text, Object object, TextButton.TextButtonStyle buttonStyle, boolean rowButton) {
+        if(rowButton == true)
+            getButtonTable().row().left();
 
-    @Override
-    public Dialog button(String text, Object object, TextButton.TextButtonStyle buttonStyle) {
-        getButtonTable().row();
         super.button(text, object, buttonStyle);
         Array<Cell> cells= getButtonTable().getCells();
         cells.get(cells.size - 1).left();
@@ -49,6 +61,8 @@ public class PixelizedDialog extends Dialog{
             Question question = (Question) object;
             question.ask();
         }
+
+
         remove();
     }
 
