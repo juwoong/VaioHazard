@@ -1,4 +1,4 @@
-package org.dimigo.vaiohazard.Object;
+package org.dimigo.vaiohazard.object;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
@@ -18,6 +19,12 @@ import org.dimigo.vaiohazard.CustomActions;
  * define several game animations
  */
 public class VaioActor extends Actor {
+    public enum MovingState {
+        walking,
+        walkingOver,
+        wating
+    }
+//this is important juseok
     private Animation walkAnimation;
     private Texture walkSheet;
     private TextureRegion[] walkFrame;
@@ -25,8 +32,12 @@ public class VaioActor extends Actor {
     private TextureRegion currentFrame;
     protected int FRAME_COLS, FRAME_ROWS;
     protected String image;
-
+    int a;
     private float stateTime;
+
+    //dot per second
+    protected int walkSpeed = 80; //default
+    protected MovingState moveState = MovingState.wating;
 
 
     public VaioActor() {
@@ -40,12 +51,15 @@ public class VaioActor extends Actor {
         this.setOrigin(getWidth()/2, getHeight()/2);
     }
 
+    public VaioActor(int walkSpeed, String imgPath) {
+
+    }
+    //
     protected void setAnimation(String image, int cols, int rows) {
         setBounds(0,0,100,100);
         this.image = image;
         this.FRAME_COLS = cols;
         this.FRAME_ROWS = rows;
-
 
         walkSheet = new Texture(Gdx.files.internal("resources/Actor/" + image));
         TextureRegion[][] temp = TextureRegion.split(walkSheet, walkSheet.getWidth()/FRAME_COLS, walkSheet.getHeight()/FRAME_ROWS);
@@ -64,6 +78,10 @@ public class VaioActor extends Actor {
         stateTime = 0f;
     }
 
+    public void notifyWalkingOver() {
+        moveState = MovingState.walkingOver;
+    }
+
     @Override
     public void act(float delta){
         super.act(delta);
@@ -79,10 +97,10 @@ public class VaioActor extends Actor {
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }
 
-    //dot per second
-    protected int walkSpeed = 3; //default
-
     public void walkTo(int dotX, int dotY, boolean goXFirst) {
+
+        assert((moveState == MovingState.wating));
+
         MoveByAction toX = new MoveByAction();
 
         toX.setAmount(dotX - getX(), 0);
@@ -99,6 +117,16 @@ public class VaioActor extends Actor {
             seq = new SequenceAction(toX, toY);
         else
             seq = new SequenceAction(toY, toX);
+
+        seq.addAction(new Action() {
+            @Override
+            public boolean act(float delta) {
+                notifyWalkingOver();
+                return true;
+            }
+        });
+
+        moveState = MovingState.walking;
 
         this.addAction(seq);
     }
