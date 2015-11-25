@@ -3,30 +3,47 @@ package org.dimigo.vaiohazard.conversation;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 
 /**
- * Created by juwoong on 15. 11. 12..
+ * Created by juwoong on 15. 11. 25..
  */
 public class Conversation {
-    //Main Conversation
-    //분노 등의 Conversation은 이 Conversation 클래스를 상속받는다.
-    //Dialog...
+    enum Status{
 
+    }
+
+    //ENUM으로 바꿉니당
+    private String conversationStatus;
     private Stage stage;
-    public Question startQuestion;
+    private String owner;
 
-    public Conversation(Stage stage){
+    //선택지가 없는 경우
+    public void listenAnswer() {
+    }
+
+    //선택지가 있는 경우
+    public void listenAnswer(int value) {
+    }
+
+    public String getConversationStatus() {
+        return conversationStatus;
+    }
+
+    public void setConversationStatus(String conversationStatus) {
+        this.conversationStatus = conversationStatus;
+    }
+
+    public Stage getStage() {
+        return stage;
+    }
+
+    public void setStage(Stage stage) {
         this.stage = stage;
     }
 
-    public void setStage() {
-        startQuestion.setStage(stage);
-    }
-    public void setName(String name) { startQuestion.setName(name);}
-
-    public void setQuestion(Question q) {
-        startQuestion = q;
+    public String getOwner() {
+        return owner;
     }
 
-    public void start() {
-        startQuestion.ask();
+    public void setOwner(String owner) {
+        this.owner = owner;
     }
 }

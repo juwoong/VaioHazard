@@ -8,9 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import com.badlogic.gdx.utils.Align;
-import com.badlogic.gdx.utils.SharedLibraryLoader;
-import org.dimigo.vaiohazard.Object.PixelizedDialog;
-import java.util.List;
+import org.dimigo.vaiohazard.object.PixelizedDialog;
 
 /**
  * Created by juwoong on 15. 11. 10..

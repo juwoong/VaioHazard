@@ -1,9 +1,6 @@
 package org.dimigo.library;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import org.dimigo.vaiohazard.conversation.Conversation;
-import org.dimigo.vaiohazard.conversation.Question;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;

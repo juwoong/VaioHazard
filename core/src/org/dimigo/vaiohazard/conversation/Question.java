@@ -1,89 +1,47 @@
 package org.dimigo.vaiohazard.conversation;
 
-import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import org.dimigo.library.DialogGenerater;
-import org.dimigo.vaiohazard.Object.PixelizedDialog;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by juwoong on 15. 11. 12..
+ * Created by juwoong on 15. 11. 25..
  */
 public class Question {
-    protected List<Question> nodes;
-    protected String question;
-    protected String requiredAnswer;
-    protected int level;
-    protected DialogGenerater generater;
-    protected Stage stage;
-    protected String name;
-    protected boolean isFinal;
+    //Question Format
+    /**
+     * Question Format.
+     *
+     * name(String) : 질문자 이름
+     * question(String) : 질문 내용
+     * Conversation(String) : 대화 문맥 객체
+     *
+     */
 
-    public Question(String question, String requiredAnswer) {
-        this.nodes = new ArrayList<Question>();
-        this.question = question;
-        this.generater = new DialogGenerater();
-        this.isFinal = false;
-        this.requiredAnswer = requiredAnswer;
+    private DialogGenerater generater = new DialogGenerater();
+    private String question;
+    private Conversation conversation;
+    private String status;
+    private List<Answer> list = new ArrayList<Answer>();
+
+    public Question(Conversation conversation) {
+        this.conversation = conversation;
     }
-
-    public boolean isFinal() {
-        return isFinal;
-    }
-
-    public void setIsFinal(boolean isFinal) {
-        this.isFinal = isFinal;
-    }
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-        for(Question q : nodes) {
-            q.setStage(stage);
-        }
-    }
-
-    public void setName(String name) {
-        this.name = name;
-        for(Question q : nodes) {
-            q.setName(name);
-        }
-    }
-
-    public void insertQuestion(Question q) {
-        nodes.add(q);
-    }
-    public void insertQuestion(List<Question> q) { nodes.addAll(q); }
-
-    public String getQuestion() { return this.question; }
-    public String getRequiredAnswer() { return this.requiredAnswer; }
-    public void setRequiredAnswer(String requiredAnswer) { this.requiredAnswer = requiredAnswer; }
 
     public void ask() {
-        PixelizedDialog dialog = generater.getDialog(name, question);
+        //dialog.show(stage);
+        Dialog dialog = generater.getDialog(conversation.getOwner(), question);
 
-        for(Question q : nodes) {
-            System.out.println(q.toString());
-            dialog.button(q.getRequiredAnswer(), q, generater.getStyle());
+        for(Answer answer : list) {
+            dialog.button(answer.getAnswer(), answer, generater.getStyle());
         }
 
-        if(nodes.size() <= 0 ) {
-            dialog.button("대화 끝마치기.", "end", generater.getStyle());
+        if(list.size()==0) {
+            dialog.button("다음으로", conversation, generater.getStyle());
         }
 
-        dialog.show(stage);
-    }
-
-    @Override
-    public String toString() {
-        return "Question{" +
-                "nodes=" + nodes +
-                ", question='" + question + '\'' +
-                ", requiredAnswer='" + requiredAnswer + '\'' +
-                ", level=" + level +
-                ", generater=" + generater +
-                ", stage=" + stage +
-                ", isFinal=" + isFinal +
-                '}';
+        dialog.show(conversation.getStage());
     }
 }
