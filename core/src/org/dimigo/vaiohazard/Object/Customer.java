@@ -155,8 +155,6 @@ public class Customer extends VaioActor {
 
 
 
-
-
         //구라 결과를 받고 의심도 계산이후 분기, 대답 다이얼로그 출력 이후 퇴장
 
         //정상적으로 계약이 끝남
@@ -216,5 +214,17 @@ public class Customer extends VaioActor {
 
     }
 
+    public void setVaio(Vaio vaio) {
+        this.vaio = vaio;
+    }
+
+    public Vaio getVaio() {
+        return vaio;
+    }
+
+    public String getName() { return name; }
+
     //TODO: 기록 저장 시 User Save 만들 것.
+
+
 }

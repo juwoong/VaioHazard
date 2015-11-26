@@ -6,6 +6,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TiledMapRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -14,6 +15,16 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import org.dimigo.library.GameCoordinate;
 import org.dimigo.vaiohazard.Object.Customer;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import org.dimigo.library.NameGenerator;
+import org.dimigo.vaiohazard.Object.Customer;
+import org.dimigo.vaiohazard.Object.MarioActor;
+import org.dimigo.vaiohazard.Object.PixelizedDialog;
+import org.dimigo.vaiohazard.conversation.Conversation;
 
 /**
  * Created by YuTack on 2015-11-09.
@@ -40,6 +51,36 @@ public class GameScreen extends ScreenAdapter {
         camera.update();
         tiledMap = new TmxMapLoader().load("resources/map.tmx");
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
+
+        NameGenerator nameGenerator = NameGenerator.getInstance();
+        //ConversationParser parser = new ConversationParser(stage);
+
+        Button newGameButton;
+        Button.ButtonStyle buttonStyle;
+        TextureAtlas buttonAtlas;
+        Skin skin;
+
+        Customer test = new Customer(nameGenerator.getName(), "mario.png", 4, 1);
+        final Conversation conversation = new Conversation(stage, test);
+
+        skin = new Skin();
+        buttonAtlas = new TextureAtlas("resources/Button/NewButton.pack");
+        skin.addRegions(buttonAtlas);
+        buttonStyle = new Button.ButtonStyle();
+        buttonStyle.up = skin.getDrawable("NewButton");
+        buttonStyle.down = skin.getDrawable("NewButton_Pressed");
+        newGameButton = new Button(buttonStyle);
+        newGameButton.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                conversation.start();
+            }
+        });
+
+        //stage.addActor(img);
+        stage.addActor(newGameButton);
+        //stage.addActor(mario);
+        stage.addActor(test);
     }
 
     @Override

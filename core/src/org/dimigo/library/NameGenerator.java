@@ -35,6 +35,7 @@ public class NameGenerator {
 
     public String getName() {
         Random rand = new Random();
+        System.out.println();
         return list.get(rand.nextInt(list.size()));
     }
 }

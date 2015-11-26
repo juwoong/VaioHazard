@@ -1,7 +1,7 @@
 package org.dimigo.vaiohazard.conversation;
 
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
-import org.dimigo.library.DialogGenerater;
+import org.dimigo.library.DialogGenerator;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,7 +20,7 @@ public class Question {
      *
      */
 
-    private DialogGenerater generater = new DialogGenerater();
+    private DialogGenerator generater = new DialogGenerator();
     private String question;
     private Conversation conversation;
     private String status;
@@ -32,14 +32,14 @@ public class Question {
 
     public void ask() {
         //dialog.show(stage);
-        Dialog dialog = generater.getDialog(conversation.getOwner(), question);
+        Dialog dialog = generater.getDialog(conversation.getOwner().getName(), question);
 
         for(Answer answer : list) {
-            dialog.button(answer.getAnswer(), answer, generater.getStyle());
+            dialog.button(answer.getAnswer(), answer, generater.getTextButtonStyle());
         }
 
         if(list.size()==0) {
-            dialog.button("다음으로", conversation, generater.getStyle());
+            dialog.button("다음으로", conversation, generater.getTextButtonStyle());
         }
 
         dialog.show(conversation.getStage());
