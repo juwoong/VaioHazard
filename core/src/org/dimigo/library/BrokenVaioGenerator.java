@@ -20,8 +20,18 @@ public class BrokenVaioGenerator {
 
         Map<VaioProblem.Trouble, VaioProblem.Critical> impairs = new HashMap<VaioProblem.Trouble, VaioProblem.Critical>();
 
+        //문제 개수만큼 바이오를 부순다.
         while(impairs.size() == troubleNumber) {
-            impairs.put(VaioProblem.Trouble.getTrouble(), VaioProblem.Critical.getCritical());
+            VaioProblem.Critical critical  = VaioProblem.Critical.getCritical();
+            if(critical != VaioProblem.Critical.Fine)
+                impairs.put(VaioProblem.Trouble.getTrouble(), VaioProblem.Critical.getCritical());
+        }
+
+        //나머지 부분은 Fine 상태로 바꿈
+        for(int i=0; i < VaioProblem.Trouble.SIZE; i++) {
+            if(impairs.keySet().contains(VaioProblem.Trouble.getList().get(i)) == false) {
+                impairs.put(VaioProblem.Trouble.getList().get(i), VaioProblem.Critical.Fine);
+            }
         }
 
         brokenVaio.setImpairs(impairs);

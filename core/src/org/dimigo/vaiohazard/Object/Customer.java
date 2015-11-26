@@ -110,6 +110,7 @@ public class Customer extends VaioActor {
         Random rand = new Random();
 
         for (VaioProblem.Trouble trouble : myVaioImpairs.keySet()) {
+            //case Fine: 은 고려안함
             switch (myVaioImpairs.get(trouble)) {
                 case Little:
                     if(Rand.get(30 * (1 - hogang))) { memory.add(trouble); }
@@ -144,11 +145,17 @@ public class Customer extends VaioActor {
     //조사 결과를 들음, 일반적으로 구라를 쳐서 넘김
     public boolean listenInspectResult(Components components) {
         //TODO: 의심도 상승 여기서 의심도로 인한 분기 화나냐 안 화나냐, true일 경우 애가 빡친거고 false 인 경우 구라 성공
-        //고객 자신의 지식과 호갱도를 기준으로 받은 값과 비교함
+        //고객 자신의 지식과 호갱도를 기준으로 말한 재료와 비교함
 
 
 
-        if (doubtPercent > 0) Gdx.app.exit();
+
+
+
+
+
+
+
 
         //구라 결과를 받고 의심도 계산이후 분기, 대답 다이얼로그 출력 이후 퇴장
 
@@ -166,13 +173,14 @@ public class Customer extends VaioActor {
     }
 
     public boolean receiveVaio(Vaio vaioRepaired) {
-        //여기서도 의심도 계산, 분노로 분기 가능
+        //고객 자신의 지식과 호갱도를 기준으로 수리된 바이오랑 비교함
+
         return true;
     }
 
     //매 대화마다 체크함 여기서 분노상태로 돌입
     public boolean angryCheck() {
-        Rand.get(doubtPercent)
+        return false;
     }
 
     @Override

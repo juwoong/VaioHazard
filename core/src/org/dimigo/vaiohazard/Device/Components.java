@@ -24,7 +24,7 @@ public class Components {
     }
 
     public final static String[] deviceStrings = new String[] {
-        "MainBoard",
+            "MainBoard",
             "CPU",
             "RAM",
             "SATA",

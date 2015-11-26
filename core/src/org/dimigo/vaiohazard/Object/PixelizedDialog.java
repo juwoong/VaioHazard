@@ -35,7 +35,7 @@ public class PixelizedDialog extends Dialog{
         super(title, windowStyle);
 
         getContentTable().left().padLeft(50).padTop(20);
-        getTitleTable().padTop(90).padLeft(60);
+        getTitleTable().padTop(110).padLeft(60);
 
         setMovable(true);
 

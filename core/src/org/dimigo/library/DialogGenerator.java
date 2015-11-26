@@ -6,8 +6,12 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import org.dimigo.vaiohazard.Device.Components;
+import org.dimigo.vaiohazard.Device.VaioProblem;
 import org.dimigo.vaiohazard.GameResource;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by juwoong on 15. 11. 10..
@@ -18,6 +22,7 @@ public class DialogGenerator {
     private Window.WindowStyle windowStyle;
     private TextButton.TextButtonStyle textButtonStyle;
     private RightCheckBox.CheckBoxStyle checkBoxStyle;
+    private SelectBox.SelectBoxStyle selectBoxStyle;
     private Label label;
 
     public DialogGenerator() {
@@ -44,15 +49,30 @@ public class DialogGenerator {
         textButtonStyle.fontColor = Color.BLACK;
 
         checkBoxStyle = new RightCheckBox.CheckBoxStyle();
-        /*checkBoxStyle.checkboxOff = GameResource.getInstance().getDrawable("checkbox_checked");
-        checkBoxStyle.checkboxOn = GameResource.getInstance().getDrawable("checkbox");
-        checkBoxStyle.checkboxOver = GameResource.getInstance().getDrawable("checkbox_hover");*/
 
         checkBoxStyle.checkboxOff = GameResource.getInstance().getDrawable("checkbox");
         checkBoxStyle.checkboxOn = GameResource.getInstance().getDrawable("checkbox_checked");
         checkBoxStyle.checkboxOver = GameResource.getInstance().getDrawable("checkbox_hover");
         checkBoxStyle.font = new BitmapFont(Gdx.files.internal("resources/font/font_big.fnt"));
         checkBoxStyle.fontColor = Color.BLACK;
+
+        selectBoxStyle = new SelectBox.SelectBoxStyle();
+        selectBoxStyle.background = GameResource.getInstance().getDrawable("LightGreen");
+        selectBoxStyle.backgroundOpen = GameResource.getInstance().getDrawable("LightGreen");
+        selectBoxStyle.backgroundOver = GameResource.getInstance().getDrawable("LightGreen");
+        selectBoxStyle.listStyle = new List.ListStyle(
+                new BitmapFont(Gdx.files.internal("resources/font/font.fnt")),
+                        Color.RED, Color.BLACK, GameResource.getInstance().getDrawable("dialog_button_hover"));
+        selectBoxStyle.scrollStyle = new ScrollPane.ScrollPaneStyle();
+        selectBoxStyle.scrollStyle.background = GameResource.getInstance().getDrawable("LightGreen");
+        selectBoxStyle.scrollStyle.corner = GameResource.getInstance().getDrawable("LightGreen");
+        selectBoxStyle.scrollStyle.hScroll = GameResource.getInstance().getDrawable("LightGreen");
+        selectBoxStyle.scrollStyle.hScrollKnob = GameResource.getInstance().getDrawable("LightGreen");
+        selectBoxStyle.scrollStyle.vScroll = GameResource.getInstance().getDrawable("LightGreen");
+        selectBoxStyle.scrollStyle.vScrollKnob = GameResource.getInstance().getDrawable("LightGreen");
+
+        selectBoxStyle.font = new BitmapFont(Gdx.files.internal("resources/font/font.fnt"));
+        selectBoxStyle.fontColor = Color.BLACK;
 
         label = new Label(null, new Label.LabelStyle(textFont, Color.BLACK));
     }
@@ -108,5 +128,35 @@ public class DialogGenerator {
         return dialog;
     }
 
+    public PixelizedDialog getImpairSelect(String title) {
+        PixelizedDialog dialog = new PixelizedDialog(title, windowStyle);
+        dialog.setDebug(true);
+
+        Table contentTable = dialog.getContentTable();
+        contentTable.top().padTop(77);
+
+        Map<VaioProblem.Trouble, VaioProblem.Critical> selectResult = new HashMap<>();
+
+        ImpairSelector selector = new ImpairSelector(selectBoxStyle);
+
+        for(String troubleString : VaioProblem.TroubleStrings) {
+            contentTable.add(new Label(troubleString, label.getStyle()));
+        }
+
+        contentTable.row().padTop(15);
+
+        for(Object selectBox : selector.getSelectBoxes()) {
+            if (selectBox instanceof SelectBox) {
+                contentTable.add((SelectBox)selectBox).maxWidth(80).maxHeight(20).width(80).padLeft(10).height(20);
+            }
+        }
+
+        dialog.button("이걸로 구라치기 ->", selector, textButtonStyle);
+
+        return dialog;
+    }
+
     public TextButton.TextButtonStyle getTextButtonStyle() { return textButtonStyle; }
+
+    public SelectBox.SelectBoxStyle getSelectBoxStyle() { return selectBoxStyle; }
 }

@@ -54,12 +54,12 @@ public class Vaio {
         isInspected = true;
     }
 
-    public Components repairResources() {
+    /*public Components repairResources() {
         Components require = new Components();
         for(Map.Entry<VaioProblem.Trouble, VaioProblem.Critical> entry : impairs.entrySet())
-            require.addComponets(VaioProblem.TroubleRequireComponets.get(entry.getKey()));
+            require.addComponets(VaioProblem.requireComponents.get(entry.getKey()));
 
         return require;
-    }
+    }*/
 
 }
