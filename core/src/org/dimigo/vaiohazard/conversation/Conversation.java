@@ -35,7 +35,7 @@ public class Conversation {
         dialog.show(stage);
     }
 
-    //선택지가 없는 경우
+    //d선택지가 없는 경우
     public void listenAnswer() {
         if(conversationStatus == Status.Start) {
             PixelizedDialog dialog = generater.getDialog(owner.getName(), "대화를 종료합니다.");
