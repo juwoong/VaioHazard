@@ -31,12 +31,13 @@ public class ImpairSelector {
         return selectors.values().toArray();
     }
 
-    public List<VaioProblem.Critical> getResult() {
-        List<VaioProblem.Critical> list = new ArrayList<>();
+    //나중에 이 겁나 긴 map을 따로 클레스로 만들어서 처리 하는게 훨씬 좋은듯 시간없어서 못할거같긴한데;
+    public Map<VaioProblem.Trouble, VaioProblem.Critical> getResult() {
+        Map<VaioProblem.Trouble,VaioProblem.Critical> map = new HashMap<>();
         for(int i = 0; i < VaioProblem.Trouble.SIZE; i ++) {
-            list.add(selectors.get(VaioProblem.Trouble.getList().get(i)).getSelected());
+            map.put(VaioProblem.Trouble.getList().get(i), selectors.get(VaioProblem.Trouble.getList().get(i)).getSelected());
         }
 
-        return list;
+        return map;
     }
 }
