@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import org.dimigo.library.DialogGenerator;
 import org.dimigo.library.GameCoordinate;
 import org.dimigo.vaiohazard.Object.Customer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -63,12 +64,9 @@ public class GameScreen extends ScreenAdapter {
         Customer test = new Customer(nameGenerator.getName(), "mario.png", 4, 1);
         final Conversation conversation = new Conversation(stage, test);
 
-        skin = new Skin();
-        buttonAtlas = new TextureAtlas("resources/Button/NewButton.pack");
-        skin.addRegions(buttonAtlas);
         buttonStyle = new Button.ButtonStyle();
-        buttonStyle.up = skin.getDrawable("NewButton");
-        buttonStyle.down = skin.getDrawable("NewButton_Pressed");
+        buttonStyle.up = GameResource.getInstance().getDrawable("new_button");
+        buttonStyle.down = GameResource.getInstance().getDrawable("new_button_pressed");
         newGameButton = new Button(buttonStyle);
         newGameButton.addListener(new ClickListener() {
             @Override
@@ -96,6 +94,9 @@ public class GameScreen extends ScreenAdapter {
         clerkTester.setPosition(GameCoordinate.toRealPos(105), GameCoordinate.toRealPos(105));
 
         Customer customer = new Customer("첫번째손님!", true);
+
+        DialogGenerator g = new DialogGenerator();
+        g.getImpairSelect("타이털").show(stage);
 
         stage.addActor(customer);
         stage.addActor(clerkTester);

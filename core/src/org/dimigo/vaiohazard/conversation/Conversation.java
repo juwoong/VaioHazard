@@ -18,7 +18,6 @@ public class Conversation {
         Deni //거절
     }
 
-    //ENUM으로 바꿉니당
     private Status conversationStatus = Status.Start;
     private Stage stage;
     private Customer owner;
@@ -35,7 +34,7 @@ public class Conversation {
         dialog.show(stage);
     }
 
-    //d선택지가 없는 경우
+    //선택지가 없는 경우
     public void listenAnswer() {
         if(conversationStatus == Status.Start) {
             PixelizedDialog dialog = generater.getDialog(owner.getName(), "대화를 종료합니다.");

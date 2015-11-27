@@ -7,12 +7,21 @@ import org.dimigo.library.Rand;
 import org.dimigo.vaiohazard.Device.Components;
 import org.dimigo.vaiohazard.Device.Vaio;
 import org.dimigo.vaiohazard.Device.VaioProblem;
+import org.dimigo.vaiohazard.conversation.Conversation;
 
 import java.util.*;
 
 /**
  * Created by YuTack on 2015-11-11.
  */
+
+/*
+    0 ~ 20
+    20 ~ 40
+    40 ~ 60
+    60 ~ 80
+    80 ~ 100
+*/
 
 public class Customer extends VaioActor {
     public boolean getPurpose() {
@@ -55,7 +64,6 @@ public class Customer extends VaioActor {
     // 0 ~ 100
     // 이 퍼센트에 따라 다이얼로그 내용이 바뀜, 가게 평판에 따라 초기값 결정
     float doubtPercent;
-
     //고객의 호갱도, 고객의 난이도와 관련
     float hogangPercent;
 
@@ -105,12 +113,12 @@ public class Customer extends VaioActor {
 
         VaioProblem.Trouble[] troubles = myVaioImpairs.keySet().toArray(new VaioProblem.Trouble[0]);
 
-        ArrayList<VaioProblem.Trouble> memory = new ArrayList<>();
+        ArrayList<VaioProblem.Trouble> memory = new ArrayList<VaioProblem.Trouble>();
 
         Random rand = new Random();
 
         for (VaioProblem.Trouble trouble : myVaioImpairs.keySet()) {
-            //case Fine: 은 고려안함
+            //case Fine: 은 고려안함, 심각한 문제일 수록 발견확률 올라감.
             switch (myVaioImpairs.get(trouble)) {
                 case Little:
                     if(Rand.get(30 * (1 - hogang))) { memory.add(trouble); }
@@ -131,35 +139,39 @@ public class Customer extends VaioActor {
         }
         return memory;
     }
-
-    //TODO: * 다이얼로그랑 고객 내부로직 분리할거다 *
-
     //가게 들어와서 처음으로 하는 말
     public void speakWhatINeed() {
-
         Gdx.app.log("Customer", "speakWhatINeed");
 
         //다이얼로그 호출, 바이오 넘기기, 조사
     }
 
     //조사 결과를 들음, 일반적으로 구라를 쳐서 넘김
-    public boolean listenInspectResult(Components components) {
-        //TODO: 의심도 상승 여기서 의심도로 인한 분기 화나냐 안 화나냐, true일 경우 애가 빡친거고 false 인 경우 구라 성공
-        //고객 자신의 지식과 호갱도를 기준으로 말한 재료와 비교함
+    public void listenInspectResult(Map<VaioProblem.Trouble, VaioProblem.Critical> result) {
+        Random floatGetter = new Random();
 
+        for(VaioProblem.Trouble KnowThisTrouble : whatIKnowAboutMyVaio) {
+            VaioProblem.Critical fakeCritical = result.get(KnowThisTrouble);
+            VaioProblem.Critical realCritical = vaio.getImpairs().get(KnowThisTrouble);
 
+            float doubtPlus = 0;
 
+            //의심도가 높으면 더 의심할 확률도 증가함
 
+            int differece = VaioProblem.Critical.valueOf(fakeCritical) - VaioProblem.Critical.valueOf(realCritical);
 
+            //이미 의심도가 높으면 배로 높아짐
+            doubtPlus = ( doubtPercent * 100 % 20 ) * (differece * 0.1f);
 
+            doubtPercent += doubtPlus;
+        }
 
-
-
-        //구라 결과를 받고 의심도 계산이후 분기, 대답 다이얼로그 출력 이후 퇴장
-
-        //정상적으로 계약이 끝남
-        cumstomerState = CumstomerState.overNegotiation;
-        return false;
+        if(angryCheck()) {
+            cumstomerState = CumstomerState.Angry;
+        } else {
+            //정상적으로 계약이 끝남
+            cumstomerState = CumstomerState.overNegotiation;
+        }
     }
 
     //TODO: 물건 받으로 돌아올 경우 구현
@@ -214,17 +226,5 @@ public class Customer extends VaioActor {
 
     }
 
-    public void setVaio(Vaio vaio) {
-        this.vaio = vaio;
-    }
-
-    public Vaio getVaio() {
-        return vaio;
-    }
-
-    public String getName() { return name; }
-
     //TODO: 기록 저장 시 User Save 만들 것.
-
-
 }

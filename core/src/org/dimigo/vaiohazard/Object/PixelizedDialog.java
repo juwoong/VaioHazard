@@ -8,15 +8,12 @@ import org.dimigo.library.GameCoordinate;
 import org.dimigo.library.ImpairSelector;
 import org.dimigo.vaiohazard.conversation.Answer;
 import org.dimigo.vaiohazard.conversation.Conversation;
+import org.dimigo.vaiohazard.conversation.Question;
 
 /**
  * Created by juwoong on 15. 11. 10..
  */
 public class PixelizedDialog extends Dialog{
-/*
-    "START", "FAKE", "ANGRY", "STRONGDOUBT", "WEAKDOUBT", "ACCEPT", "ASSIGN", "RECEIVE"
-*/
-    private String status;
 
     private static BitmapFont textFont, titleFont;
     private static Skin skin;
