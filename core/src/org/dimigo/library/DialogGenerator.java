@@ -83,6 +83,8 @@ public class DialogGenerator {
 
         PixelizedDialog dialog = new PixelizedDialog(title, windowStyle);
 
+        dialog.getTitleTable().padBottom(25);
+
         dialog.text(content, label.getStyle());
 
         dialog.getContentTable().add(label);
@@ -130,7 +132,6 @@ public class DialogGenerator {
 
     public PixelizedDialog getImpairSelect(String title) {
         PixelizedDialog dialog = new PixelizedDialog(title, windowStyle);
-        dialog.setDebug(true);
 
         Table contentTable = dialog.getContentTable();
         contentTable.top().padTop(77);

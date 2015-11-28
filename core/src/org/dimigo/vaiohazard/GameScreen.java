@@ -54,12 +54,9 @@ public class GameScreen extends ScreenAdapter {
         tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);
 
         NameGenerator nameGenerator = NameGenerator.getInstance();
-        //ConversationParser parser = new ConversationParser(stage);
 
         Button newGameButton;
         Button.ButtonStyle buttonStyle;
-        TextureAtlas buttonAtlas;
-        Skin skin;
 
         Customer test = new Customer(nameGenerator.getName(), "mario.png", 4, 1);
         final Conversation conversation = new Conversation(stage, test);
@@ -95,9 +92,6 @@ public class GameScreen extends ScreenAdapter {
 
         Customer customer = new Customer("첫번째손님!", true);
 
-        DialogGenerator g = new DialogGenerator();
-        g.getImpairSelect("타이털").show(stage);
-
         stage.addActor(customer);
         stage.addActor(clerkTester);
     }
@@ -116,8 +110,6 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(delta);
-
-
 
         camera.update();
         tiledMapRenderer.setView(camera);

@@ -54,9 +54,9 @@ public class Conversation {
         }
     }
 
+
     //선택지가 있는 경우
-    public void listenAnswer(int value) {
-    }
+    public void listenAnswer(int value) { }
 
     public Status getConversationStatus() {
         return conversationStatus;

@@ -105,6 +105,8 @@ public class Customer extends VaioActor {
         whatIKnowAboutMyVaio = setMemory(hogangPercent, vaio);
     }
 
+    public String getName() { return name; }
+
     private static ArrayList<VaioProblem.Trouble> setMemory(float hogang, Vaio myVaio) {
         Map<VaioProblem.Trouble, VaioProblem.Critical> myVaioImpairs
                 = new HashMap<VaioProblem.Trouble, VaioProblem.Critical>(myVaio.getImpairs());
@@ -137,11 +139,47 @@ public class Customer extends VaioActor {
         }
         return memory;
     }
-    //가게 들어와서 처음으로 하는 말
-    public void speakWhatINeed() {
-        Gdx.app.log("Customer", "speakWhatINeed");
 
-        //다이얼로그 호출, 바이오 넘기기, 조사
+    public String sayWhatIKnowAboutMyVaio() {
+        StringBuilder builder = new StringBuilder();
+        System.out.println(whatIKnowAboutMyVaio);
+        System.out.println(vaio.getImpairs());
+        System.out.println(hogangPercent);
+        System.out.println(doubtPercent);
+        for(int i=0; i<whatIKnowAboutMyVaio.size(); i++){
+            String convWord = null;
+            switch (whatIKnowAboutMyVaio.get(i)) {
+                case LiquidDisplayTrouble:
+                    convWord = "화면에 제대로 표시를 못합니다.";
+                    break;
+                case BootTrouble:
+                    convWord = "부팅이 안됩니다.";
+                    break;
+                case PowerTrouble:
+                    convWord = "켜지지를 않습니다.";
+                    break;
+                case LCDTrouble:
+                    convWord = "액정이 나간것 같습니다.";
+                    break;
+                case FunctionTrouble:
+                    convWord = "쒸쁘뜨끼까 안빠찌ㅃ니다.";
+                    break;
+                case Cleaning:
+                    convWord = "팬 소리가 너무 시끄럽습니다.";
+                    break;
+                case BatteryTrouble:
+                    convWord = "배터리가 너무 빨리 닳습니다.";
+            }
+
+            if(i==whatIKnowAboutMyVaio.size()-1) builder.append(String.format("%s", convWord));
+            else builder.append(String.format("%s%s", convWord.substring(0, convWord.length()-4), "고, "));
+            if((i+1)%2==0) builder.append("\n");
+
+        }
+        if(whatIKnowAboutMyVaio.size()==0) {
+            builder.append("뭔지 모르겠으나 매우 이상합니다");
+        }
+        return builder.toString();
     }
 
     //조사 결과를 들음, 일반적으로 구라를 쳐서 넘김
@@ -245,6 +283,8 @@ public class Customer extends VaioActor {
         //TODO: 수령하는 부분 구현
 
     }
+
+
 
     //TODO: 기록 저장 시 User Save 만들 것.
 }
