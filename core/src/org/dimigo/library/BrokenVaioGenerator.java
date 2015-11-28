@@ -16,7 +16,7 @@ public class BrokenVaioGenerator {
 
         Vaio brokenVaio = new Vaio();
 
-        int troubleNumber = rand.nextInt(VaioProblem.Trouble.SIZE);
+        int troubleNumber = rand.nextInt(VaioProblem.Trouble.SIZE-1) + 1;
 
         Map<VaioProblem.Trouble, VaioProblem.Critical> impairs = new HashMap<VaioProblem.Trouble, VaioProblem.Critical>();
 

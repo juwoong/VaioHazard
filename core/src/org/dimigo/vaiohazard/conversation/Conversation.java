@@ -10,9 +10,7 @@ import org.dimigo.vaiohazard.Object.ServiceCenter;
 import org.dimigo.vaiohazard.conversation.parser.ConversationParser;
 import org.dimigo.vaiohazard.conversation.parser.StartConversationParser;
 
-import java.util.HashMap;
 import java.util.Map;
-import java.util.Random;
 
 /**
  * Created by juwoong on 15. 11. 25..
@@ -56,40 +54,16 @@ public class Conversation {
             dialog.show(stage);
             conversationStatus = Status.Knowing;
         }else if(conversationStatus == Status.Knowing) {
-            //for test
-            ServiceCenter.InspectResult temp = new ServiceCenter.InspectResult();
-
-            int troubleNumber = (new Random()).nextInt(VaioProblem.Trouble.SIZE);
-
-            Map<VaioProblem.Trouble, VaioProblem.Critical> impairs = new HashMap<VaioProblem.Trouble, VaioProblem.Critical>();
-
-            //문제 개수만큼 바이오를 부순다.
-            while(impairs.size() != troubleNumber) {
-                VaioProblem.Critical critical  = VaioProblem.Critical.getCritical();
-                if(critical != VaioProblem.Critical.Fine)
-                    impairs.put(VaioProblem.Trouble.getTrouble(), VaioProblem.Critical.getCritical());
-            }
-
-            //나머지 부분은 Fine 상태로 바꿈
-            for(int i=0; i < VaioProblem.Trouble.SIZE; i++) {
-                if(impairs.keySet().contains(VaioProblem.Trouble.getList().get(i)) == false) {
-                    impairs.put(VaioProblem.Trouble.getList().get(i), VaioProblem.Critical.Fine);
-                }
-            }
-
-            temp.impairs = impairs;
-            temp.failCount = (new Random()).nextInt();
-
-            //
-
-
-
-            PixelizedDialog dialog = generator.getImpairSelect(owner.getName(), temp);
+            ServiceCenter center = ServiceCenter.getInstance();
+            PixelizedDialog dialog = generator.getImpairSelect(owner.getName(), center.inspectVaio(owner.getVaio()));
             dialog.show(stage);
             conversationStatus = Status.Estimating;
         }else if(conversationStatus == Status.Estimating) {
             Map<VaioProblem.Trouble,VaioProblem.Critical> map = (Map<VaioProblem.Trouble,VaioProblem.Critical>) object;
-            Gdx.app.log(TAG, map.toString());
+            owner.listenInspectResult(map);
+
+            if(owner.getCumstomerState() == Customer.CumstomerState.overNegotiation) conversationStatus=Status.Accept;
+            else conversationStatus = Status.Estimating;
         }
     }
 

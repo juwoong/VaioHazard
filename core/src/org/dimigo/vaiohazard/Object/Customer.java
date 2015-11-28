@@ -63,18 +63,20 @@ public class Customer extends VaioActor {
 
     // 0 ~ 100
     // 이 퍼센트에 따라 다이얼로그 내용이 바뀜, 가게 평판에 따라 초기값 결정
-    float doubtPercent;
+    private float doubtPercent;
     //고객의 호갱도, 고객의 난이도와 관련
-    float hogangPercent;
+    private float hogangPercent;
 
     public Customer(String name, String image, int cols, int rows, String uuid) {
         this.name = name;
         setAnimation(image, cols, rows);
         this.uuid = uuid;
+        init();
     }
 
     public Customer(String name) {
         this(name, "resources/Actor/Creeper.png", 1, 1);
+        init();
     }
 
     public Customer(String name, boolean tester) {
@@ -186,6 +188,8 @@ public class Customer extends VaioActor {
             doubtPercent += doubtPlus;
         }
 
+
+
         if(angryCheck()) {
             cumstomerState = CumstomerState.Angry;
         } else {
@@ -193,6 +197,8 @@ public class Customer extends VaioActor {
             cumstomerState = CumstomerState.overNegotiation;
         }
     }
+
+    public CumstomerState getState() { return cumstomerState; }
 
     //TODO: 물건 받으로 돌아올 경우 구현
 
@@ -237,7 +243,7 @@ public class Customer extends VaioActor {
                 super.walkTo(0, 0, false); //화면 밖으로 이동
 
             } else if(moveState == MovingState.walkingOver) {
-                //손님이 물건 맏기고 떠남 안보이게 해줌
+                //손님이 물건 맡기고 떠남 안보이게 해줌
                 cumstomerState = CumstomerState.OutOfStore;
             }
         }
@@ -290,5 +296,12 @@ public class Customer extends VaioActor {
 
     public String getName(){ return name; }
 
+    public Vaio getVaio() {
+        return vaio;
+    }
+
+    public float getDoubtPercent() {
+        return doubtPercent;
+    }
     //TODO: 기록 저장 시 User Save 만들 것.
 }

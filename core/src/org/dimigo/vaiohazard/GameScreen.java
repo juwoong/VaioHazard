@@ -93,14 +93,14 @@ public class GameScreen extends ScreenAdapter {
         clerkTester.setScale(0.6f, 0.6f);
         clerkTester.setPosition(GameCoordinate.toRealPos(105), GameCoordinate.toRealPos(105));
 
-        Customer customer = new Customer("첫번째손님!", true);
+        //Customer customer = new Customer("첫번째손님!", true);
 
         music = Gdx.audio.newMusic(Gdx.files.internal("resources/music/game.mp3"));
         music.setLooping(true);
         music.setVolume(0.7f);
         music.play();
 
-        stage.addActor(customer);
+        //stage.addActor(customer);
         stage.addActor(clerkTester);
     }
 
