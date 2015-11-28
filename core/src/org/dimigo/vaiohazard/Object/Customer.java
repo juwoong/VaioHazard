@@ -7,12 +7,21 @@ import org.dimigo.library.Rand;
 import org.dimigo.vaiohazard.Device.Components;
 import org.dimigo.vaiohazard.Device.Vaio;
 import org.dimigo.vaiohazard.Device.VaioProblem;
+import org.dimigo.vaiohazard.conversation.Conversation;
 
 import java.util.*;
 
 /**
  * Created by YuTack on 2015-11-11.
  */
+
+/*
+    0 ~ 20
+    20 ~ 40
+    40 ~ 60
+    60 ~ 80
+    80 ~ 100
+*/
 
 public class Customer extends VaioActor {
     public boolean getPurpose() {
@@ -55,7 +64,6 @@ public class Customer extends VaioActor {
     // 0 ~ 100
     // 이 퍼센트에 따라 다이얼로그 내용이 바뀜, 가게 평판에 따라 초기값 결정
     float doubtPercent;
-
     //고객의 호갱도, 고객의 난이도와 관련
     float hogangPercent;
 
@@ -87,12 +95,10 @@ public class Customer extends VaioActor {
         Random rand = new Random();
 
         //testCode
-        hogangPercent = (float) ((rand.nextInt(100)+1) / 100.0);
+        hogangPercent = rand.nextFloat();
 
-        //초기 의심도 로직
-        doubtPercent = (1 - ServiceCenter.getInstance().getReputaionPercent())
-                * (1 - hogangPercent)
-                + ((rand.nextInt() % 10) / 100);
+        //초기 의심도 로직 (1 - 가계 명망 + 랜덤) * 0.5 , 첨부터 너무 의심도가 높으면 골때리기 때문에 0.5 곱하기
+        doubtPercent = ((1 - ServiceCenter.getInstance().getReputaionPercent()) + (rand.nextInt(30) / 100)) * 0.5f;
 
         vaio = BrokenVaioGenerator.getBrokenVaio();
 
@@ -110,56 +116,82 @@ public class Customer extends VaioActor {
         Random rand = new Random();
 
         for (VaioProblem.Trouble trouble : myVaioImpairs.keySet()) {
-            //case Fine: 은 고려안함
+            //case Fine: 은 고려안함, 심각한 문제일 수록 발견확률 올라감.
             switch (myVaioImpairs.get(trouble)) {
                 case Little:
-                    if(Rand.get(30 * (1 - hogang))) { memory.add(trouble); }
+                    if(Rand.get((0.3f * (1 - hogang)))) { memory.add(trouble); }
                     break;
                 case Soso:
-                    if(Rand.get(50 * (1 - hogang))) { memory.add(trouble); }
+                    if(Rand.get((0.5f * (1 - hogang)))) { memory.add(trouble); }
                     break;
                 case Bad:
-                    if(Rand.get(60 * (1 - hogang))) { memory.add(trouble); }
+                    if(Rand.get((0.8f * (1 - hogang)))) { memory.add(trouble); }
                     break;
                 case Serious:
-                    if(Rand.get(80 * (1 - hogang))) { memory.add(trouble); }
+                    if(Rand.get((0.9f * (1 - hogang)))) { memory.add(trouble); }
                     break;
                 case Died:
-                    if(Rand.get(100 * (1 - hogang))) { memory.add(trouble); }
+                    if(Rand.get((1.0f * (1 - hogang)))) { memory.add(trouble); }
                     break;
             }
         }
         return memory;
     }
-
-    //TODO: * 다이얼로그랑 고객 내부로직 분리할거다 *
-
     //가게 들어와서 처음으로 하는 말
     public void speakWhatINeed() {
-
         Gdx.app.log("Customer", "speakWhatINeed");
 
         //다이얼로그 호출, 바이오 넘기기, 조사
     }
 
     //조사 결과를 들음, 일반적으로 구라를 쳐서 넘김
-    public boolean listenInspectResult(Components components) {
-        //TODO: 의심도 상승 여기서 의심도로 인한 분기 화나냐 안 화나냐, true일 경우 애가 빡친거고 false 인 경우 구라 성공
-        //고객 자신의 지식과 호갱도를 기준으로 말한 재료와 비교함
+    public void listenInspectResult(Map<VaioProblem.Trouble, VaioProblem.Critical> result) {
+        for(VaioProblem.Trouble trouble : VaioProblem.Trouble.getList()) {
+            VaioProblem.Critical fakeCritical = result.get(trouble);
+            VaioProblem.Critical realCritical = vaio.getImpairs().get(trouble);
 
+            float doubtPlus = 0;
 
+            //의심도가 높으면 더 의심할 확률도 증가함
 
+            //이미 알고 있는 문제에 대한 경우
+            if(whatIKnowAboutMyVaio.contains(trouble) == true) {
+                int differece = VaioProblem.Critical.valueOf(fakeCritical) - VaioProblem.Critical.valueOf(realCritical);
 
+                //이미 의심도가 높으면 배로 높아짐
 
+                if(differece > 0) {
+                    //실제 심각성 보다 더 부숴졌다고 말한 경우
+                    doubtPlus += (1 - hogangPercent) * (differece * 0.1f);
 
+                    //정상인데 구라치면 더 높아지는 의심도
+                    if(realCritical == VaioProblem.Critical.Fine && Rand.get(1 - hogangPercent)) doubtPlus += 1.2f;
 
+                } else {
 
+                    //실제 심각성 보다 더 낫다고 말한 경우 ( * 의심도 내려감 )
+                    doubtPlus += (1 - hogangPercent) * (differece * 0.1f);
+                }
 
-        //구라 결과를 받고 의심도 계산이후 분기, 대답 다이얼로그 출력 이후 퇴장
+                //상황이 정상인데 구라친 경우
+            } else {
+                //모르는 문제에 대한 경우
 
-        //정상적으로 계약이 끝남
-        cumstomerState = CumstomerState.overNegotiation;
-        return false;
+                //true일 확률이 좀 높음 이 경우 실제 바이오의 고장상태와는 무관함
+                if(Rand.get(1 - hogangPercent) || Rand.get(1 - hogangPercent)) {
+                    doubtPlus += 0.1f * VaioProblem.Critical.valueOf(fakeCritical);
+                }
+            }
+
+            doubtPercent += doubtPlus;
+        }
+
+        if(angryCheck()) {
+            cumstomerState = CumstomerState.Angry;
+        } else {
+            //정상적으로 계약이 끝남
+            cumstomerState = CumstomerState.overNegotiation;
+        }
     }
 
     //TODO: 물건 받으로 돌아올 경우 구현
@@ -214,57 +246,5 @@ public class Customer extends VaioActor {
 
     }
 
-    public void setVaio(Vaio vaio) {
-        this.vaio = vaio;
-    }
-
-    public Vaio getVaio() {
-        return vaio;
-    }
-
-    public String getName() { return name; }
-
     //TODO: 기록 저장 시 User Save 만들 것.
-    public String sayWhatIKnowAboutMyVaio() {
-        StringBuilder builder = new StringBuilder();
-        System.out.println(whatIKnowAboutMyVaio);
-        System.out.println(vaio.getImpairs());
-        System.out.println(hogangPercent);
-        System.out.println(doubtPercent);
-        for(int i=0; i<whatIKnowAboutMyVaio.size(); i++){
-            String convWord = null;
-            switch (whatIKnowAboutMyVaio.get(i)) {
-                case LiquidDisplayTrouble:
-                    convWord = "화면에 제대로 표시를 못합니다.";
-                    break;
-                case BootTrouble:
-                    convWord = "부팅이 안됩니다.";
-                    break;
-                case PowerTrouble:
-                    convWord = "켜지지를 않습니다.";
-                    break;
-                case LCDTrouble:
-                    convWord = "액정이 나간것 같습니다.";
-                    break;
-                case FunctionTrouble:
-                    convWord = "쒸쁘뜨끼까 안빠찌ㅃ니다.";
-                    break;
-                case Cleaning:
-                    convWord = "팬 소리가 너무 시끄럽습니다.";
-                    break;
-                case BatteryTrouble:
-                    convWord = "배터리가 너무 빨리 닳습니다.";
-            }
-
-            if(i==whatIKnowAboutMyVaio.size()-1) builder.append(String.format("%s", convWord));
-            else builder.append(String.format("%s%s", convWord.substring(0, convWord.length()-4), "고, "));
-            if((i+1)%2==0) builder.append("\n");
-
-        }
-        if(whatIKnowAboutMyVaio.size()==0) {
-            builder.append("뭔지 모르겠으나 매우 이상합니다");
-        }
-        return builder.toString();
-    }
-
 }

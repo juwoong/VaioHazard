@@ -1,10 +1,12 @@
 package org.dimigo.vaiohazard.Object;
 
+import org.dimigo.library.Rand;
 import org.dimigo.vaiohazard.Device.Components;
+import org.dimigo.vaiohazard.Device.Vaio;
+import org.dimigo.vaiohazard.Device.VaioProblem;
 
 import java.time.DayOfWeek;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by YuTack on 2015-11-11.
@@ -26,6 +28,9 @@ public class ServiceCenter {
     private int day;
     private DayOfWeek dayOfWeek;
 
+    //0 에서 1사이의 값
+    private float inspectSkill = 0.5f;
+
     private Components components;
 //
     public static void newCenter() {
@@ -41,26 +46,48 @@ public class ServiceCenter {
 
     }*/
 
-    public void changeMoney(int money) {
-        this.money = ((this.money-money)>=0 ? this.money-money : 0);
+    public class InspectResult {
+        public Map<VaioProblem.Trouble, VaioProblem.Critical> impairs;
+        public int failCount;
     }
 
-    public void changeReputaion(int reputaion) {
-        this.reputaionPercent = ((this.reputaionPercent -reputaion)>=0 ? this.reputaionPercent -reputaion : 0);
+    //Fine인 문제를 착각할 정도로 멍청하진 않음, 그러나 스킬에 따라 있는 문제를 모르거나(가벼운 경우만) 심각성을 잘못 판단할 수 있음
+    public InspectResult inspectVaio(Vaio vaio) {
+        Map<VaioProblem.Trouble, VaioProblem.Critical> inspectResult = new HashMap<VaioProblem.Trouble, VaioProblem.Critical>();
+        int failCount = 0;
 
-    }
+        for (VaioProblem.Trouble realTrouble : vaio.getImpairs().keySet()) {
+            if (vaio.getImpairs().get(realTrouble) == VaioProblem.Critical.Fine) {
 
-    public void negotiateRepairDevice(Customer target) {
-        if(target.getPurpose() == Customer.REPAIR && target.getCumstomerState() == Customer.CumstomerState.readyToNegotiate) {
-            //여기서 점원으로 자동 처리 또는 직접 처리
+                inspectResult.put(realTrouble, VaioProblem.Critical.Fine);
 
+            } else if (vaio.getImpairs().get(realTrouble) == VaioProblem.Critical.Little) {
 
+                if (Rand.get(inspectSkill)) inspectResult.put(realTrouble, VaioProblem.Critical.Little);
+                else {
+                    inspectResult.put(realTrouble, VaioProblem.Critical.Fine);
+                    failCount++;
+                }
+
+            } else {
+
+                if (Rand.get(inspectSkill)) {
+                    inspectResult.put(realTrouble, vaio.getImpairs().get(realTrouble));
+                } else {
+                    Random rand = new Random();
+                    inspectResult.put(realTrouble, VaioProblem.Critical.values()[2 + rand.nextInt(3)]);
+                    failCount++;
+                }
+
+            }
         }
+
+        InspectResult result = new InspectResult();
+        result.impairs = inspectResult;
+        result.failCount = failCount;
+        return result;
     }
 
-    public void negotiateRegainDevice(Customer target) {
-
-    }
 
     public void addRepairOrder(RepairOrder order) {
         orders.add(order);
