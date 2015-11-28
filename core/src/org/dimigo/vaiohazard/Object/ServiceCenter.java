@@ -46,7 +46,7 @@ public class ServiceCenter {
 
     }*/
 
-    public class InspectResult {
+    static public class InspectResult {
         public Map<VaioProblem.Trouble, VaioProblem.Critical> impairs;
         public int failCount;
     }

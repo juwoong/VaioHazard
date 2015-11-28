@@ -3,12 +3,14 @@ package org.dimigo.library;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
 import org.dimigo.vaiohazard.Device.Components;
 import org.dimigo.vaiohazard.Device.VaioProblem;
 import org.dimigo.vaiohazard.GameResource;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
+import org.dimigo.vaiohazard.Object.ServiceCenter;
 import org.dimigo.vaiohazard.conversation.Conversation;
 
 import java.util.HashMap;
@@ -18,18 +20,15 @@ import java.util.Map;
  * Created by juwoong on 15. 11. 10..
  */
 public class DialogGenerator {
-    private FontGenerator generater;
-    private BitmapFont textFont, titleFont;
-    private Window.WindowStyle windowStyle;
-    private TextButton.TextButtonStyle textButtonStyle;
-    private RightCheckBox.CheckBoxStyle checkBoxStyle;
-    private SelectBox.SelectBoxStyle selectBoxStyle;
-    private Label label;
+    private static BitmapFont textFont, titleFont;
+    private static Window.WindowStyle windowStyle;
+    private static TextButton.TextButtonStyle textButtonStyle;
+    private static RightCheckBox.CheckBoxStyle checkBoxStyle;
+    private static SelectBox.SelectBoxStyle selectBoxStyle;
+    private static Label.LabelStyle labelStyle;
     private Conversation conv;
 
-    public DialogGenerator(Conversation conv) {
-        generater = new FontGenerator();
-
+    static {
         textFont = new BitmapFont(Gdx.files.internal("resources/font/font.fnt"));
         titleFont = new BitmapFont(Gdx.files.internal("resources/font/font_big.fnt"));
 
@@ -64,7 +63,7 @@ public class DialogGenerator {
         selectBoxStyle.backgroundOver = GameResource.getInstance().getDrawable("LightGreen");
         selectBoxStyle.listStyle = new List.ListStyle(
                 new BitmapFont(Gdx.files.internal("resources/font/font.fnt")),
-                        Color.RED, Color.BLACK, GameResource.getInstance().getDrawable("dialog_button_hover"));
+                Color.RED, Color.BLACK, GameResource.getInstance().getDrawable("dialog_button_hover"));
         selectBoxStyle.scrollStyle = new ScrollPane.ScrollPaneStyle();
         selectBoxStyle.scrollStyle.background = GameResource.getInstance().getDrawable("LightGreen");
         selectBoxStyle.scrollStyle.corner = GameResource.getInstance().getDrawable("LightGreen");
@@ -76,25 +75,70 @@ public class DialogGenerator {
         selectBoxStyle.font = new BitmapFont(Gdx.files.internal("resources/font/font.fnt"));
         selectBoxStyle.fontColor = Color.BLACK;
 
-        label = new Label(null, new Label.LabelStyle(textFont, Color.BLACK));
-
-        this.conv = conv;
+        labelStyle = new Label.LabelStyle(textFont, Color.BLACK);
     }
 
+    public DialogGenerator(Conversation conv) {
+        this.conv = conv;
+    }
 
     public PixelizedDialog getDialog(String title, String content) {
         title = "\n" + title;
 
         PixelizedDialog dialog = new PixelizedDialog(title, windowStyle, conv);
 
-        dialog.text(content, label.getStyle());
+        dialog.getTitleTable().padBottom(25);
 
-        dialog.getContentTable().add(label);
+        dialog.text(content, labelStyle);
         return dialog;
     }
 
-    public PixelizedDialog getComponetsSelect(String title) {
+    /*public PixelizedDialog getInspectLoading(String title,  ServiceCenter.InspectResult inspectResult) {
+
+    }*/
+
+    public PixelizedDialog getImpairSelect(String title, ServiceCenter.InspectResult inspectResult) {
         PixelizedDialog dialog = new PixelizedDialog(title, windowStyle, conv);
+
+        Table contentTable = dialog.getContentTable();
+        contentTable.top().padTop(77);
+
+        Map<VaioProblem.Trouble, VaioProblem.Critical> selectResult = new HashMap<VaioProblem.Trouble, VaioProblem.Critical>();
+
+        ImpairSelector selector = new ImpairSelector(selectBoxStyle);
+
+        contentTable.add(new Actor());
+        for(String troubleString : VaioProblem.TroubleStrings) {
+            contentTable.add(new Label(troubleString, labelStyle));
+        }
+
+        contentTable.row().padTop(12);
+
+        contentTable.add(new Label("조사 결과 :", labelStyle));
+        for(VaioProblem.Trouble trouble : VaioProblem.Trouble.getList()) {
+            contentTable.add(new Label(inspectResult.impairs.get(trouble).name(), labelStyle));
+        }
+
+        contentTable.row().padTop(12);
+
+        contentTable.add(new Label("구라 치기 :", labelStyle));
+        for(Object selectBox : selector.getSelectBoxes()) {
+            if (selectBox instanceof SelectBox) {
+                contentTable.add((SelectBox)selectBox).maxWidth(80).maxHeight(20).width(75).padLeft(5).height(20);
+            }
+        }
+
+        dialog.button("이걸로 구라치기 ->", selector, textButtonStyle);
+
+        return dialog;
+    }
+
+    public TextButton.TextButtonStyle getTextButtonStyle() { return textButtonStyle; }
+
+    public SelectBox.SelectBoxStyle getSelectBoxStyle() { return selectBoxStyle; }
+
+    /*public PixelizedDialog getComponetsSelect(String title) {
+        PixelizedDialog dialog = new PixelizedDialog(title, windowStyle);
 
         Table table = dialog.getButtonTable();
         table.padBottom(80).left();
@@ -130,37 +174,5 @@ public class DialogGenerator {
         dialog.getButtonTable().getCells().get(dialog.getButtonTable().getCells().size - 1).padLeft(20);
 
         return dialog;
-    }
-
-    public PixelizedDialog getImpairSelect(String title) {
-        PixelizedDialog dialog = new PixelizedDialog(title, windowStyle, conv);
-        dialog.setDebug(true);
-
-        Table contentTable = dialog.getContentTable();
-        contentTable.top().padTop(77);
-
-        Map<VaioProblem.Trouble, VaioProblem.Critical> selectResult = new HashMap<VaioProblem.Trouble, VaioProblem.Critical>();
-
-        ImpairSelector selector = new ImpairSelector(selectBoxStyle);
-
-        for(String troubleString : VaioProblem.TroubleStrings) {
-            contentTable.add(new Label(troubleString, label.getStyle()));
-        }
-
-        contentTable.row().padTop(15);
-
-        for(Object selectBox : selector.getSelectBoxes()) {
-            if (selectBox instanceof SelectBox) {
-                contentTable.add((SelectBox)selectBox).maxWidth(80).maxHeight(20).width(80).padLeft(10).height(20);
-            }
-        }
-
-        dialog.button("이걸로 구라치기 ->", selector, textButtonStyle);
-
-        return dialog;
-    }
-
-    public TextButton.TextButtonStyle getTextButtonStyle() { return textButtonStyle; }
-
-    public SelectBox.SelectBoxStyle getSelectBoxStyle() { return selectBoxStyle; }
+    }*/
 }
