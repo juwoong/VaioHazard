@@ -11,8 +11,12 @@ import java.util.Random;
  */
 public class StartConversationParser extends ConversationParser {
 
-    private DialogGenerator generator = new DialogGenerator();
+    private DialogGenerator generator;
     private static final String uri = "Start";
+
+    public StartConversationParser(DialogGenerator generator) {
+        this.generator = generator;
+    }
 
     public PixelizedDialog getGeneratedDialog(String name) {
         List<ConversationFormat> list = get(uri);

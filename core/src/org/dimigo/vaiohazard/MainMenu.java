@@ -1,6 +1,7 @@
 package org.dimigo.vaiohazard;
 
 import com.badlogic.gdx.*;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,7 +20,7 @@ import org.dimigo.vaiohazard.Object.ServiceCenter;
  */
 public class MainMenu implements Screen {
     Stage stage;
-
+    Music music;
     VaioHazardGame currentGame;
 
     Table table;
@@ -70,7 +71,8 @@ public class MainMenu implements Screen {
         twinkleForever.setCount(RepeatAction.FOREVER);
 
         logo.addAction(twinkleForever);
-
+        music = Gdx.audio.newMusic(Gdx.files.internal("resources/music/main.mp3"));
+        music.play();
         stage.addActor(logo);
     }
 
@@ -88,6 +90,7 @@ public class MainMenu implements Screen {
             }
 
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                music.stop();
                 currentGame.setScreen(currentGame.gameScreen);
                 ServiceCenter.newCenter();
                 //currentGame.setScreen(currentGame.loadingScreen);

@@ -19,10 +19,9 @@ public class Question {
      * Conversation(String) : 대화 문맥 객체
      *
      */
-
-    private DialogGenerator generater = new DialogGenerator();
-    private String question;
     private Conversation conversation;
+    private DialogGenerator generater = new DialogGenerator(conversation);
+    private String question;
     private String status;
     private List<Answer> list = new ArrayList<Answer>();
 

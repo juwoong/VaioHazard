@@ -3,6 +3,7 @@ package org.dimigo.vaiohazard;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -13,7 +14,6 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
-import org.dimigo.library.DialogGenerator;
 import org.dimigo.library.GameCoordinate;
 import org.dimigo.vaiohazard.Object.Customer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -36,6 +36,7 @@ public class GameScreen extends ScreenAdapter {
     TiledMapRenderer tiledMapRenderer;
     OrthographicCamera camera;
     Stage stage;
+    Music music;
 
     boolean cleaned = false;
 
@@ -74,7 +75,6 @@ public class GameScreen extends ScreenAdapter {
                 conversation.start();
             }
         });
-
         //stage.addActor(img);
         stage.addActor(newGameButton);
         //stage.addActor(mario);
@@ -95,8 +95,10 @@ public class GameScreen extends ScreenAdapter {
 
         Customer customer = new Customer("첫번째손님!", true);
 
-        DialogGenerator g = new DialogGenerator();
-        g.getImpairSelect("타이털").show(stage);
+        music = Gdx.audio.newMusic(Gdx.files.internal("resources/music/game.mp3"));
+        music.setLooping(true);
+        music.setVolume(0.7f);
+        music.play();
 
         stage.addActor(customer);
         stage.addActor(clerkTester);

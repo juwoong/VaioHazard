@@ -21,7 +21,7 @@ public class PixelizedDialog extends Dialog{
     private static TextButton.TextButtonStyle style;
     private static Label.LabelStyle labelStyle;
     private static Label label;
-
+    private Conversation conv;
     static {
 
     }
@@ -34,7 +34,7 @@ public class PixelizedDialog extends Dialog{
         super(title, skin, windowStyleName);
     }
 
-    public PixelizedDialog(String title, Window.WindowStyle windowStyle) {
+    public PixelizedDialog(String title, Window.WindowStyle windowStyle, Conversation conv) {
         super(title, windowStyle);
 
         getContentTable().left().padLeft(50).padTop(20);
@@ -45,6 +45,7 @@ public class PixelizedDialog extends Dialog{
         getButtonTable().left();
         getButtonTable().padBottom(50);
         //getButtonTable().padRight(600);
+        this.conv=conv;
     }
 
     public Dialog button(String text, Object object, TextButton.TextButtonStyle buttonStyle, boolean rowButton) {
@@ -61,12 +62,10 @@ public class PixelizedDialog extends Dialog{
     @Override
     protected void result(Object object){
         //((Conversation) object).listenAnswer();
-        if(object instanceof Answer) {
-
-        } else if (object instanceof Conversation) {
-            ((Conversation) object).listenAnswer();
+        if(object == null) {
+            conv.listenAnswer(null);
         } else if (object instanceof ImpairSelector) {
-            ((ImpairSelector) object).getResult();
+            conv.listenAnswer(((ImpairSelector) object).getResult());
         }
 
         remove();

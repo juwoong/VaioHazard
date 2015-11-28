@@ -9,6 +9,7 @@ import org.dimigo.vaiohazard.Device.Components;
 import org.dimigo.vaiohazard.Device.VaioProblem;
 import org.dimigo.vaiohazard.GameResource;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
+import org.dimigo.vaiohazard.conversation.Conversation;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,8 +25,9 @@ public class DialogGenerator {
     private RightCheckBox.CheckBoxStyle checkBoxStyle;
     private SelectBox.SelectBoxStyle selectBoxStyle;
     private Label label;
+    private Conversation conv;
 
-    public DialogGenerator() {
+    public DialogGenerator(Conversation conv) {
         generater = new FontGenerator();
 
         textFont = new BitmapFont(Gdx.files.internal("resources/font/font.fnt"));
@@ -75,13 +77,15 @@ public class DialogGenerator {
         selectBoxStyle.fontColor = Color.BLACK;
 
         label = new Label(null, new Label.LabelStyle(textFont, Color.BLACK));
+
+        this.conv = conv;
     }
 
 
     public PixelizedDialog getDialog(String title, String content) {
         title = "\n" + title;
 
-        PixelizedDialog dialog = new PixelizedDialog(title, windowStyle);
+        PixelizedDialog dialog = new PixelizedDialog(title, windowStyle, conv);
 
         dialog.text(content, label.getStyle());
 
@@ -90,7 +94,7 @@ public class DialogGenerator {
     }
 
     public PixelizedDialog getComponetsSelect(String title) {
-        PixelizedDialog dialog = new PixelizedDialog(title, windowStyle);
+        PixelizedDialog dialog = new PixelizedDialog(title, windowStyle, conv);
 
         Table table = dialog.getButtonTable();
         table.padBottom(80).left();
@@ -129,7 +133,7 @@ public class DialogGenerator {
     }
 
     public PixelizedDialog getImpairSelect(String title) {
-        PixelizedDialog dialog = new PixelizedDialog(title, windowStyle);
+        PixelizedDialog dialog = new PixelizedDialog(title, windowStyle, conv);
         dialog.setDebug(true);
 
         Table contentTable = dialog.getContentTable();

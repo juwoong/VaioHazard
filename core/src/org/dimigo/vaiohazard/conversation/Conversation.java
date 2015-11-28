@@ -1,11 +1,15 @@
 package org.dimigo.vaiohazard.conversation;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import org.dimigo.library.DialogGenerator;
+import org.dimigo.vaiohazard.Device.VaioProblem;
 import org.dimigo.vaiohazard.Object.Customer;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
 import org.dimigo.vaiohazard.conversation.parser.ConversationParser;
 import org.dimigo.vaiohazard.conversation.parser.StartConversationParser;
+
+import java.util.Map;
 
 /**
  * Created by juwoong on 15. 11. 25..
@@ -21,10 +25,11 @@ public class Conversation {
         Deni //거절
     }
 
+    private static final String TAG = "Conversation";
     private Status conversationStatus = Status.Start;
     private Stage stage;
     private Customer owner;
-    private DialogGenerator generator = new DialogGenerator();
+    private DialogGenerator generator = new DialogGenerator(this);
 
     public Conversation(Stage stage, Customer owner) {
         this.stage = stage;
@@ -34,28 +39,27 @@ public class Conversation {
     public void start() {
         conversationStatus = Status.Start;
 
-        StartConversationParser parser = new StartConversationParser();
+        StartConversationParser parser = new StartConversationParser(generator);
         PixelizedDialog dialog = parser.getGeneratedDialog(owner.getName());
-        dialog.button("다음으로 넘기기", this, generator.getTextButtonStyle());
+        dialog.button("다음으로 넘기기", null, generator.getTextButtonStyle());
         dialog.show(stage);
     }
 
     //선택지가 없는 경우
-    public void listenAnswer() {
+    public void listenAnswer(Object object) {
         if(conversationStatus == Status.Start) {
             PixelizedDialog dialog = generator.getDialog(owner.getName(), "증상은 " + owner.sayWhatIKnowAboutMyVaio());
-            dialog.button("알겠습니다. 견적을 내보도록 하죠.", this, generator.getTextButtonStyle());
+            dialog.button("알겠습니다. 견적을 내보도록 하죠.", null, generator.getTextButtonStyle());
             dialog.show(stage);
             conversationStatus = Status.Knowing;
         }else if(conversationStatus == Status.Knowing) {
             PixelizedDialog dialog = generator.getImpairSelect(owner.getName());
             dialog.show(stage);
             conversationStatus = Status.Estimating;
+        }else if(conversationStatus == Status.Estimating) {
+            Map<VaioProblem.Trouble,VaioProblem.Critical> map = (Map<VaioProblem.Trouble,VaioProblem.Critical>) object;
+            Gdx.app.log(TAG, map.toString());
         }
-    }
-
-    //선택지가 있는 경우
-    public void listenAnswer(int value) {
     }
 
     public Status getConversationStatus() {

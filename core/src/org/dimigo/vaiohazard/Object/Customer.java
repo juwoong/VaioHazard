@@ -246,5 +246,49 @@ public class Customer extends VaioActor {
 
     }
 
+    public String sayWhatIKnowAboutMyVaio() {
+        StringBuilder builder = new StringBuilder();
+        System.out.println(whatIKnowAboutMyVaio);
+        System.out.println(vaio.getImpairs());
+        System.out.println(hogangPercent);
+        System.out.println(doubtPercent);
+        for(int i=0; i<whatIKnowAboutMyVaio.size(); i++){
+            String convWord = null;
+            switch (whatIKnowAboutMyVaio.get(i)) {
+                case LiquidDisplayTrouble:
+                    convWord = "화면에 제대로 표시를 못합니다.";
+                    break;
+                case BootTrouble:
+                    convWord = "부팅이 안됩니다.";
+                    break;
+                case PowerTrouble:
+                    convWord = "켜지지를 않습니다.";
+                    break;
+                case LCDTrouble:
+                    convWord = "액정이 나간것 같습니다.";
+                    break;
+                case FunctionTrouble:
+                    convWord = "쒸쁘뜨끼까 안빠찌ㅃ니다.";
+                    break;
+                case Cleaning:
+                    convWord = "팬 소리가 너무 시끄럽습니다.";
+                    break;
+                case BatteryTrouble:
+                    convWord = "배터리가 너무 빨리 닳습니다.";
+            }
+
+            if(i==whatIKnowAboutMyVaio.size()-1) builder.append(String.format("%s", convWord));
+            else builder.append(String.format("%s%s", convWord.substring(0, convWord.length()-4), "고, "));
+            if((i+1)%2==0) builder.append("\n");
+
+        }
+        if(whatIKnowAboutMyVaio.size()==0) {
+            builder.append("뭔지 모르겠으나 매우 이상합니다");
+        }
+        return builder.toString();
+    }
+
+    public String getName(){ return name; }
+
     //TODO: 기록 저장 시 User Save 만들 것.
 }
