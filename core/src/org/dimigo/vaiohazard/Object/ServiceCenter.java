@@ -101,6 +101,8 @@ public class ServiceCenter {
         return reputaionPercent;
     }
 
+    public float getInspectSkill() { return inspectSkill; }
+
     public int getMonth() {
         return month;
     }

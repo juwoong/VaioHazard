@@ -3,9 +3,13 @@ package org.dimigo.library;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import net.dermetfan.gdx.physics.box2d.PositionController;
 import org.dimigo.vaiohazard.Device.Components;
 import org.dimigo.vaiohazard.Device.VaioProblem;
 import org.dimigo.vaiohazard.GameResource;
@@ -15,6 +19,7 @@ import org.dimigo.vaiohazard.conversation.Conversation;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by juwoong on 15. 11. 10..
@@ -26,6 +31,7 @@ public class DialogGenerator {
     private static RightCheckBox.CheckBoxStyle checkBoxStyle;
     private static SelectBox.SelectBoxStyle selectBoxStyle;
     private static Label.LabelStyle labelStyle;
+    private static Label.LabelStyle bigLabelStyle;
     private Conversation conv;
 
     static {
@@ -76,6 +82,7 @@ public class DialogGenerator {
         selectBoxStyle.fontColor = Color.BLACK;
 
         labelStyle = new Label.LabelStyle(textFont, Color.BLACK);
+        bigLabelStyle = new Label.LabelStyle(titleFont, Color.BLACK);
     }
 
     public DialogGenerator(Conversation conv) {
@@ -83,19 +90,68 @@ public class DialogGenerator {
     }
 
     public PixelizedDialog getDialog(String title, String content) {
-        title = "\n" + title;
 
         PixelizedDialog dialog = new PixelizedDialog(title, windowStyle, conv);
-
-        dialog.getTitleTable().padBottom(25);
 
         dialog.text(content, labelStyle);
         return dialog;
     }
 
-    /*public PixelizedDialog getInspectLoading(String title,  ServiceCenter.InspectResult inspectResult) {
+    public PixelizedDialog getInspectLoading(String title,  ServiceCenter.InspectResult inspectResult) {
+        PixelizedDialog dialog = new PixelizedDialog(title, windowStyle, conv);
 
-    }*/
+        //Label inspect = new Label("조사중", bigLabelStyle);
+
+        Label inspect = new Label("조사중", bigLabelStyle){
+            boolean isInspected = false;
+            @Override
+            public void act(float deltaTime) {
+                super.act(deltaTime);
+                if(isInspected == false) {
+                    SequenceAction seq = new SequenceAction();
+
+                    for(VaioProblem.Trouble trouble : inspectResult.impairs.keySet()) {
+                        SequenceAction fadeInOutStep = new SequenceAction();
+
+                        int blinkNum = (new Random()).nextInt(5);
+                        float inOutDuration = (new Random()).nextFloat() + 0.2f;
+
+                        for(int i=0; i<=blinkNum; i++) {
+                            fadeInOutStep.addAction(Actions.fadeIn(inOutDuration));
+
+                            fadeInOutStep.addAction(new Action() {
+                                @Override
+                                public boolean act(float delta) {
+                                    String str = new String();
+
+                                    str = trouble.name() + "이/가 " + inspectResult.impairs.get(trouble).name() + "한 Feeling이군!";
+                                    setText(str);
+
+                                    return true;
+                                }
+                            });
+
+                            fadeInOutStep.addAction(Actions.fadeOut(inOutDuration));
+                        }
+
+                        seq.addAction(fadeInOutStep);
+                    }
+
+                    addAction(seq);
+
+                    isInspected = true;
+                }
+            }
+        };
+
+        //원래다이얼로그에서 컨텐트 테이블은 왼쪽부터 글쓰는 곳이라 padLeft들어가 있는데 이건 아니니까 오른쪽으로 옮기깅!
+        dialog.getContentTable().add(inspect).expandX().center().padRight(50).padTop(40);
+
+
+
+        dialog.button("볼장은 다봤깅!", true, textButtonStyle);
+        return dialog;
+    }
 
     public PixelizedDialog getImpairSelect(String title, ServiceCenter.InspectResult inspectResult) {
         PixelizedDialog dialog = new PixelizedDialog(title, windowStyle, conv);
@@ -116,7 +172,11 @@ public class DialogGenerator {
 
         contentTable.add(new Label("조사 결과 :", labelStyle));
         for(VaioProblem.Trouble trouble : VaioProblem.Trouble.getList()) {
-            contentTable.add(new Label(inspectResult.impairs.get(trouble).name(), labelStyle));
+            if(Rand.get(ServiceCenter.getInstance().getInspectSkill()))
+                contentTable.add(new Label(inspectResult.impairs.get(trouble).name(), labelStyle));
+            else
+                contentTable.add(new Label("아몰랑:)", labelStyle));
+
         }
 
         contentTable.row().padTop(12);

@@ -6,6 +6,10 @@ import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RotateByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import org.dimigo.library.GameCoordinate;
+import org.dimigo.vaiohazard.Device.VaioProblem;
+
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by YuTack on 2015-11-09.

@@ -61,7 +61,7 @@ public class Conversation {
         }else if(conversationStatus == Status.Estimating) {
             Map<VaioProblem.Trouble,VaioProblem.Critical> map = (Map<VaioProblem.Trouble,VaioProblem.Critical>) object;
             owner.listenInspectResult(map);
-
+            Gdx.app.log(TAG, Float.toString(owner.getDoubtPercent()));
             if(owner.getCumstomerState() == Customer.CumstomerState.overNegotiation) conversationStatus=Status.Accept;
             else conversationStatus = Status.Estimating;
         }

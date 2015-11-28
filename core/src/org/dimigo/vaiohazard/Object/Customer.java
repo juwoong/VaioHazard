@@ -99,8 +99,8 @@ public class Customer extends VaioActor {
         //testCode
         hogangPercent = rand.nextFloat();
 
-        //초기 의심도 로직 (1 - 가계 명망 + 랜덤) * 0.5 , 첨부터 너무 의심도가 높으면 골때리기 때문에 0.5 곱하기
-        doubtPercent = ((1 - ServiceCenter.getInstance().getReputaionPercent()) + (rand.nextInt(30) / 100)) * 0.5f;
+        //초기 의심도 로직 (1 - 가계 명망 + 랜덤) * 0.2 , 첨부터 너무 의심도가 높으면 골때리기 때문에 0.2 곱하기
+        doubtPercent = ((1 - ServiceCenter.getInstance().getReputaionPercent()) + (rand.nextInt(30) / 100.0f)) * 0.2f;
 
         vaio = BrokenVaioGenerator.getBrokenVaio();
 
