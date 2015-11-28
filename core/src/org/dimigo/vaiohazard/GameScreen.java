@@ -13,6 +13,7 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
+import org.dimigo.library.DialogGenerator;
 import org.dimigo.library.GameCoordinate;
 import org.dimigo.vaiohazard.Object.Customer;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -93,6 +94,9 @@ public class GameScreen extends ScreenAdapter {
         clerkTester.setPosition(GameCoordinate.toRealPos(105), GameCoordinate.toRealPos(105));
 
         Customer customer = new Customer("첫번째손님!", true);
+
+        DialogGenerator g = new DialogGenerator();
+        g.getImpairSelect("타이털").show(stage);
 
         stage.addActor(customer);
         stage.addActor(clerkTester);

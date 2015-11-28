@@ -68,6 +68,13 @@ public class VaioProblem {
         public static Critical getCritical() {
             return VALUES.get(RANDOM.nextInt(SIZE));
         }
+        public static int valueOf(Critical critical) {
+            for(Critical val : VALUES)
+                if(val == critical) return VALUES.indexOf(val);
+
+            //error case
+            return -1;
+        }
     }
 
     //필요한 개수임 ( 임시 )
