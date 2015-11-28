@@ -63,12 +63,9 @@ public class GameScreen extends ScreenAdapter {
         Customer test = new Customer(nameGenerator.getName(), "mario.png", 4, 1);
         final Conversation conversation = new Conversation(stage, test);
 
-        skin = new Skin();
-        buttonAtlas = new TextureAtlas("resources/Button/NewButton.pack");
-        skin.addRegions(buttonAtlas);
         buttonStyle = new Button.ButtonStyle();
-        buttonStyle.up = skin.getDrawable("NewButton");
-        buttonStyle.down = skin.getDrawable("NewButton_Pressed");
+        buttonStyle.up = GameResource.getInstance().getDrawable("new_button");
+        buttonStyle.down = GameResource.getInstance().getDrawable("new_button_pressed");
         newGameButton = new Button(buttonStyle);
         newGameButton.addListener(new ClickListener() {
             @Override

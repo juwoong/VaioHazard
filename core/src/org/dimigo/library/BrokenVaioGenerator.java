@@ -16,12 +16,12 @@ public class BrokenVaioGenerator {
 
         Vaio brokenVaio = new Vaio();
 
-        int troubleNumber = rand.nextInt() % VaioProblem.Trouble.SIZE;
+        int troubleNumber = rand.nextInt(VaioProblem.Trouble.SIZE);
 
         Map<VaioProblem.Trouble, VaioProblem.Critical> impairs = new HashMap<VaioProblem.Trouble, VaioProblem.Critical>();
 
         //문제 개수만큼 바이오를 부순다.
-        while(impairs.size() == troubleNumber) {
+        while(impairs.size() != troubleNumber) {
             VaioProblem.Critical critical  = VaioProblem.Critical.getCritical();
             if(critical != VaioProblem.Critical.Fine)
                 impairs.put(VaioProblem.Trouble.getTrouble(), VaioProblem.Critical.getCritical());

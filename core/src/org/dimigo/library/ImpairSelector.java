@@ -16,7 +16,7 @@ import java.util.Map;
 public class ImpairSelector {
 
     private Map<VaioProblem.Trouble, SelectBox<VaioProblem.Critical>> selectors
-            = new HashMap<>();
+            = new HashMap<VaioProblem.Trouble, SelectBox<VaioProblem.Critical>>();
 
     public ImpairSelector (SelectBox.SelectBoxStyle style) {
         for(int i=0; i< VaioProblem.Trouble.SIZE; i++) {
@@ -33,7 +33,7 @@ public class ImpairSelector {
 
     //나중에 이 겁나 긴 map을 따로 클레스로 만들어서 처리 하는게 훨씬 좋은듯 시간없어서 못할거같긴한데;
     public Map<VaioProblem.Trouble, VaioProblem.Critical> getResult() {
-        Map<VaioProblem.Trouble,VaioProblem.Critical> map = new HashMap<>();
+        Map<VaioProblem.Trouble,VaioProblem.Critical> map = new HashMap<VaioProblem.Trouble,VaioProblem.Critical>();
         for(int i = 0; i < VaioProblem.Trouble.SIZE; i ++) {
             map.put(VaioProblem.Trouble.getList().get(i), selectors.get(VaioProblem.Trouble.getList().get(i)).getSelected());
         }

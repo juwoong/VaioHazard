@@ -135,7 +135,7 @@ public class DialogGenerator {
         Table contentTable = dialog.getContentTable();
         contentTable.top().padTop(77);
 
-        Map<VaioProblem.Trouble, VaioProblem.Critical> selectResult = new HashMap<>();
+        Map<VaioProblem.Trouble, VaioProblem.Critical> selectResult = new HashMap<VaioProblem.Trouble, VaioProblem.Critical>();
 
         ImpairSelector selector = new ImpairSelector(selectBoxStyle);
 

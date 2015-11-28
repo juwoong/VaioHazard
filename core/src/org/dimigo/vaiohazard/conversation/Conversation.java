@@ -4,6 +4,8 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import org.dimigo.library.DialogGenerator;
 import org.dimigo.vaiohazard.Object.Customer;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
+import org.dimigo.vaiohazard.conversation.parser.ConversationParser;
+import org.dimigo.vaiohazard.conversation.parser.StartConversationParser;
 
 /**
  * Created by juwoong on 15. 11. 25..
@@ -12,6 +14,7 @@ public class Conversation {
     //TODO: Negotiating은 다 끝나고.
     enum Status{
         Start, //의뢰 시 Status
+        Knowing, //무슨 문제가 있는지 알고 있습니다.
         Estimating, //현재 견적 내는 중
         Negotiating, //협상중
         Accept, //동의
@@ -22,7 +25,7 @@ public class Conversation {
     private Status conversationStatus = Status.Start;
     private Stage stage;
     private Customer owner;
-    private DialogGenerator generater = new DialogGenerator();
+    private DialogGenerator generator = new DialogGenerator();
 
     public Conversation(Stage stage, Customer owner) {
         this.stage = stage;
@@ -30,18 +33,25 @@ public class Conversation {
     }
 
     public void start() {
-        PixelizedDialog dialog = generater.getDialog(owner.getName(), "대회를 시작합니다.");
-        dialog.button("다음으로 넘기기", this, generater.getTextButtonStyle());
+        conversationStatus = Status.Start;
+
+        StartConversationParser parser = new StartConversationParser();
+        PixelizedDialog dialog = parser.getGeneratedDialog(owner.getName());
+        dialog.button("다음으로 넘기기", this, generator.getTextButtonStyle());
         dialog.show(stage);
     }
 
     //d선택지가 없는 경우
     public void listenAnswer() {
         if(conversationStatus == Status.Start) {
-            PixelizedDialog dialog = generater.getDialog(owner.getName(), "대화를 종료합니다.");
-            dialog.button("다음으로 넘기기", this, generater.getTextButtonStyle());
+            PixelizedDialog dialog = generator.getDialog(owner.getName(), "증상은 " + owner.sayWhatIKnowAboutMyVaio());
+            dialog.button("알겠습니다. 견적을 내보도록 하죠.", this, generator.getTextButtonStyle());
             dialog.show(stage);
-            conversationStatus = Status.Accept;
+            conversationStatus = Status.Knowing;
+        }else if(conversationStatus == Status.Knowing) {
+            PixelizedDialog dialog = generator.getImpairSelect(owner.getName());
+            dialog.show(stage);
+            conversationStatus = Status.Estimating;
         }
     }
 

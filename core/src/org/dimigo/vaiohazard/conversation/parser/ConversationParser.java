@@ -19,6 +19,7 @@ public class ConversationParser {
     public class ConversationFormat {
         public String question;
         public List<String> list;
+        public boolean useName;
     }
 
     private JSONParser parser = new JSONParser();
@@ -35,6 +36,8 @@ public class ConversationParser {
             String result = new String(bytes);
             is.close();
 
+            System.out.println(result);
+
             JSONObject obj = (JSONObject) parser.parse(result);
             JSONArray objList = (JSONArray) obj.get("list");
 
@@ -42,6 +45,9 @@ public class ConversationParser {
                 JSONObject value = (JSONObject) objList.get(i);
                 ConversationFormat format = new ConversationFormat();
                 if(value.containsKey("answers") == true) {
+                }
+                if(value.containsKey("useName") == true) {
+                    format.useName = true;
                 }
 
                 format.question = (String) value.get("question");
