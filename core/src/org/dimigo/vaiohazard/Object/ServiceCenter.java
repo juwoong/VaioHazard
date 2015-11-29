@@ -23,7 +23,7 @@ public class ServiceCenter {
         return center;
     }
 
-    private int[] monthlyDate = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
+    public static int[] monthlyDate = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
 
     private ServiceCenter() {
         money = 10000;

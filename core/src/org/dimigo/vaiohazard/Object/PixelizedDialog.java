@@ -37,6 +37,7 @@ public class PixelizedDialog extends Dialog{
     public PixelizedDialog(String title, Window.WindowStyle windowStyle, Conversation conv) {
         super(title, windowStyle);
 
+        //디자인합니당 이야잉양 패딩패딩 왼쪽그리고위
         getContentTable().left().padLeft(50).padTop(20);
         getTitleTable().padTop(110).padLeft(60);
 

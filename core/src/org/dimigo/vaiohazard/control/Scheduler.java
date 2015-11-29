@@ -15,6 +15,7 @@ public class Scheduler {
     private static final int MAX_CLASS_INTERVAL = 100;
     private static final int OPENING_TIME = 540;
     private static final int CLOSING_TIME = 1080;
+    private static final int SALE_TIME = 540;
 
     private int month, day;
     private Random random;
@@ -29,7 +30,12 @@ public class Scheduler {
 
         for(RepairOrder order : repairOrders) {
             if(order.getAppointmentDate() == day && order.getAppointmentMonth() == month) {
-                todayCustomers.put(order.getAppointmentMinutes(), order.getOrderer());
+                while(true) {
+                    int time = random.nextInt(OPENING_TIME) + SALE_TIME;
+                    if(todayCustomers.containsKey(time)) continue;
+                    todayCustomers.put(time, order.getOrderer());
+                    break;
+                }
             }
         }
 
