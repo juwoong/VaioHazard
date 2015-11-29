@@ -188,8 +188,6 @@ public class Customer extends VaioActor {
             doubtPercent += doubtPlus;
         }
 
-
-
         if(angryCheck()) {
             cumstomerState = CumstomerState.Angry;
         } else {
@@ -250,6 +248,11 @@ public class Customer extends VaioActor {
 
         //TODO: 수령하는 부분 구현
 
+        if(doubtPercent > 1) {
+            doubtPercent = 1;
+        } else if(doubtPercent < 0) {
+            doubtPercent = 0;
+        }
     }
 
     public String sayWhatIKnowAboutMyVaio() {

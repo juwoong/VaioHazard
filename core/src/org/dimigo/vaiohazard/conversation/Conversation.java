@@ -40,10 +40,17 @@ public class Conversation {
     public void start() {
         conversationStatus = Status.Start;
 
-        StartConversationParser parser = new StartConversationParser(generator);
+        ServiceCenter.InspectResult i = new ServiceCenter.InspectResult();
+        i.impairs = owner.getVaio().getImpairs();
+        i.failCount = 3;
+
+        generator.getInspectLoading("타이틀이라능!", i).show(stage);
+
+
+        /*StartConversationParser parser = new StartConversationParser(generator);
         PixelizedDialog dialog = parser.getGeneratedDialog(owner.getName());
         dialog.button("다음으로 넘기기", null, generator.getTextButtonStyle());
-        dialog.show(stage);
+        dialog.show(stage);*/
     }
 
     //선택지가 없는 경우

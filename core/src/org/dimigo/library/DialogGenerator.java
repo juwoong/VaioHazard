@@ -9,6 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.NinePatchDrawable;
+import com.badlogic.gdx.utils.StringBuilder;
 import net.dermetfan.gdx.physics.box2d.PositionController;
 import org.dimigo.vaiohazard.Device.Components;
 import org.dimigo.vaiohazard.Device.VaioProblem;
@@ -114,31 +115,42 @@ public class DialogGenerator {
                         SequenceAction fadeInOutStep = new SequenceAction();
 
                         int blinkNum = (new Random()).nextInt(5);
-                        float inOutDuration = (new Random()).nextFloat() + 0.2f;
+                        float inOutDuration = 1.3f;
 
                         for(int i=0; i<=blinkNum; i++) {
                             fadeInOutStep.addAction(Actions.fadeIn(inOutDuration));
 
-                            fadeInOutStep.addAction(new Action() {
-                                @Override
-                                public boolean act(float delta) {
-                                    String str = new String();
+                            final int index = i;
 
-                                    str = trouble.name() + "이/가 " + inspectResult.impairs.get(trouble).name() + "한 Feeling이군!";
-                                    setText(str);
+                            if(i==blinkNum  || i==blinkNum-1) {
+                                fadeInOutStep.addAction(new Action() {
+                                    @Override
+                                    public boolean act(float delta) {
+                                        String str = trouble.name() + "이/가 " + inspectResult.impairs.get(trouble).name() + "한 Feeling이군!";
+                                        setText(str);
 
-                                    return true;
-                                }
-                            });
-
+                                        return true;
+                                    }
+                                });
+                            } else {
+                                fadeInOutStep.addAction(new Action() {
+                                    @Override
+                                    public boolean act(float delta) {
+                                        StringBuilder builder = new StringBuilder();
+                                        builder.append("조사 중 ");
+                                        for(int j=0; j<index; j++) {
+                                            builder.append(". ");
+                                        }
+                                        setText(builder);
+                                        return true;
+                                    }
+                                });
+                            }
                             fadeInOutStep.addAction(Actions.fadeOut(inOutDuration));
                         }
-
                         seq.addAction(fadeInOutStep);
                     }
-
                     addAction(seq);
-
                     isInspected = true;
                 }
             }
