@@ -4,10 +4,8 @@ package org.dimigo.vaiohazard.Object;
 import com.badlogic.gdx.Gdx;
 import org.dimigo.library.BrokenVaioGenerator;
 import org.dimigo.library.Rand;
-import org.dimigo.vaiohazard.Device.Components;
 import org.dimigo.vaiohazard.Device.Vaio;
 import org.dimigo.vaiohazard.Device.VaioProblem;
-import org.dimigo.vaiohazard.conversation.Conversation;
 
 import java.util.*;
 
@@ -28,11 +26,11 @@ public class Customer extends VaioActor {
         return purpose;
     }
 
-    public CumstomerState getCumstomerState() {
-        return cumstomerState;
+    public CustomerState getCustomerState() {
+        return customerState;
     }
 
-    public enum CumstomerState {
+    public enum CustomerState {
         //자신의 차례까지 기다림 ~ 점원에게 이동할 때 까지
         waitForTurn,
         //협상 준비 완료, 이 상태가 된 객체를 서치해서 협상으로 들어감
@@ -47,7 +45,7 @@ public class Customer extends VaioActor {
         OutOfStore
     }
 
-    private CumstomerState cumstomerState = CumstomerState.waitForTurn;
+    private CustomerState customerState = CustomerState.waitForTurn;
 
     public static final boolean REPAIR = false;
     public static final boolean REGAIN = true;
@@ -61,33 +59,17 @@ public class Customer extends VaioActor {
     private Vaio vaio;
     private ArrayList<VaioProblem.Trouble> whatIKnowAboutMyVaio;
 
+    private int waitingNumber;
+
     // 0 ~ 100
     // 이 퍼센트에 따라 다이얼로그 내용이 바뀜, 가게 평판에 따라 초기값 결정
     private float doubtPercent;
     //고객의 호갱도, 고객의 난이도와 관련
     private float hogangPercent;
 
-    public Customer(String name, String image, int cols, int rows, String uuid) {
+    public Customer(String name, int waitingNumber, String image, int cols, int rows) {
         this.name = name;
-        setAnimation(image, cols, rows);
-        this.uuid = uuid;
-        init();
-    }
-
-    public Customer(String name) {
-        this(name, "resources/Actor/Creeper.png", 1, 1);
-        init();
-    }
-
-    public Customer(String name, boolean tester) {
-        this.name = name;
-        setAnimation("mario.png", 4, 1);
-        uuid="난 시발 테스터다";
-        init();
-    }
-
-    public Customer(String name, String image, int cols, int rows) {
-        this.name = name;
+        this.waitingNumber = waitingNumber;
         setAnimation(image, cols, rows);
         uuid = UUID.randomUUID().toString().replace("-", "");
         init();
@@ -189,20 +171,20 @@ public class Customer extends VaioActor {
         }
 
         if(angryCheck()) {
-            cumstomerState = CumstomerState.Angry;
+            customerState = CustomerState.Angry;
         } else {
             //정상적으로 계약이 끝남
-            cumstomerState = CumstomerState.overNegotiation;
+            customerState = CustomerState.overNegotiation;
         }
     }
 
-    public CumstomerState getState() { return cumstomerState; }
+    public CustomerState getState() { return customerState; }
 
     //TODO: 물건 받으로 돌아올 경우 구현
 
     public void appearToGetVaio() {
         purpose = REGAIN;
-        cumstomerState = CumstomerState.waitForTurn;
+        customerState = CustomerState.waitForTurn;
         angryCheck();
     }
 
@@ -211,38 +193,43 @@ public class Customer extends VaioActor {
 
         return true;
     }
-
     //매 대화마다 체크함 여기서 분노상태로 돌입
     public boolean angryCheck() {
         return false;
+    }
+
+    public void updateWaitingNumber() {
+        waitingNumber--;
     }
 
     @Override
     public void act(float deltaTime) {
         super.act(deltaTime);
         //입장하고 움직임 (대기는 아직)
-        if(cumstomerState == CumstomerState.waitForTurn) {
+        if(customerState == CustomerState.waitForTurn) {
             if(moveState == MovingState.wating) {
 
-                //고객이 꽉차있으면 기다려야함.. 지금은 그런거 할시간 없으니 그냥 이동시킴
-
-                super.walkTo(100, 100, true); //점원 있는 곳으로 이동
+                //자기차례
+                if(waitingNumber == 0) {
+                    //카운터로 이동, 이동 끝나면 자동으로 협상대기 상태로 들어감
+                    walkTo(200, 200, true);
+                }
 
             } else if(moveState == MovingState.walkingOver) {
                 moveState = MovingState.wating;
 
-                cumstomerState = CumstomerState.readyToNegotiate;
+                customerState = CustomerState.readyToNegotiate;
 
                 //외부에서 Negotiation객체로 협상 시작
             }
-        } else if(cumstomerState == CumstomerState.overNegotiation) {
+        } else if(customerState == CustomerState.overNegotiation) {
             if(moveState == MovingState.wating) {
 
                 super.walkTo(0, 0, false); //화면 밖으로 이동
 
             } else if(moveState == MovingState.walkingOver) {
                 //손님이 물건 맡기고 떠남 안보이게 해줌
-                cumstomerState = CumstomerState.OutOfStore;
+                customerState = CustomerState.OutOfStore;
             }
         }
 

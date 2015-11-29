@@ -14,21 +14,46 @@ import java.util.List;
  */
 //진단 후 고객과의 협의 이후 결과로 나옴
 public class RepairOrder {
-    Customer orderer;
-    List<VaioProblem.Trouble> troublesToFix = new ArrayList<VaioProblem.Trouble>();
+    private Customer orderer;
+    private List<VaioProblem.Trouble> troublesToFix = new ArrayList<VaioProblem.Trouble>();
 
-    int appointmentMonth;
-    int appointmentDate;
+    private final int appointmentMonth;
+    private final int appointmentDate;
+    private final int appointmentHour;
 
-    int reward;
+    private final int reward;
 
-    public RepairOrder(Customer orderer, int appointmentMonth, int appointmentDate, int reward) {
+    public RepairOrder(Customer orderer, int appointmentMonth, int appointmentDate, int appointmentHour, int reward) {
         this.orderer = orderer;
         this.appointmentMonth = appointmentMonth;
         this.appointmentDate = appointmentDate;
+        this.appointmentHour = appointmentHour;
         this.reward = reward;
     }
 
+    public int getReward() {
+        return reward;
+    }
+
+    public Customer getOrderer() {
+        return orderer;
+    }
+
+    public List<VaioProblem.Trouble> getTroublesToFix() {
+        return troublesToFix;
+    }
+
+    public int getAppointmentMonth() {
+        return appointmentMonth;
+    }
+
+    public int getAppointmentDate() {
+        return appointmentDate;
+    }
+
+    public int getAppointmentHour() {
+        return appointmentHour;
+    }
 /*    public void addRepairOrder(Components.Component trouble) {
         list.add(trouble);
     }

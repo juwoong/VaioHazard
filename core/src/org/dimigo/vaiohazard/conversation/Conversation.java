@@ -6,8 +6,8 @@ import org.dimigo.library.DialogGenerator;
 import org.dimigo.vaiohazard.Device.VaioProblem;
 import org.dimigo.vaiohazard.Object.Customer;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
+import org.dimigo.vaiohazard.Object.RepairOrder;
 import org.dimigo.vaiohazard.Object.ServiceCenter;
-import org.dimigo.vaiohazard.conversation.parser.ConversationParser;
 import org.dimigo.vaiohazard.conversation.parser.StartConversationParser;
 
 import java.util.Map;
@@ -40,17 +40,10 @@ public class Conversation {
     public void start() {
         conversationStatus = Status.Start;
 
-        ServiceCenter.InspectResult i = new ServiceCenter.InspectResult();
-        i.impairs = owner.getVaio().getImpairs();
-        i.failCount = 3;
-
-        generator.getInspectLoading("타이틀이라능!", i).show(stage);
-
-
-        /*StartConversationParser parser = new StartConversationParser(generator);
+        StartConversationParser parser = new StartConversationParser(generator);
         PixelizedDialog dialog = parser.getGeneratedDialog(owner.getName());
         dialog.button("다음으로 넘기기", null, generator.getTextButtonStyle());
-        dialog.show(stage);*/
+        dialog.show(stage);
     }
 
     //선택지가 없는 경우
@@ -68,8 +61,15 @@ public class Conversation {
         }else if(conversationStatus == Status.Estimating) {
             Map<VaioProblem.Trouble,VaioProblem.Critical> map = (Map<VaioProblem.Trouble,VaioProblem.Critical>) object;
             owner.listenInspectResult(map);
+
             Gdx.app.log(TAG, Float.toString(owner.getDoubtPercent()));
-            if(owner.getCumstomerState() == Customer.CumstomerState.overNegotiation) conversationStatus=Status.Accept;
+            if(owner.getCustomerState() == Customer.CustomerState.overNegotiation) {
+                //TODO : 고객이 약속 날짜 주면 그걸로 repairOrder 작성
+                RepairOrder order = new RepairOrder(owner, 1, 2, 3, 4); //temporary
+                ServiceCenter.getInstance().addRepairOrder(order);
+
+                conversationStatus=Status.Accept;
+            }
             else conversationStatus = Status.Estimating;
         }
     }
