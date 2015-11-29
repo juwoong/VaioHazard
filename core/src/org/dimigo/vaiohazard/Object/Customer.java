@@ -197,7 +197,7 @@ public class Customer extends VaioActor {
     }
     //매 대화마다 체크함 여기서 분노상태로 돌입
     public boolean angryCheck() {
-        return false;
+        return true;
     }
 
     public void updateWaitingNumber() {

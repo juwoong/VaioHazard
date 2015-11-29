@@ -34,6 +34,8 @@ public class DialogGenerator {
     private static Label.LabelStyle labelStyle;
     private static Label.LabelStyle bigLabelStyle;
     private Conversation conv;
+    private boolean isInspected = false;
+
 
     static {
         textFont = new BitmapFont(Gdx.files.internal("resources/font/font.fnt"));
@@ -98,20 +100,24 @@ public class DialogGenerator {
         return dialog;
     }
 
-    public PixelizedDialog getInspectLoading(String title,  ServiceCenter.InspectResult inspectResult) {
+    private ServiceCenter.InspectResult inspectResult;
+    private VaioProblem.Trouble trouble;
+
+    public PixelizedDialog getInspectLoading(String title,  ServiceCenter.InspectResult inspectResults) {
         PixelizedDialog dialog = new PixelizedDialog(title, windowStyle, conv);
 
+        inspectResult = inspectResults;
         //Label inspect = new Label("조사중", bigLabelStyle);
 
         Label inspect = new Label("조사 중", bigLabelStyle){
-            boolean isInspected = false;
             @Override
             public void act(float deltaTime) {
                 super.act(deltaTime);
                 if(isInspected == false) {
                     SequenceAction seq = new SequenceAction();
 
-                    for(VaioProblem.Trouble trouble : inspectResult.impairs.keySet()) {
+                    for(VaioProblem.Trouble troubled : inspectResult.impairs.keySet()) {
+                        trouble = troubled;
                         SequenceAction fadeInOutStep = new SequenceAction();
 
                         int blinkNum = (new Random()).nextInt(5) + 2;

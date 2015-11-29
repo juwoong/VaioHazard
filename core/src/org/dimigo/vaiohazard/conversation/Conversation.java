@@ -6,8 +6,8 @@ import org.dimigo.library.DialogGenerator;
 import org.dimigo.vaiohazard.Device.VaioProblem;
 import org.dimigo.vaiohazard.Object.Customer;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
-import org.dimigo.vaiohazard.Object.RepairOrder;
 import org.dimigo.vaiohazard.Object.ServiceCenter;
+import org.dimigo.vaiohazard.conversation.parser.ConversationParser;
 import org.dimigo.vaiohazard.conversation.parser.StartConversationParser;
 
 import java.util.Map;
@@ -62,14 +62,7 @@ public class Conversation {
             Map<VaioProblem.Trouble,VaioProblem.Critical> map = (Map<VaioProblem.Trouble,VaioProblem.Critical>) object;
             owner.listenInspectResult(map);
 
-            Gdx.app.log(TAG, Float.toString(owner.getDoubtPercent()));
-            if(owner.getCustomerState() == Customer.CustomerState.overNegotiation) {
-                //TODO : 고객이 약속 날짜 주면 그걸로 repairOrder 작성
-                RepairOrder order = new RepairOrder(owner, 1, 2, 3, 4); //temporary
-                ServiceCenter.getInstance().addRepairOrder(order);
-
-                conversationStatus=Status.Accept;
-            }
+            if(owner.getCustomerState() == Customer.CustomerState.overNegotiation) conversationStatus=Status.Accept;
             else conversationStatus = Status.Estimating;
         }
     }

@@ -46,10 +46,10 @@ public class Scheduler {
         }
     }
 
-    public void update(float deltaTime) {
-        /*for(RepairOrder order : repairOrders) {
+    /*public void update(float deltaTime) {
+        *//*for(RepairOrder order : repairOrders) {
 
-        }*/
+        }*//*
         if(testFlag == false) {
             Customer customer =
                     new Customer(NameGenerator.getInstance().getName(), ServiceCenter.getInstance().getWaitingNumber(), "mario.png", 4, 1);
@@ -66,5 +66,5 @@ public class Scheduler {
             nextFlag = true;
         }
 
-    }
+    }*/
 }
