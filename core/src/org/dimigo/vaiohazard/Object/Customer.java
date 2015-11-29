@@ -238,7 +238,7 @@ public class Customer extends VaioActor {
             } else if(moveState == MovingState.walkingOver) {
                 //손님이 물건 맡기고 떠남 안보이게 해줌
                 customerState = CustomerState.OutOfStore;
-                addAction(Actions.fadeOut(2.0f));
+                addAction(Actions.fadeOut(1.0f));
                 addAction(CustomActions.twinkle());
             }
         }
