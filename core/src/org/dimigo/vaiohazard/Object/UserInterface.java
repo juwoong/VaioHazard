@@ -85,6 +85,9 @@ public class UserInterface extends Table{
 
         time.setText(String.format("%d년 %02d월 %02d일", center.getYear(), center.getMonth(), center.getDay()));
         date.setText(String.format("%02d:%02d", center.getMinutes()/60, center.getMinutes()%60));
+
+        waitPerson.setText(Integer.toString(ServiceCenter.getInstance().getWaitingNumber()));
+        checkedPerson.setText(Integer.toString(ServiceCenter.getInstance().getOrders().size()));
     }
 
 }

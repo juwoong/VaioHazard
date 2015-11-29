@@ -6,6 +6,7 @@ import org.dimigo.library.DialogGenerator;
 import org.dimigo.vaiohazard.Device.VaioProblem;
 import org.dimigo.vaiohazard.Object.Customer;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
+import org.dimigo.vaiohazard.Object.RepairOrder;
 import org.dimigo.vaiohazard.Object.ServiceCenter;
 import org.dimigo.vaiohazard.conversation.parser.ConversationParser;
 import org.dimigo.vaiohazard.conversation.parser.StartConversationParser;
@@ -20,7 +21,7 @@ public class Conversation {
     enum Status{
         Start, //의뢰 시 Status
         Knowing, //무슨 문제가 있는지 알고 있습니다.
-        Finding, //실제 오류를 찾고 있습니다.
+        Finding,
         Estimating, //현재 견적 내는 중
         Negotiating, //협상중
         Accept, //동의
@@ -57,16 +58,19 @@ public class Conversation {
             dialog.show(stage);
             conversationStatus = Status.Knowing;
         }else if(conversationStatus == Status.Knowing) {
-            PixelizedDialog dialog = generator.getInspectLoading(owner.getName(), inspectResult);
+            generator.getInspectLoading(owner.getName(), inspectResult).show(stage);
+            /*PixelizedDialog dialog = generator.getImpairSelect(owner.getName(), center.inspectVaio(owner.getVaio()));
             dialog.show(stage);
+            conversationStatus = Status.Estimating;*/
             conversationStatus = Status.Finding;
         }else if(conversationStatus == Status.Finding){
-            PixelizedDialog dialog = generator.getImpairSelect(owner.getName(), inspectResult);
-            dialog.show(stage);
+            generator.getImpairSelect(owner.getName(), inspectResult).show(stage);
             conversationStatus = Status.Estimating;
         }else if(conversationStatus == Status.Estimating) {
             Map<VaioProblem.Trouble,VaioProblem.Critical> map = (Map<VaioProblem.Trouble,VaioProblem.Critical>) object;
             owner.listenInspectResult(map);
+
+            ServiceCenter.getInstance().addRepairOrder(new RepairOrder(owner, 1, 2 ,3, 4));
 
             if(owner.getCustomerState() == Customer.CustomerState.overNegotiation) conversationStatus=Status.Accept;
             else conversationStatus = Status.Estimating;

@@ -64,7 +64,7 @@ public class GameScreen extends ScreenAdapter {
         TextureAtlas buttonAtlas;
         Skin skin;
 
-        Customer test = new Customer(nameGenerator.getName(), 1, "mario.png", 4, 1);
+        Customer test = new Customer(nameGenerator.getName(), "mario.png", 4, 1);
         test.setPosition(100, 400);
         final Conversation conversation = new Conversation(stage, test);
 

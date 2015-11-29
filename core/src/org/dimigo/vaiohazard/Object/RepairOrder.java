@@ -2,11 +2,7 @@ package org.dimigo.vaiohazard.Object;
 
 import org.dimigo.vaiohazard.Device.VaioProblem;
 
-import org.dimigo.vaiohazard.Device.VaioProblem;
-import org.dimigo.vaiohazard.Device.Components;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -19,15 +15,15 @@ public class RepairOrder {
 
     private final int appointmentMonth;
     private final int appointmentDate;
-    private final int appointmentHour;
+    private final int appointmentMinutes;
 
     private final int reward;
 
-    public RepairOrder(Customer orderer, int appointmentMonth, int appointmentDate, int appointmentHour, int reward) {
+    public RepairOrder(Customer orderer, int appointmentMonth, int appointmentDate, int appointmentMinutes, int reward) {
         this.orderer = orderer;
         this.appointmentMonth = appointmentMonth;
         this.appointmentDate = appointmentDate;
-        this.appointmentHour = appointmentHour;
+        this.appointmentMinutes = appointmentMinutes;
         this.reward = reward;
     }
 
@@ -51,8 +47,8 @@ public class RepairOrder {
         return appointmentDate;
     }
 
-    public int getAppointmentHour() {
-        return appointmentHour;
+    public int getAppointmentMinutes() {
+        return appointmentMinutes;
     }
 /*    public void addRepairOrder(Components.Component trouble) {
         list.add(trouble);

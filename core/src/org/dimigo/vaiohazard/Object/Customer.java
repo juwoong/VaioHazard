@@ -50,6 +50,7 @@ public class Customer extends VaioActor {
     private CustomerState customerState = CustomerState.waitForTurn;
 
     public static final boolean REPAIR = false;
+
     public static final boolean REGAIN = true;
 
     //가게에 온 목적, repair에서 regain으로 넘어감, 이 불린값과 스테이트 값을 통해 고객의 상태 결정
@@ -62,6 +63,7 @@ public class Customer extends VaioActor {
     private ArrayList<VaioProblem.Trouble> whatIKnowAboutMyVaio;
 
     private int waitingNumber;
+    private boolean didReceiveWaitingNumber = false;
 
     // 0 ~ 100
     // 이 퍼센트에 따라 다이얼로그 내용이 바뀜, 가게 평판에 따라 초기값 결정
@@ -69,9 +71,8 @@ public class Customer extends VaioActor {
     //고객의 호갱도, 고객의 난이도와 관련
     private float hogangPercent;
 
-    public Customer(String name, int waitingNumber, String image, int cols, int rows) {
+    public Customer(String name, String image, int cols, int rows) {
         this.name = name;
-        this.waitingNumber = waitingNumber;
         setAnimation(image, cols, rows);
         uuid = UUID.randomUUID().toString().replace("-", "");
         init();
@@ -95,11 +96,7 @@ public class Customer extends VaioActor {
         Map<VaioProblem.Trouble, VaioProblem.Critical> myVaioImpairs
                 = new HashMap<VaioProblem.Trouble, VaioProblem.Critical>(myVaio.getImpairs());
 
-        VaioProblem.Trouble[] troubles = myVaioImpairs.keySet().toArray(new VaioProblem.Trouble[0]);
-
         ArrayList<VaioProblem.Trouble> memory = new ArrayList<VaioProblem.Trouble>();
-
-        Random rand = new Random();
 
         for (VaioProblem.Trouble trouble : myVaioImpairs.keySet()) {
             //case Fine: 은 고려안함, 심각한 문제일 수록 발견확률 올라감.
@@ -122,12 +119,6 @@ public class Customer extends VaioActor {
             }
         }
         return memory;
-    }
-    //가게 들어와서 처음으로 하는 말
-    public void speakWhatINeed() {
-        Gdx.app.log("Customer", "speakWhatINeed");
-
-        //다이얼로그 호출, 바이오 넘기기, 조사
     }
 
     //조사 결과를 들음, 일반적으로 구라를 쳐서 넘김
@@ -197,7 +188,7 @@ public class Customer extends VaioActor {
     }
     //매 대화마다 체크함 여기서 분노상태로 돌입
     public boolean angryCheck() {
-        return true;
+        return false;
     }
 
     public void updateWaitingNumber() {
@@ -213,16 +204,13 @@ public class Customer extends VaioActor {
     public void act(float deltaTime) {
         super.act(deltaTime);
 
-
         //입장하고 움직임 (대기는 아직)
         if(customerState == CustomerState.waitForTurn) {
             if(moveState == MovingState.wating) {
-                //자기차례
                 if(waitingNumber == 0) {
                     //카운터로 이동, 이동 끝나면 자동으로 협상대기 상태로 들어감
                     walkTo(200, 200, true);
                 }
-
             } else if(moveState == MovingState.walkingOver) {
                 moveState = MovingState.wating;
 
@@ -233,12 +221,11 @@ public class Customer extends VaioActor {
         } else if(customerState == CustomerState.overNegotiation) {
             if(moveState == MovingState.wating) {
 
-                super.walkTo(0, 0, false); //화면 밖으로 이동
+                super.walkTo(-100, 0, false); //화면 밖으로 이동
 
             } else if(moveState == MovingState.walkingOver) {
                 //손님이 물건 맡기고 떠남 안보이게 해줌
                 customerState = CustomerState.OutOfStore;
-                addAction(Actions.fadeOut(1.0f));
                 addAction(CustomActions.twinkle());
             }
         }
@@ -298,6 +285,10 @@ public class Customer extends VaioActor {
 
     public Vaio getVaio() {
         return vaio;
+    }
+
+    public void setWaitingNumber(int waitingNumber) {
+        this.waitingNumber = waitingNumber;
     }
 
     public float getDoubtPercent() {

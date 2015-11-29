@@ -23,8 +23,6 @@ public class ServiceCenter {
         return center;
     }
 
-    private int i=0;
-
     private int[] monthlyDate = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
 
     private ServiceCenter() {
@@ -38,34 +36,15 @@ public class ServiceCenter {
         customers = new ArrayList<Customer>();
     }
 
-
-    private void timeFlow() {
-        i++;
-        if(i%30==0) minutes++;
-        if(minutes > 1080) {
-            i = 0;
-            minutes = 540;
-            day++;
-        }
-        if(day > monthlyDate[month-1]) {
-            day = 1;
-            month++;
-        }
-        if(month > 12) {
-            month = 1;
-            year++;
-        }
-    }
-
     private int money;
     private float reputaionPercent;
     private List<RepairOrder> orders = new ArrayList<RepairOrder>();
 
+    private int timerTick;
+    private int year;
     private int month;
     private int day;
-    private int hour;
     private int minutes;
-    private int year;
 
     public Stage getCurrentStage() {
         return currentStage;
@@ -94,8 +73,26 @@ public class ServiceCenter {
 
     }*/
 
+    private void timeFlow() {
+        timerTick++;
+        if(timerTick %30==0) minutes++;
+        if(minutes > 1080) {
+            timerTick = 0;
+            minutes = 540;
+            day++;
+        }
+        if(day > monthlyDate[month-1]) {
+            day = 1;
+            month++;
+        }
+        if(month > 12) {
+            month = 1;
+            year++;
+        }
+    }
+
     public void updateDate() {
-        todaySchedule = new Scheduler(month, day, orders, customers);
+        todaySchedule = new Scheduler(month, day, orders);
     }
 
     public void updateWaitingState(Customer orderer) {
@@ -110,11 +107,12 @@ public class ServiceCenter {
 
     public void update(float deltaTime) {
         timeFlow();
-        /*if(todaySchedule != null) {
-            todaySchedule.update(deltaTime);
-        }*/
 
-        int currentWaitingNum = 0;
+        Gdx.app.log("으악", Integer.toString(waitingNumber));
+
+        if(todaySchedule != null) {
+            todaySchedule.update(deltaTime);
+        }
 
         for(Customer customer : customers) {
 
@@ -124,11 +122,9 @@ public class ServiceCenter {
                 (new Conversation(currentStage, customer)).start();
                 customer.notifyConversationStarted();
             } else if(state == Customer.CustomerState.waitForTurn) {
-                currentWaitingNum++;
             }
         }
 
-        waitingNumber = currentWaitingNum;
     }
 
     static public class InspectResult {
@@ -178,6 +174,18 @@ public class ServiceCenter {
         orders.add(order);
     }
 
+    //화면에 실제 렌더링 되는 고객을 추가하는것, 주문서에 예약된 손님이 다시올 수도 있고 새손님일 수도 있음
+    public void addCustomer(Customer customer) {
+        currentStage.addActor(customer);
+        customers.add(customer);
+        customer.setWaitingNumber(waitingNumber);
+        waitingNumber++;
+    }
+
+    public List<RepairOrder> getOrders() {
+        return orders;
+    }
+
     public int getMoney() {
         return money;
     }
@@ -196,6 +204,14 @@ public class ServiceCenter {
         return day;
     }
 
+    public int getYear() {
+        return year;
+    }
+
+    public int getMinutes(){
+        return minutes;
+    }
+
     public DayOfWeek getDayOfWeek() {
         return dayOfWeek;
     }
@@ -203,8 +219,4 @@ public class ServiceCenter {
     public void setCurrentStage(Stage stage) { this.currentStage = stage; }
 
     public int getWaitingNumber() { return waitingNumber; }
-
-    public int getMinutes() { return minutes; }
-
-    public int getYear() { return year; }
 }

@@ -11,60 +11,53 @@ import java.util.*;
  * Created by juwoong on 15. 11. 14..
  */
 public class Scheduler {
-    //(시간, 사람) 제네레이터..
-    private Map<Integer, String> todayCustomer = new HashMap<Integer, String>();
+    private static final int MIN_CLASS_INTERVAL = 10;
+    private static final int MAX_CLASS_INTERVAL = 100;
+    private static final int OPENING_TIME = 540;
+    private static final int CLOSING_TIME = 1080;
+
     private int month, day;
     private Random random;
 
-    /////////
-    boolean testFlag = false;
-    boolean nextFlag = true;
-    ////////
+    private Map<Integer, Customer> todayCustomers;
 
-    private List<RepairOrder> repairOrders;
-    private List<Customer> customers;
-
-    public Scheduler(int month, int day, List<RepairOrder> repairOrders, List<Customer> customers) {
+    public Scheduler(int month, int day, List<RepairOrder> repairOrders) {
         this.month = month;
         this.day = day;
-        this.repairOrders = repairOrders;
-        this.customers = customers;
+
+        todayCustomers = new HashMap<Integer, Customer>();
+
+        for(RepairOrder order : repairOrders) {
+            if(order.getAppointmentDate() == day && order.getAppointmentMonth() == month) {
+                todayCustomers.put(order.getAppointmentMinutes(), order.getOrderer());
+            }
+        }
 
         random = new Random();
-
-        //INSERT characterName to Schedule
-        int customerCount = 20;
-        for(int i=0; i<customerCount; i++) {
-            while(true) {
-                int time = random.nextInt(540)+540;
-                String name = NameGenerator.getInstance().getName();
-                if(todayCustomer.containsKey(time) || todayCustomer.containsValue(name)) continue;
-
-                todayCustomer.put(time, name);
-                break;
+        int time = OPENING_TIME;
+        while (true) {
+            int classInterval = random.nextInt(MAX_CLASS_INTERVAL - MIN_CLASS_INTERVAL) + MIN_CLASS_INTERVAL;
+            time += classInterval;
+            if(time >= CLOSING_TIME) break;
+            else if(todayCustomers.containsKey(time) == false){
+                todayCustomers.put(time, new Customer(NameGenerator.getInstance().getName(), "mario.png", 4, 1));
             }
         }
     }
 
-    /*public void update(float deltaTime) {
-        *//*for(RepairOrder order : repairOrders) {
-
-        }*//*
-        if(testFlag == false) {
-            Customer customer =
-                    new Customer(NameGenerator.getInstance().getName(), ServiceCenter.getInstance().getWaitingNumber(), "mario.png", 4, 1);
-            customers.add(customer);
-            ServiceCenter.getInstance().getCurrentStage().addActor(customer);
-
-            testFlag = true;
-            nextFlag = false;
-        } else if(nextFlag == false) {
-            Customer customer2 =
-                    new Customer(NameGenerator.getInstance().getName(), ServiceCenter.getInstance().getWaitingNumber(), "mario.png", 4, 1);
-            customers.add(customer2);
-            ServiceCenter.getInstance().getCurrentStage().addActor(customer2);
-            nextFlag = true;
+    //고객이 동시에 들어오면 문제가 발생함
+    public void update(float deltaTime) {
+        int upTime = -1;
+        for(int time : todayCustomers.keySet()) {
+            if(ServiceCenter.getInstance().getMinutes() == time) {
+                ServiceCenter.getInstance().addCustomer(todayCustomers.get(time));
+                upTime = time;
+                break;
+            }
         }
 
-    }*/
+        todayCustomers.remove(upTime);
+
+
+    }
 }

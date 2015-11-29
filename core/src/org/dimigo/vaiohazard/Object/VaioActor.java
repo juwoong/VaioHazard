@@ -97,6 +97,7 @@ public class VaioActor extends Actor {
     }
 
     public void walkTo(int dotX, int dotY, boolean goXFirst) {
+
         assert((moveState == MovingState.wating));
 
         MoveByAction toX = new MoveByAction();
