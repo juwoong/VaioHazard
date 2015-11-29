@@ -1,5 +1,6 @@
 package org.dimigo.vaiohazard.Object;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import org.dimigo.library.Rand;
 import org.dimigo.vaiohazard.Device.Components;
@@ -21,7 +22,16 @@ public class ServiceCenter {
         return center;
     }
 
-    private ServiceCenter() {}
+    private ServiceCenter() {
+        money = 10000;
+        reputaionPercent = 30 / 100;
+        month = 1;
+        day= 1;
+        minutes = 540;
+        dayOfWeek = DayOfWeek.MONDAY;
+        customers = new ArrayList<Customer>();
+        orders = new ArrayList<RepairOrder>();
+    }
 
     private int money;
     private float reputaionPercent;
@@ -31,6 +41,11 @@ public class ServiceCenter {
     private int day;
     private int hour;
     private int minutes;
+
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
     private DayOfWeek dayOfWeek;
 
     //0 에서 1사이의 값
@@ -48,18 +63,7 @@ public class ServiceCenter {
     public static final int MAX_WAITING_NUM = 5;
 
     private Components components;
-//
-    public static void newCenter() {
-        center = new ServiceCenter();
-        center.money = 10000;
-        center.reputaionPercent = 30 / 100;
-        center.month = 1;
-        center.day= 1;
-        center.hour = 9;
-        center.minutes = 0;
-        center.dayOfWeek = DayOfWeek.MONDAY;
-        center.customers = new ArrayList<Customer>();
-    }
+
 
     /*public static ServiceCenter loadCenter() {
 
@@ -80,7 +84,10 @@ public class ServiceCenter {
     }
 
     public void update(float deltaTime) {
-        todaySchedule.update(deltaTime);
+
+        if(todaySchedule != null) {
+            todaySchedule.update(deltaTime);
+        }
 
         int currentWaitingNum = 0;
 
@@ -90,6 +97,7 @@ public class ServiceCenter {
 
             if(state == Customer.CustomerState.readyToNegotiate) {
                 (new Conversation(currentStage, customer)).start();
+                customer.notifyConversationStarted();
             } else if(state == Customer.CustomerState.waitForTurn) {
                 currentWaitingNum++;
             }

@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import org.dimigo.library.DialogGenerator;
 import org.dimigo.library.GameCoordinate;
-import org.dimigo.vaiohazard.Object.Customer;
+import org.dimigo.vaiohazard.Object.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -24,8 +24,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import org.dimigo.library.NameGenerator;
 import org.dimigo.vaiohazard.Object.Customer;
-import org.dimigo.vaiohazard.Object.MarioActor;
-import org.dimigo.vaiohazard.Object.PixelizedDialog;
 import org.dimigo.vaiohazard.conversation.Conversation;
 
 /**
@@ -49,6 +47,8 @@ public class GameScreen extends ScreenAdapter {
     private void init() {
         stage = new Stage();
 
+        ServiceCenter.getInstance().setCurrentStage(stage);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
         camera.update();
@@ -63,7 +63,8 @@ public class GameScreen extends ScreenAdapter {
         TextureAtlas buttonAtlas;
         Skin skin;
 
-        Customer test = new Customer(nameGenerator.getName(), "mario.png", 4, 1);
+        Customer test = new Customer(nameGenerator.getName(), 1, "mario.png", 4, 1);
+        test.setPosition(100, 400);
         final Conversation conversation = new Conversation(stage, test);
 
         buttonStyle = new Button.ButtonStyle();
@@ -78,6 +79,8 @@ public class GameScreen extends ScreenAdapter {
         });
         //stage.addActor(img);
         stage.addActor(newGameButton);
+
+
         //stage.addActor(mario);
         stage.addActor(test);
     }
@@ -99,7 +102,7 @@ public class GameScreen extends ScreenAdapter {
         music.setVolume(0.7f);
         music.play();
 
-
+        ServiceCenter.getInstance().updateDate();
 
         stage.addActor(clerkTester);
     }
@@ -119,7 +122,7 @@ public class GameScreen extends ScreenAdapter {
 
         stage.act(delta);
 
-
+        ServiceCenter.getInstance().update(delta);
 
         camera.update();
         tiledMapRenderer.setView(camera);

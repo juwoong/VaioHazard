@@ -2,8 +2,10 @@
 package org.dimigo.vaiohazard.Object;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import org.dimigo.library.BrokenVaioGenerator;
 import org.dimigo.library.Rand;
+import org.dimigo.vaiohazard.CustomActions;
 import org.dimigo.vaiohazard.Device.Vaio;
 import org.dimigo.vaiohazard.Device.VaioProblem;
 
@@ -202,13 +204,19 @@ public class Customer extends VaioActor {
         waitingNumber--;
     }
 
+    public void notifyConversationStarted() {
+        assert(customerState == CustomerState.readyToNegotiate);
+        customerState = CustomerState.onNegotiation;
+    }
+
     @Override
     public void act(float deltaTime) {
         super.act(deltaTime);
+
+
         //입장하고 움직임 (대기는 아직)
         if(customerState == CustomerState.waitForTurn) {
             if(moveState == MovingState.wating) {
-
                 //자기차례
                 if(waitingNumber == 0) {
                     //카운터로 이동, 이동 끝나면 자동으로 협상대기 상태로 들어감
@@ -230,6 +238,8 @@ public class Customer extends VaioActor {
             } else if(moveState == MovingState.walkingOver) {
                 //손님이 물건 맡기고 떠남 안보이게 해줌
                 customerState = CustomerState.OutOfStore;
+                addAction(Actions.fadeOut(2.0f));
+                addAction(CustomActions.twinkle());
             }
         }
 
