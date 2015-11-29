@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveByAction;
 import com.badlogic.gdx.scenes.scene2d.actions.RepeatAction;
 import com.badlogic.gdx.scenes.scene2d.actions.SequenceAction;
@@ -96,7 +97,6 @@ public class VaioActor extends Actor {
     }
 
     public void walkTo(int dotX, int dotY, boolean goXFirst) {
-
         assert((moveState == MovingState.wating));
 
         MoveByAction toX = new MoveByAction();
@@ -129,7 +129,6 @@ public class VaioActor extends Actor {
         this.addAction(seq);
     }
 
-
     public static int FOREVER  = -1;
     public void twitch(int count) {
 
@@ -146,5 +145,9 @@ public class VaioActor extends Actor {
 
         this.addAction(repeat);
     }
+
+    /*public void walkAround(int x1, int y1, int x2, int y2) {
+
+    }*/
 
 }

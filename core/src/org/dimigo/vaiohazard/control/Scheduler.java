@@ -18,6 +18,7 @@ public class Scheduler {
 
     /////////
     boolean testFlag = false;
+    boolean nextFlag = true;
     ////////
 
     private List<RepairOrder> repairOrders;
@@ -28,6 +29,8 @@ public class Scheduler {
         this.day = day;
         this.repairOrders = repairOrders;
         this.customers = customers;
+
+        random = new Random();
 
         //INSERT characterName to Schedule
         int customerCount = 20;
@@ -48,8 +51,19 @@ public class Scheduler {
 
         }*//*
         if(testFlag == false) {
-            customers.add(new Customer(NameGenerator.getInstance().getName(), ServiceCenter.getInstance())
-            customers.add(new Customer(NameGenerator.getInstance().getName(), ServiceCenter.getInstance().getWaitingNumber())
+            Customer customer =
+                    new Customer(NameGenerator.getInstance().getName(), ServiceCenter.getInstance().getWaitingNumber(), "mario.png", 4, 1);
+            customers.add(customer);
+            ServiceCenter.getInstance().getCurrentStage().addActor(customer);
+
+            testFlag = true;
+            nextFlag = false;
+        } else if(nextFlag == false) {
+            Customer customer2 =
+                    new Customer(NameGenerator.getInstance().getName(), ServiceCenter.getInstance().getWaitingNumber(), "mario.png", 4, 1);
+            customers.add(customer2);
+            ServiceCenter.getInstance().getCurrentStage().addActor(customer2);
+            nextFlag = true;
         }
 
     }*/

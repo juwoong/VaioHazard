@@ -35,7 +35,6 @@ public class GameScreen extends ScreenAdapter {
     TiledMapRenderer tiledMapRenderer;
     OrthographicCamera camera;
     Stage stage;
-    ServiceCenter center;
     Music music;
 
     boolean cleaned = false;
@@ -47,7 +46,9 @@ public class GameScreen extends ScreenAdapter {
     }
     private void init() {
         stage = new Stage();
-        center = ServiceCenter.getInstance();
+
+        ServiceCenter.getInstance().setCurrentStage(stage);
+
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
         camera.update();
@@ -62,7 +63,8 @@ public class GameScreen extends ScreenAdapter {
         TextureAtlas buttonAtlas;
         Skin skin;
 
-        Customer test = new Customer(nameGenerator.getName(), 0, "mario.png", 4, 1);
+        Customer test = new Customer(nameGenerator.getName(), 1, "mario.png", 4, 1);
+        test.setPosition(100, 400);
         final Conversation conversation = new Conversation(stage, test);
 
         buttonStyle = new Button.ButtonStyle();
@@ -76,12 +78,11 @@ public class GameScreen extends ScreenAdapter {
             }
         });
         //stage.addActor(img);
-        UserInterface ui = new UserInterface();
-
         stage.addActor(newGameButton);
+
+
         //stage.addActor(mario);
         stage.addActor(test);
-        stage.addActor(ui);
     }
 
     @Override
@@ -101,7 +102,7 @@ public class GameScreen extends ScreenAdapter {
         music.setVolume(0.7f);
         music.play();
 
-
+        ServiceCenter.getInstance().updateDate();
 
         stage.addActor(clerkTester);
     }
@@ -120,7 +121,8 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(delta);
-        center.timeFlow();
+
+        ServiceCenter.getInstance().update(delta);
 
         camera.update();
         tiledMapRenderer.setView(camera);

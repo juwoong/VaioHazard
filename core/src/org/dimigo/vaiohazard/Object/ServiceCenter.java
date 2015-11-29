@@ -1,5 +1,6 @@
 package org.dimigo.vaiohazard.Object;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import org.dimigo.library.Rand;
 import org.dimigo.vaiohazard.Device.Components;
@@ -22,29 +23,30 @@ public class ServiceCenter {
         return center;
     }
 
-    private int[] monthlyDate = new int[]{31,28,31,30,31,30,31,31,30,31,30,31};
-
     private ServiceCenter() {
         money = 10000;
         reputaionPercent = 30 / 100;
-        year = 2015;
         month = 1;
         day= 1;
         minutes = 540;
         dayOfWeek = DayOfWeek.MONDAY;
         customers = new ArrayList<Customer>();
+        orders = new ArrayList<RepairOrder>();
     }
-
 
     private int money;
     private float reputaionPercent;
     private List<RepairOrder> orders = new ArrayList<RepairOrder>();
 
-    private int i = 0;
-    private int year;
     private int month;
     private int day;
+    private int hour;
     private int minutes;
+
+    public Stage getCurrentStage() {
+        return currentStage;
+    }
+
     private DayOfWeek dayOfWeek;
 
     //0 에서 1사이의 값
@@ -62,30 +64,11 @@ public class ServiceCenter {
     public static final int MAX_WAITING_NUM = 5;
 
     private Components components;
-//
 
 
     /*public static ServiceCenter loadCenter() {
 
     }*/
-
-    public void timeFlow() {
-        i++;
-        if(i%30==0) minutes++;
-        if(minutes > 1080) {
-            i = 0;
-            minutes = 540;
-            day++;
-        }
-        if(day > monthlyDate[month-1]) {
-            day = 1;
-            month++;
-        }
-        if(month > 12) {
-            month = 1;
-            year++;
-        }
-    }
 
     public void updateDate() {
         todaySchedule = new Scheduler(month, day, orders, customers);
@@ -102,7 +85,10 @@ public class ServiceCenter {
     }
 
     public void update(float deltaTime) {
-        //todaySchedule.update(deltaTime);
+
+        if(todaySchedule != null) {
+            todaySchedule.update(deltaTime);
+        }
 
         int currentWaitingNum = 0;
 
@@ -112,6 +98,7 @@ public class ServiceCenter {
 
             if(state == Customer.CustomerState.readyToNegotiate) {
                 (new Conversation(currentStage, customer)).start();
+                customer.notifyConversationStarted();
             } else if(state == Customer.CustomerState.waitForTurn) {
                 currentWaitingNum++;
             }
@@ -183,14 +170,6 @@ public class ServiceCenter {
 
     public int getDay() {
         return day;
-    }
-
-    public int getYear() {
-        return year;
-    }
-
-    public int getMinutes(){
-        return minutes;
     }
 
     public DayOfWeek getDayOfWeek() {
