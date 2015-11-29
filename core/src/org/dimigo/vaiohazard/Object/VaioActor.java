@@ -96,6 +96,7 @@ public class VaioActor extends Actor {
                 getWidth(), getHeight(), getScaleX(), getScaleY(), getRotation());
     }
 
+    //걸어가는 함수임. 방향 지정해 주면 알아서 갑니다
     public void walkTo(int dotX, int dotY, boolean goXFirst) {
 
         assert((moveState == MovingState.wating));
@@ -131,6 +132,8 @@ public class VaioActor extends Actor {
     }
 
     public static int FOREVER  = -1;
+
+    //흔들흔들~
     public void twitch(int count) {
 
         this.setOrigin(getWidth()/2, getHeight()/2);

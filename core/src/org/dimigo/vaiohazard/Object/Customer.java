@@ -191,9 +191,10 @@ public class Customer extends VaioActor {
         return false;
     }
 
-    public void updateWaitingNumber() {
-        waitingNumber--;
-    }
+    /*public void updateWaitingNumber() {
+        --waitingNumber;
+        System.out.println(waitingNumber);
+    }*/
 
     public void notifyConversationStarted() {
         assert(customerState == CustomerState.readyToNegotiate);
@@ -207,7 +208,7 @@ public class Customer extends VaioActor {
         //입장하고 움직임 (대기는 아직)
         if(customerState == CustomerState.waitForTurn) {
             if(moveState == MovingState.wating) {
-                if(waitingNumber == 0) {
+                if(waitingNumber == ServiceCenter.getInstance().getCountNumber()) {
                     //카운터로 이동, 이동 끝나면 자동으로 협상대기 상태로 들어감
                     walkTo(200, 200, true);
                 }

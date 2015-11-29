@@ -62,11 +62,12 @@ public class ServiceCenter {
     //지금 가게에 렌더링되고 있는 고객만 있음
     private ArrayList<Customer> customers;
     private int waitingNumber = 0;
-
+    private int countNumber = 1;
     public static final int MAX_COUNTER_NUM = 1;
     public static final int MAX_WAITING_NUM = 5;
 
     private Components components;
+
 
 
     /*public static ServiceCenter loadCenter() {
@@ -95,7 +96,7 @@ public class ServiceCenter {
         todaySchedule = new Scheduler(month, day, orders);
     }
 
-    public void updateWaitingState(Customer orderer) {
+    /*public void updateWaitingState(Customer orderer) {
         customers.remove(orderer);
         for(Customer customer : customers) {
             if(customer.getCustomerState() == Customer.CustomerState.waitForTurn) {
@@ -103,7 +104,7 @@ public class ServiceCenter {
                 customer.updateWaitingNumber();
             }
         }
-    }
+    }*/
 
     public void update(float deltaTime) {
         timeFlow();
@@ -168,16 +169,16 @@ public class ServiceCenter {
     }
 
     public void addRepairOrder(RepairOrder order) {
-        updateWaitingState(order.getOrderer());
+        //updateWaitingState(order.getOrderer());
         orders.add(order);
+        ++countNumber;
     }
 
     //화면에 실제 렌더링 되는 고객을 추가하는것, 주문서에 예약된 손님이 다시올 수도 있고 새손님일 수도 있음
     public void addCustomer(Customer customer) {
         currentStage.addActor(customer);
         customers.add(customer);
-        customer.setWaitingNumber(waitingNumber);
-        waitingNumber++;
+        customer.setWaitingNumber(++waitingNumber);
     }
 
     public List<RepairOrder> getOrders() {
@@ -217,4 +218,5 @@ public class ServiceCenter {
     public void setCurrentStage(Stage stage) { this.currentStage = stage; }
 
     public int getWaitingNumber() { return waitingNumber; }
+    public int getCountNumber() { return countNumber; }
 }

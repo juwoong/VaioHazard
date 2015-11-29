@@ -35,6 +35,7 @@ public class UserInterface extends Table{
         init();
     }
 
+    //필요한 컨텐츠 라벨 등을 초기화한다.
     public void init() {
         Table table = this;
         Table leftTable = new Table();
@@ -86,7 +87,7 @@ public class UserInterface extends Table{
         time.setText(String.format("%d년 %02d월 %02d일", center.getYear(), center.getMonth(), center.getDay()));
         date.setText(String.format("%02d:%02d", center.getMinutes()/60, center.getMinutes()%60));
 
-        waitPerson.setText(Integer.toString(ServiceCenter.getInstance().getWaitingNumber()));
+        waitPerson.setText(Integer.toString(ServiceCenter.getInstance().getWaitingNumber() - ServiceCenter.getInstance().getCountNumber()));
         checkedPerson.setText(Integer.toString(ServiceCenter.getInstance().getOrders().size()));
     }
 

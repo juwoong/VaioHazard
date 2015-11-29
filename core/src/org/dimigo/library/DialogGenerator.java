@@ -164,7 +164,7 @@ public class DialogGenerator {
 
 
 
-        dialog.button("볼장은 다봤깅!", true, textButtonStyle);
+        dialog.button("볼장은 다봤깅!", null, textButtonStyle);
         return dialog;
     }
 
@@ -240,7 +240,7 @@ public class DialogGenerator {
 
         contentTable.add(new Label(order.getReward() + "원 개이득", labelStyle));
 
-        dialog.button("호갱 주문 리스트에 넣기 ㄱㄱ->", true, textButtonStyle);
+        dialog.button("호갱 주문 리스트에 넣기 ㄱㄱ->", null, textButtonStyle);
 
         return dialog;
     }

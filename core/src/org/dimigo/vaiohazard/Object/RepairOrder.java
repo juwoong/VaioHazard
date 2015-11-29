@@ -65,6 +65,7 @@ public class RepairOrder {
     }
 
     public RepairOrder(Customer orderer, Map<VaioProblem.Trouble, VaioProblem.Critical> detail) {
+        this.orderer = orderer;
         ServiceCenter center = ServiceCenter.getInstance();
         //10일 내로 찾아옵니다.
         int date = center.getDay() + (new Random()).nextInt(10)+1;

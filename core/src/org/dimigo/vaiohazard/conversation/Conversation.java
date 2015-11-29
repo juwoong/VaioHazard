@@ -25,7 +25,8 @@ public class Conversation {
         Estimating, //현재 견적 내는 중
         Negotiating, //협상중
         Accept, //동의
-        Deni //거절
+        Deni, //거절
+        Finish
     }
 
     private static final String TAG = "Conversation";
@@ -67,14 +68,19 @@ public class Conversation {
             generator.getImpairSelect(owner.getName(), inspectResult).show(stage);
             conversationStatus = Status.Estimating;
         }else if(conversationStatus == Status.Estimating) {
-            Map<VaioProblem.Trouble,VaioProblem.Critical> map = (Map<VaioProblem.Trouble,VaioProblem.Critical>) object;
-            owner.listenInspectResult(map);
+            Map<VaioProblem.Trouble,VaioProblem.Critical> repairOrderDetail = (Map<VaioProblem.Trouble,VaioProblem.Critical>) object;
+            owner.listenInspectResult(repairOrderDetail);
 
             //ServiceCenter.getInstance().addRepairOrder(new RepairOrder(owner, 1, 2 ,3, 4));
+
+            RepairOrder repairOrder = new RepairOrder(owner, repairOrderDetail);
+            ServiceCenter.getInstance().addRepairOrder(repairOrder);
+            generator.getBillDialog(repairOrder).show(stage);
 
             if(owner.getCustomerState() == Customer.CustomerState.overNegotiation) conversationStatus=Status.Accept;
             else conversationStatus = Status.Estimating;
         }
+        System.out.println(conversationStatus);
     }
 
     public Status getConversationStatus() {
