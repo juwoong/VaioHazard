@@ -20,6 +20,7 @@ public class Conversation {
     enum Status{
         Start, //의뢰 시 Status
         Knowing, //무슨 문제가 있는지 알고 있습니다.
+        Finding, //실제 오류를 찾고 있습니다.
         Estimating, //현재 견적 내는 중
         Negotiating, //협상중
         Accept, //동의
@@ -31,10 +32,12 @@ public class Conversation {
     private Stage stage;
     private Customer owner;
     private DialogGenerator generator = new DialogGenerator(this);
+    private ServiceCenter.InspectResult inspectResult;
 
     public Conversation(Stage stage, Customer owner) {
         this.stage = stage;
         this.owner = owner;
+        inspectResult = ServiceCenter.getInstance().inspectVaio(owner.getVaio());
     }
 
     public void start() {
@@ -54,8 +57,11 @@ public class Conversation {
             dialog.show(stage);
             conversationStatus = Status.Knowing;
         }else if(conversationStatus == Status.Knowing) {
-            ServiceCenter center = ServiceCenter.getInstance();
-            PixelizedDialog dialog = generator.getImpairSelect(owner.getName(), center.inspectVaio(owner.getVaio()));
+            PixelizedDialog dialog = generator.getInspectLoading(owner.getName(), inspectResult);
+            dialog.show(stage);
+            conversationStatus = Status.Finding;
+        }else if(conversationStatus == Status.Finding){
+            PixelizedDialog dialog = generator.getImpairSelect(owner.getName(), inspectResult);
             dialog.show(stage);
             conversationStatus = Status.Estimating;
         }else if(conversationStatus == Status.Estimating) {

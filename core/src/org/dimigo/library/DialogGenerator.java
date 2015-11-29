@@ -100,13 +100,9 @@ public class DialogGenerator {
         return dialog;
     }
 
-    private ServiceCenter.InspectResult inspectResult;
-    private VaioProblem.Trouble trouble;
-
     public PixelizedDialog getInspectLoading(String title,  ServiceCenter.InspectResult inspectResults) {
         PixelizedDialog dialog = new PixelizedDialog(title, windowStyle, conv);
-
-        inspectResult = inspectResults;
+        final ServiceCenter.InspectResult inspectResult = inspectResults;
         //Label inspect = new Label("조사중", bigLabelStyle);
 
         Label inspect = new Label("조사 중", bigLabelStyle){
@@ -116,10 +112,9 @@ public class DialogGenerator {
                 if(isInspected == false) {
                     SequenceAction seq = new SequenceAction();
 
-                    for(VaioProblem.Trouble troubled : inspectResult.impairs.keySet()) {
-                        trouble = troubled;
+                    for(VaioProblem.Trouble troubles : inspectResult.impairs.keySet()) {
                         SequenceAction fadeInOutStep = new SequenceAction();
-
+                        final VaioProblem.Trouble trouble = troubles;
                         int blinkNum = (new Random()).nextInt(5) + 2;
                         float inOutDuration = 1.4f;
 

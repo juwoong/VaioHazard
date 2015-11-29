@@ -35,6 +35,7 @@ public class GameScreen extends ScreenAdapter {
     TiledMapRenderer tiledMapRenderer;
     OrthographicCamera camera;
     Stage stage;
+    UserInterface ui;
     Music music;
 
     boolean cleaned = false;
@@ -80,9 +81,10 @@ public class GameScreen extends ScreenAdapter {
         //stage.addActor(img);
         stage.addActor(newGameButton);
 
-
+        ui = new UserInterface();
         //stage.addActor(mario);
         stage.addActor(test);
+        stage.addActor(ui);
     }
 
     @Override
@@ -123,7 +125,6 @@ public class GameScreen extends ScreenAdapter {
         stage.act(delta);
 
         ServiceCenter.getInstance().update(delta);
-
         camera.update();
         tiledMapRenderer.setView(camera);
         tiledMapRenderer.render();
