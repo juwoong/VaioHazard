@@ -103,7 +103,7 @@ public class DialogGenerator {
 
         //Label inspect = new Label("조사중", bigLabelStyle);
 
-        Label inspect = new Label("조사중", bigLabelStyle){
+        Label inspect = new Label("조사 중", bigLabelStyle){
             boolean isInspected = false;
             @Override
             public void act(float deltaTime) {
@@ -114,8 +114,8 @@ public class DialogGenerator {
                     for(VaioProblem.Trouble trouble : inspectResult.impairs.keySet()) {
                         SequenceAction fadeInOutStep = new SequenceAction();
 
-                        int blinkNum = (new Random()).nextInt(5);
-                        float inOutDuration = 1.3f;
+                        int blinkNum = (new Random()).nextInt(5) + 2;
+                        float inOutDuration = 1.4f;
 
                         for(int i=0; i<=blinkNum; i++) {
                             fadeInOutStep.addAction(Actions.fadeIn(inOutDuration));
