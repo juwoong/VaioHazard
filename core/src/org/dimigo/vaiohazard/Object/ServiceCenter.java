@@ -108,8 +108,6 @@ public class ServiceCenter {
     public void update(float deltaTime) {
         timeFlow();
 
-        Gdx.app.log("으악", Integer.toString(waitingNumber));
-
         if(todaySchedule != null) {
             todaySchedule.update(deltaTime);
         }

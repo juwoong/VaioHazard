@@ -113,4 +113,8 @@ public class RepairOrder {
     public void addTrouble(VaioProblem.Trouble trouble) {
         troublesToFix.add(trouble);
     }
+
+    public Map<VaioProblem.Trouble, VaioProblem.Critical> getDetail() {
+        return detail;
+    }
 }

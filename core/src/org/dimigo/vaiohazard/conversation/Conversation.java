@@ -70,7 +70,7 @@ public class Conversation {
             Map<VaioProblem.Trouble,VaioProblem.Critical> map = (Map<VaioProblem.Trouble,VaioProblem.Critical>) object;
             owner.listenInspectResult(map);
 
-            ServiceCenter.getInstance().addRepairOrder(new RepairOrder(owner, 1, 2 ,3, 4));
+            //ServiceCenter.getInstance().addRepairOrder(new RepairOrder(owner, 1, 2 ,3, 4));
 
             if(owner.getCustomerState() == Customer.CustomerState.overNegotiation) conversationStatus=Status.Accept;
             else conversationStatus = Status.Estimating;

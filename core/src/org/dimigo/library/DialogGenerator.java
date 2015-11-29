@@ -14,7 +14,9 @@ import net.dermetfan.gdx.physics.box2d.PositionController;
 import org.dimigo.vaiohazard.Device.Components;
 import org.dimigo.vaiohazard.Device.VaioProblem;
 import org.dimigo.vaiohazard.GameResource;
+import org.dimigo.vaiohazard.Object.Customer;
 import org.dimigo.vaiohazard.Object.PixelizedDialog;
+import org.dimigo.vaiohazard.Object.RepairOrder;
 import org.dimigo.vaiohazard.Object.ServiceCenter;
 import org.dimigo.vaiohazard.conversation.Conversation;
 
@@ -202,6 +204,43 @@ public class DialogGenerator {
         }
 
         dialog.button("이걸로 구라치기 ->", selector, textButtonStyle);
+
+        return dialog;
+    }
+
+    public PixelizedDialog getBillDialog(RepairOrder order) {
+        PixelizedDialog dialog = new PixelizedDialog(order.getOrderer().getName(), windowStyle, conv);
+
+        Table contentTable = dialog.getContentTable();
+
+        contentTable.padTop(20);
+
+        contentTable.add(new Label(order.getOrderer().getName() + " 호갱님", bigLabelStyle));
+        contentTable.row().padTop(8);
+
+        contentTable.add(new Label("문제점 :", labelStyle));
+
+        for(String troubleString : VaioProblem.TroubleStrings) {
+            contentTable.add(new Label(troubleString, labelStyle)).padLeft(2);
+        }
+
+        contentTable.row().padTop(3);
+
+        contentTable.add(new Label("심각성 :", labelStyle));
+
+        for(VaioProblem.Trouble trouble : VaioProblem.Trouble.getList()) {
+            contentTable.add(new Label(order.getDetail().get(trouble).name(), labelStyle)).padLeft(2);
+        }
+
+        contentTable.row().padTop(3);
+
+        contentTable.add(new Label(order.getAppointmentMonth() + "월" + order.getAppointmentDate() + "일에 방문", labelStyle));
+
+        contentTable.row().padTop(3);
+
+        contentTable.add(new Label(order.getReward() + "원 개이득", labelStyle));
+
+        dialog.button("호갱 주문 리스트에 넣기 ㄱㄱ->", true, textButtonStyle);
 
         return dialog;
     }
