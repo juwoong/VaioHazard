@@ -43,14 +43,14 @@ public class Scheduler {
         }
     }
 
-    public void update(float deltaTime) {
-        /*for(RepairOrder order : repairOrders) {
+    /*public void update(float deltaTime) {
+        *//*for(RepairOrder order : repairOrders) {
 
-        }*/
+        }*//*
         if(testFlag == false) {
             customers.add(new Customer(NameGenerator.getInstance().getName(), ServiceCenter.getInstance())
             customers.add(new Customer(NameGenerator.getInstance().getName(), ServiceCenter.getInstance().getWaitingNumber())
         }
 
-    }
+    }*/
 }

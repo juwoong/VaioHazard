@@ -16,7 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.*;
 import org.dimigo.library.DialogGenerator;
 import org.dimigo.library.GameCoordinate;
-import org.dimigo.vaiohazard.Object.Customer;
+import org.dimigo.vaiohazard.Object.*;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -24,8 +24,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import org.dimigo.library.NameGenerator;
 import org.dimigo.vaiohazard.Object.Customer;
-import org.dimigo.vaiohazard.Object.MarioActor;
-import org.dimigo.vaiohazard.Object.PixelizedDialog;
 import org.dimigo.vaiohazard.conversation.Conversation;
 
 /**
@@ -37,6 +35,7 @@ public class GameScreen extends ScreenAdapter {
     TiledMapRenderer tiledMapRenderer;
     OrthographicCamera camera;
     Stage stage;
+    ServiceCenter center;
     Music music;
 
     boolean cleaned = false;
@@ -48,7 +47,7 @@ public class GameScreen extends ScreenAdapter {
     }
     private void init() {
         stage = new Stage();
-
+        center = ServiceCenter.getInstance();
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 1280, 720);
         camera.update();
@@ -63,7 +62,7 @@ public class GameScreen extends ScreenAdapter {
         TextureAtlas buttonAtlas;
         Skin skin;
 
-        Customer test = new Customer(nameGenerator.getName(), "mario.png", 4, 1);
+        Customer test = new Customer(nameGenerator.getName(), 0, "mario.png", 4, 1);
         final Conversation conversation = new Conversation(stage, test);
 
         buttonStyle = new Button.ButtonStyle();
@@ -77,9 +76,12 @@ public class GameScreen extends ScreenAdapter {
             }
         });
         //stage.addActor(img);
+        UserInterface ui = new UserInterface();
+
         stage.addActor(newGameButton);
         //stage.addActor(mario);
         stage.addActor(test);
+        stage.addActor(ui);
     }
 
     @Override
@@ -118,8 +120,7 @@ public class GameScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         stage.act(delta);
-
-
+        center.timeFlow();
 
         camera.update();
         tiledMapRenderer.setView(camera);
